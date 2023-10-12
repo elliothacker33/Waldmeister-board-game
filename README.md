@@ -1,5 +1,17 @@
 # Turma 5- Wald Meister_5
 
+## Index 
+- [Group](#group) 
+- [Installation and Execution](#installation-and-execution) 
+	- [Linux](#linux)
+	-  [Windows](#windows)
+-  [Wald Meister - Introduction and Rules](#wald-meister---introduction-and-rules)
+	 - [Game Components](#game-components)
+	 - [How to Play](#how-to-play) 
+	 - [Objective](#objective) 
+	 - [Ending and Scoring](#ending-and-scoring)
+   - [Helpful links]("helpful-links")
+
 ## Group
    - Tomás Alexandre Torres Pereira (up202108845@edu.fe.up.pt)
    - Tomás Miranda de Figueiredo Sarmento (up202108778@edu.fe.up.pt)
@@ -94,3 +106,7 @@ The game's objective varies for each player:
 The game ends when all the pieces have been placed on the board. Players must then calculate their points. One player should count the points for the largest cluster in each color, while the other player counts the points for the largest cluster in each height. To determine the winner, add up the points for the three largest clusters for each player, with each piece in a cluster counting as one point.
 
 ![points](media-assets/points.png)
+### Helpful links
+- [Rulebook](https://boardgamegeek.com/filepage/249274/rules-waldmeister): Download the comprehensive rulebook for Wald Meister.
+- [Official Website](https://www.spielewerkstatt.eu/gb/strategy-tactics/204-forestmeister.html): Browse the official website of the game and buy the game.
+
