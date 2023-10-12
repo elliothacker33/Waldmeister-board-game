@@ -22,43 +22,53 @@ helps('6','Quit').
 
 % Define a predicate to print all type_of_game options with formatting.
 print_type_of_game_options :-
-    findall(X, (type_of_game(Id, X), format('~w: ~w~n', [Id, X])), GameOptions),
-    nl.
+    findall(X, (type_of_game(Id, X), format('~w: ~w~n', [Id, X])), GameOptions).
 
 % Define a predicate to print all helps options with formatting.
 print_helps_options :-
-    findall(Y, (helps(Id, Y), format('~w: ~w~n', [Id, Y])), MenuOptions),
-    nl.
+    findall(Y, (helps(Id, Y), format('~w: ~w~n', [Id, Y])), MenuOptions).
 
 % Define a predicate to print all options.
 print_options :-
     print_type_of_game_options,
     print_helps_options.
 
+
+handle_option(1) :-
+    view_main_menu.
+
+handle_option(2) :-
+    view_main_menu.
+
+handle_option(3) :-
+    view_main_menu.
+
+handle_option(4) :-
+    view_main_menu.
+
+handle_option(5) :-
+    view_main_menu.
+
+handle_option(6) :-
+    view_main_menu.
+
+handle_option(_Other):-
+    write('\nERROR: that option does not exist.\n\n'),
+    write('Insert option from 1-6: \n'),
+    get_option(Option),
+    handle_option(Option).
+get_option(Option):-
+    get_char(Input),
+    get_char(_),
+    char_to_number(Input,Option).
 view_main_menu :-
     nl,
     waldmeister_logo,
     nl,
     write('Available Options\n'),
     print_options, % Use option_main_menu to print options
-    handle_option.
-
-char_to_number(Char, Number) :-
-    char_code(Char, Code),
-    Number is Code - 48.
-
-get_option(Option) :-
-    get_char(Ch),
-    char_to_number(Ch, Option).
-
-handle_option :-
-    repeat,
+    nl,
+    write('Insert option from 1-6: \n'),
     get_option(Option),
-    (Option >= 1, Option =< 3 ->
-        start_game(Option)
-    ; Option >= 4, Option =< 6 ->
-        start_help(Option)
-    ;  
-        fail
-    ).
+    handle_option(Option).
 
