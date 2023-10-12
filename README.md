@@ -69,7 +69,7 @@ play.
 
 Wald Meister consists of a total of 54 trees. Each player uses 27 trees. The trees come in three different heights and three different colors. Each player receives three pieces per color and per height.
 
-![Tree Types](uploads/trees.png)
+![Tree Types](media-assets/trees.png)
 
 ### How to Play
 
