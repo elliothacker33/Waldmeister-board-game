@@ -1,8 +1,8 @@
 # Turma 5- Wald Meister_5
 
 ## Group
-   Tomás Alexandre Torres Pereira (up202108845@edu.fe.up.pt)
-   Tomás Miranda de Figueiredo Sarmento (up202108778@edu.fe.up.pt)
+   - Tomás Alexandre Torres Pereira (up202108845@edu.fe.up.pt)
+   - Tomás Miranda de Figueiredo Sarmento (up202108778@edu.fe.up.pt)
 
 ## Installation and Execution
 
