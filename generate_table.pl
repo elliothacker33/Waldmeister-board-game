@@ -43,10 +43,9 @@ generate_line_aux(Size,Column_Number,Line):-
 
 generate_line(Size,Number_Of_Pieces,Line):-
     Number is Size - Number_Of_Pieces,
-    Number1 is Number + 1,
-    add_Blanck(Number1 , [] ,LineTmp),
+    add_Blanck(Number , [] ,LineTmp),
     add_PlaceHolders(Number_Of_Pieces,LineTmp,LineTmp1),
-    add_Blanck(Number1 , LineTmp1 ,Line).
+    add_Blanck(Number , LineTmp1 ,Line).
 
 %teste
 /*teste:-draw_matrix([[0,0,0,0,0,0,0,-1],[0,0,0,0,0,0,-1,0,-1],[0,0,0,0,0,-1,0,-1,0,-1],[0,0,0,0,-1,0,-1,0,-1,0,-1],[0,0,0,-1,0,-1,0,-1,0,-1,0,-1],

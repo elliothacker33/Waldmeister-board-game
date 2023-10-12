@@ -10,6 +10,7 @@ draw_Piece(-1):-
 draw_Piece(0):-
     write('   ').
 
+draw_matrix([]).
 
 draw_matrix([Head | Tail]):-
     draw_line(Head),
