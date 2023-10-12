@@ -24,12 +24,12 @@ sicstus
 ```
 
 3. Load the game in sicstus:
-```shell
+```prolog
 consult('waldmeister.pl').
 ```
 
 4. Start the game:
-```shell
+```prolog
 play.
 ```
 
@@ -51,7 +51,7 @@ sicstus.exe
 ```
 
 3. Load the game in sicstus:
-```shell
+```prolog
 consult('waldmeister.pl').
 ```
 
