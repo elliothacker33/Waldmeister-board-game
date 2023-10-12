@@ -10,7 +10,7 @@
 	 - [How to Play](#how-to-play) 
 	 - [Objective](#objective) 
 	 - [Ending and Scoring](#ending-and-scoring)
-   - [Helpful links]("helpful-links")
+   - [Helpful links](#helpful-links)
 
 ## Group
    - Tomás Alexandre Torres Pereira (up202108845@edu.fe.up.pt)
