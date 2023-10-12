@@ -92,3 +92,5 @@ The game's objective varies for each player:
 ### Ending and Scoring
 
 The game ends when all the pieces have been placed on the board. Players must then calculate their points. One player should count the points for the largest cluster in each color, while the other player counts the points for the largest cluster in each height. To determine the winner, add up the points for the three largest clusters for each player, with each piece in a cluster counting as one point.
+
+![points](media-assets/points.png)
