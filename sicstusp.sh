@@ -25,6 +25,8 @@ if [ -x "$SICSTUS_PATH" ]; then
 		# Set the text color to green
 		tput setaf 2
 		echo "The screen is in full-screen mode. Good to go!"
+		echo "ONLY USE THIS FILE TO RUN THE GAME"
+		echo "Purpose-> centering the game on the screen"
 		# Reset text color
 		tput sgr0
 	fi
