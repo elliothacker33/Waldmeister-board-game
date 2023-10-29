@@ -4,21 +4,91 @@ box_char(top_left, 0x250C).
 box_char(top_right, 0x2510).
 box_char(bottom_left, 0x2514).
 box_char(bottom_right, 0x2518).
+box_char(connector, 0x2534).
+box_char(connector2, 0x252C).
+
 
 /* waldmeister_logo/0 is a predicate that is responsible for showing the waldmeister logo in ASCII ART */
 waldmeister_logo:-
-center_text(' ',12),
-format('\e[38;5;208m~w\e[0m', [' ##      ##    ##    ##    ##    ###       ##     ##   ####   #   ###   #####  ####   ###   ']),
-print_newline(1),
-center_text(' ',12),
-format('\e[38;5;208m~w\e[0m', ['  ##   ## ##  ##   ##  ##  ##    #  #    ####   ####   # __   |    #  #   #    # __   #  #  ']),
-print_newline(1),
-center_text(' ',12),
-format('\e[38;5;208m~w\e[0m', ['   ## ##  ## ##    ######  ##    #   #  ##  ## ##  ##  #      |  # ##     #    #      # ##  ']),
-print_newline(1),
-center_text(' ',12),
-format('\e[38;5;208m~w\e[0m', ['    ##      ##     ##  ##  ##### ####  #    ##     #   ####   |  ###      #    ####   ##  # ']),
-print_newline(1).
+    format('~*c', [12, 32]),
+    format('\e[38;5;208m~w\e[0m', [' ##      ##    ##    ##    ##    ###       ##     ##   ####   #   ###   #####  ####   ###   ']),
+    print_newline(1),
+    format('~*c', [12, 32]),
+    format('\e[38;5;208m~w\e[0m', ['  ##   ## ##  ##   ##  ##  ##    #  #    ####   ####   # __   |    #  #   #    # __   #  #  ']),
+    print_newline(1),
+    format('~*c', [12, 32]),
+    format('\e[38;5;208m~w\e[0m', ['   ## ##  ## ##    ######  ##    #   #  ##  ## ##  ##  #      |  # ##     #    #      # ##  ']),
+    print_newline(1),
+    format('~*c', [12, 32]),
+    format('\e[38;5;208m~w\e[0m', ['    ##      ##     ##  ##  ##### ####  #    ##     #   ####   |  ###      #    ####   ##  # ']),
+    print_newline(1).
+
+display_aux_options_vertical(V):-
+    print_newline(1),
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    format('~*c', [35, 32]),
+    format('~c',[V]),
+    print_newline(1).
+display_aux_options_first_line(TL,H,TR):-
+     format('~*c', [40, 32]),
+     format('~c',[TL]),
+     format('~*c', [35, H]),
+     format('~c',[TR]).
+display_aux_options_last_line(BL,H,BR):-
+    format('~*c', [40, 32]),
+    format('~c',[BL]),
+    format('~*c', [35, H]),
+    format('~c',[BR]).
+display_choose(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('    Choose your option from 1-6    '),
+    format('~c',[V]).
+display_option_1(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['1']),
+    write(' Human/Human             '),
+    format('~c',[V]).
+
+display_option_2(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['2']),
+    write(' Human/PC                '),
+    format('~c',[V]).
+display_option_3(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['3']),
+    write(' PC/PC                   '),
+    format('~c',[V]).
+display_option_4(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['4']),
+    write(' Instructions            '),
+    format('~c',[V]).
+display_option_5(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['5']),
+    write(' Credits                 '),
+    format('~c',[V]).
+
+display_option_6(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['6']),
+    write(' Quit                    '),
+    format('~c',[V]).
 
 /* clear/0 is a predicate that is responsible to clear the screen */
 clear:-
@@ -30,117 +100,34 @@ print_newline(N):-
     N1 is N-1,
     print_newline(N1),
     nl.
-/* center_text/2 is a predicate that prints the character Ch, N times */
-center_text(_,0):-!.
-center_text(Ch,N):-
-    N1 is N-1,
-    center_text(Ch,N1),
-    write(Ch).
 
 /* print_options/2 is a predicate that prints the main menu option */
 print_options:-
-    center_text(' ',40),
     box_char(horizontal,H),
     box_char(vertical,V),
     box_char(top_right,TR),
     box_char(top_left,TL),
     box_char(bottom_right,BR),
     box_char(bottom_left,BL),
-    format('~c',[TL]),
-    format('~*c', [35, H]),
-    format('~c',[TR]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    center_text(' ',35),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    write('    Choose your option from 1-6    '),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    center_text(' ',35),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    write('         '),
-    format('\e[38;5;208m~w\e[0m',['1']),
-    write(' Human/Human             '),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    center_text(' ',35),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    write('         '),
-    format('\e[38;5;208m~w\e[0m',['2']),
-    write(' Human/PC                '),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    center_text(' ',35),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    write('         '),
-    format('\e[38;5;208m~w\e[0m',['3']),
-    write(' PC/PC                   '),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    center_text(' ',35),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    write('         '),
-    format('\e[38;5;208m~w\e[0m',['4']),
-    write(' Instructions            '),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    center_text(' ',35),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    write('         '),
-    format('\e[38;5;208m~w\e[0m',['5']),
-    write(' Credits                 '),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    center_text(' ',35),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    write('         '),
-    format('\e[38;5;208m~w\e[0m',['6']),
-    write(' Quit                    '),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[V]),
-    center_text(' ',35),
-    format('~c',[V]),
-    print_newline(1),
-    center_text(' ',40),
-    format('~c',[BL]),
-    format('~*c', [35, H]),
-    format('~c',[BR]).
+    display_aux_options_first_line(TL,H,TR),
+    display_aux_options_vertical(V),
+    display_choose(V),
+    display_aux_options_vertical(V),
+    display_option_1(V),
+    display_aux_options_vertical(V),
+    display_option_2(V),
+    display_aux_options_vertical(V),
+    display_option_3(V),
+    display_aux_options_vertical(V),
+    display_option_4(V),
+    display_aux_options_vertical(V),
+    display_option_5(V),
+    display_aux_options_vertical(V),
+    display_option_6(V),
+    display_aux_options_vertical(V),
+    display_aux_options_last_line(BL,H,BR).
+
+
 
 
 /*repeat_ask_difficulty/1 is a predicate that keeps asking difficulty if the values are not in the range specified*/
@@ -150,17 +137,17 @@ repeat_ask_difficulty(Difficulty):-
     (Difficulty == 1 ; Difficulty == 2), !.
 
 repeat_ask_difficulty(Difficulty):-
-    center_text(' ',40),
-    format('\e[47m\e[31mERROR: Invalid difficulty. Please enter 1 or 2.\e[0m', []),
+    format('~*c', [40, 32]),
+    format('\e[48;5;208m\e[97mERROR: Invalid difficulty. Please enter 1 or 2.\e[0m', []),
     print_newline(2),
     repeat_ask_difficulty(difficulty).
 
 /* askDifficulty/1 asks for a game difficulty input */ 
 askDifficulty(Y):-
-    center_text(' ',45),
+    format('~*c', [45, 32]),
     write('1- PC Easy mode, 2- PC Hard mode'),
     print_newline(2),
-    center_text(' ',45),
+    format('~*c', [45, 32]),
     write('Insert PC Difficulty: '),
     read(Y).
 
@@ -171,24 +158,24 @@ repeat_ask_goal(Goal,Name):-
     (Goal == 1 ; Goal == 2), !.
 
 repeat_ask_goal(Goal,Name):-
-    center_text(' ',40),
-    format('\e[47m\e[31mERROR: Invalid goal. Please enter 1 or 2.\e[0m', []),
+    format('~*c', [40, 32]),
+    format('\e[48;5;208m\e[97mERROR: Invalid goal. Please enter 1 or 2.\e[0m', []),
     print_newline(2),
     repeat_ask_goal(Goal,Name).
 
 /* askGoal/1 asks for a goal input */ 
 askGoal(Goal,Name):- 
-    center_text(' ',40),
+    format('~*c', [40, 32]),
     write('1- Play for Colors 2- Play for Heights'),
     print_newline(2),
-    center_text(' ',45),
+    format('~*c', [45, 32]),
     write(Name),
     write(' please insert your goal : '),
     read(Goal).
 
 /* askName/1 asks for a name input */ /*  Make this accept UpperCase */
 askName(Name):-
-    center_text(' ',45),
+    format('~*c', [45, 32]),
     write('Insert your name: '),
     read(Name).
 
@@ -200,16 +187,17 @@ repeat_ask_option(Option):-
     handle_option(Option).
 
 repeat_ask_option(Option):-
-    center_text(' ',40),
-    format('\e[47m\e[31mERROR: Invalid option. Please enter 1-6 number.\e[0m', []),
+    format('~*c', [40, 32]),
+    format('\e[48;5;208m\e[97mERROR: Invalid option. Please enter 1-6 number.\e[0m', []),
     print_newline(2),
     repeat_ask_option(Option).
 
 /* askOption/1 asks for an option input */ 
 askOption(Option):-
-    center_text(' ',45),
+    format('~*c', [45, 32]),
     write('Insert option from 1-6: '),
     read(Option).
+    
 
 /* handle_option/1 is a predicate that shows the respective functionalities for each menu */
 handle_option(1):-
@@ -234,15 +222,15 @@ handle_option(2):-
     repeat_ask_goal(Goal),
     repeat_ask_difficulty(Difficulty),
     (Goal == 1 -> 
-    start_game(initial,(Name1,Goal),(Difficulty,2))
+    start_game(initial,(1,Name1,Goal),(2,Difficulty,2))
     ;
-    start_game(initial,(Name1,2),(Difficulty,1))),
+    start_game(initial,(1,Name1,2),(2,Difficulty,Goal))),
     view_main_menu. 
 
 handle_option(3):-
     repeat_ask_difficulty(Difficulty1),
     repeat_ask_difficulty(Difficulty2),
-    start_game(initial,(Difficulty1,1),(Difficulty2,2)),
+    start_game(initial,(1,Difficulty1,1),(2,Difficulty2,2)),
     view_main_menu.
 
 handle_option(4):-

@@ -6,21 +6,21 @@ height(1,'High').
 height(2,'Medium').
 height(3,'Small').
 
-piece(C,H):- color(C,_),height(H,_).
+tree(C,H):- color(C,_),height(H,_).
 
 goal(1,'colors').
 goal(2,'heights').
 
 /* !! Improve this functions */ 
 get_turn(InitialState,Turn):-
-    length(InitalState,L),
+    length(InitialState,L),
     L1 is L-1,
-    nth0(L1,InitalState,Turn).
+    nth0(L1,InitialState,Turn).
 
-get_trees_to_play(InitalState,TreesToPlay):-
-    length(InitalState,L),
+get_trees_to_play(InitialState,TreesToPlay):-
+    length(InitialState,L),
     L1 is L-2,
-    nth0(InitalState,L,TreesToPlay).
+    nth0(L1,InitialState,TreesToPlay).
 
 
 
@@ -29,26 +29,26 @@ get_trees_to_play(InitalState,TreesToPlay):-
 get_valid_moves_initial([], _, []).
 
 get_valid_moves_initial([Row|RestRows], RowIndex, ValidMoves) :-
-    get_row_moves(Row, RowIndex, 0, RowMoves),
+    get_row_moves_initial(Row, RowIndex, 0, RowMoves),
     NewRowIndex is RowIndex + 1,
-    get_valid_moves(RestRows, NewRowIndex, RestMoves),
+    get_valid_moves_initial(RestRows, NewRowIndex, RestMoves),
     append(RowMoves, RestMoves, ValidMoves).
 
 get_row_moves_initial([], _, _, []).
 
-get_row_moves_initial([-1|Rest], Row, Col, [(Row, Col)|RowMoves]) :-
+get_row_moves_initial([-1|Rest], Row, Col, [Row-Col|RowMoves]) :-
     NewCol is Col + 1,
-    get_row_moves(Rest, Row, NewCol, RowMoves).
+    get_row_moves_initial(Rest, Row, NewCol, RowMoves).
 
-valid_moves([Board,_,_,54,],_,ValidMoves):-
+valid_moves([Board,_,_,54,_],_,ValidMoves):-
     get_valid_moves_initial(Board,0,ValidMoves).
 
 /* Get valid moves for middle game state */
-valid_moves(OtherState,_, ValidMoves):-
+valid_moves([Board,_,_,_,_],_,ValidMoves):-
 .
 
 /* Get valid moves for final state (no moves) */
-valid_moves(EndState,_,[]).
+% valid_moves(EndState,_,[]).
    
 
 createState(GameState,X,Y,FinalState):-

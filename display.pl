@@ -5,7 +5,9 @@ initial_state_size(1,[[[-1],[-1,-1],[-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1,-1],[-
 
 
 print_valid_moves([]).
-print_valid_moves([(X,Y)|H]):-
-        format("(~w,~w)",[X,Y]),
-        nl,
+print_valid_moves([X-Y|H]):-
+        format('~w-~w ',[X,Y]),
         print_valid_moves(H).
+
+display_game(GameState):- .
+  
