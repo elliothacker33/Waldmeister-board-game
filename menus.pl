@@ -207,11 +207,12 @@ handle_option(1):-
     print_newline(2),
     repeat_ask_goal(Goal,Name1),
     print_newline(1),
+    initial_state_size(1,InitialState),
     !,
     (Goal == 1 ->
-        play_game_Initial(InitalState, (1, Name1, Goal), (2, Name2, 2))
+        play_game_GameState(InitialState, (1, Name1, Goal), (2, Name2, 2))
     ;
-        play_game_Initial(InitalState, (1, Name1, Goal), (2, Name2, 1))
+        play_game_GameState(InitialState, (1, Name1, Goal), (2, Name2, 1))
     ),
     view_main_menu.
 
@@ -222,15 +223,15 @@ handle_option(2):-
     repeat_ask_goal(Goal),
     repeat_ask_difficulty(Difficulty),
     (Goal == 1 -> 
-    start_game(initial,(1,Name1,Goal),(2,Difficulty,2))
+    play_game(InitialState,(1,Name1,Goal),(2,Difficulty,2))
     ;
-    start_game(initial,(1,Name1,2),(2,Difficulty,Goal))),
+    play_game(InitialState,(1,Name1,2),(2,Difficulty,Goal))),
     view_main_menu. 
 
 handle_option(3):-
     repeat_ask_difficulty(Difficulty1),
     repeat_ask_difficulty(Difficulty2),
-    start_game(initial,(1,Difficulty1,1),(2,Difficulty2,2)),
+    play_game(InitialState,(1,Difficulty1,1),(2,Difficulty2,2)),
     view_main_menu.
 
 handle_option(4):-
