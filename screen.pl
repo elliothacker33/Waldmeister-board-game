@@ -1,12 +1,19 @@
-%convert symbols in the matrix to the screen
 draw_Piece(-1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['    _ '],NewTail1),
     append(Tail2,['   / \\'],NewTail2),
     append(Tail3,['   \\_/'],NewTail3).
-draw_Piece(1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+draw_Piece((_,1),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['    _ '],NewTail1),
-    append(Tail2,['   / L'],NewTail2),
-    append(Tail3,['   H_/'],NewTail3).
+    append(Tail2,['   V V'],NewTail2),
+    append(Tail3,['   \\_/'],NewTail3).
+draw_Piece((_,2),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+    append(Tail1,['    _ '],NewTail1),
+    append(Tail2,['   G G'],NewTail2),
+    append(Tail3,['   \\_/'],NewTail3).
+draw_Piece((_,3),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+    append(Tail1,['    _ '],NewTail1),
+    append(Tail2,['   B B'],NewTail2),
+    append(Tail3,['   \\_/'],NewTail3).
 
 draw_Piece(0,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['   '],NewTail1),

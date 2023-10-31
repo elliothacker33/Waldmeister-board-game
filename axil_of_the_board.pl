@@ -21,21 +21,32 @@ get_Color((Color,_),Color).
 %calcula o numero maximo de pecas com a mesma cor proximas umas das outras
 
 start_color_bfs(Board,Size,Max):-
-    Visited = [],
-    color_bfs(Board,Size,Visited,0,Max).
+    write('start_color_bfs\n'),
+    color_bfs(Board,Size,[],1,0,Max1),
+    write('LightGreen:'),
+    write(Max1),
+    write('\n'),
+    color_bfs(Board,Size,[],2,0,Max2),
+    write('MediumLight:'),
+    write(Max2),
+    write('\n'),
+    color_bfs(Board,Size,[],3,0,Max3),
+    write('MaxLight:'),
+    write(Max3),
+    write('\n'),
+    Max is Max1 + Max2 + Max3.
 
-color_bfs(Board,_,Visited,CurrMax,CurrMax):-
-    next_position(Board,Visited,Cord),
+color_bfs(Board,_,Visited,Color,CurrMax,CurrMax):-
+    next_position_color(Board,Visited,Color,Cord),
     Cord == null.
 
-color_bfs(Board,Size,Visited,CurrMax,Max):-
-    next_position(Board,Visited,Cord),
+color_bfs(Board,Size,Visited,Color,CurrMax,Max):-
+    next_position_color(Board,Visited,Color,Cord),
     Cord \= null,
-    getPiece(Board,Cord,(Color,_Height)),
     color_bfs_aux(Board,Size,[Cord],Visited,NewVisited,Color,0,TmpMax),
     (TmpMax < CurrMax ->
-        color_bfs(Board,Size,NewVisited,CurrMax,Max);
-        color_bfs(Board,Size,NewVisited,TmpMax,Max)
+        color_bfs(Board,Size,NewVisited,Color,CurrMax,Max);
+        color_bfs(Board,Size,NewVisited,Color,TmpMax,Max)
     ).
 
 color_bfs_aux(_,_,[],Visited,Visited,_,Max,Max).
@@ -50,21 +61,31 @@ color_bfs_aux(Board,Size,[Col-Line |  Rest],Visited,NewVisited,Color,Current_Max
 
 %calcula o numero maximo de Pecas com a mesma altura proximas umas das outras
 start_height_bfs(Board,Size,Max):-
-    Visited = [],
-    height_bfs(Board,Size,Visited,0,Max).
+    height_bfs(Board,Size,[],1,0,Max1),
+    write('LightGreen:'),
+    write(Max1),
+    write('\n'),
+    height_bfs(Board,Size,[],2,0,Max2),
+    write('MediumLight:'),
+    write(Max2),
+    write('\n'),
+    height_bfs(Board,Size,[],3,0,Max3),
+    write('MaxLight:'),
+    write(Max3),
+    write('\n'),
+    Max is Max1 + Max2 + Max3.
 
-height_bfs(Board,_,Visited,CurrMax,CurrMax):-
-    next_position(Board,Visited,Cord),
+height_bfs(Board,_,Visited,Height,CurrMax,CurrMax):-
+    next_position_height(Board,Visited,Height,Cord),
     Cord == null.
 
-height_bfs(Board,Size,Visited,CurrMax,Max):-
-    next_position(Board,Visited,Cord),
+height_bfs(Board,Size,Visited,Height,CurrMax,Max):-
+    next_position_height(Board,Visited,Height,Cord),
     Cord \= null,
-    getPiece(Board,Cord,(_Color,Height)),
     height_bfs_aux(Board,Size,[Cord],Visited,NewVisited,Height,0,TmpMax),
     (TmpMax < CurrMax ->
-        height_bfs(Board,Size,NewVisited,CurrMax,Max);
-        height_bfs(Board,Size,NewVisited,TmpMax,Max)
+        height_bfs(Board,Size,NewVisited,Height,CurrMax,Max);
+        height_bfs(Board,Size,NewVisited,Height,TmpMax,Max)
     ).
 height_bfs_aux(_,_,[],Visited,Visited,_,Max,Max).
 
@@ -106,17 +127,24 @@ getPositionNear(_,_,_,_):-fail.
 
 %finds the next position that is not visited and isnt empty
 
-next_position(Board, Visited, Ncol-Nline) :-
+next_position_height(Board, Visited,Height, Ncol-Nline) :-
     nth0(Nline, Board, Col),
     length(Col, Ncols),
     TmpNcols is Ncols - 1,
     between(0, TmpNcols, Ncol),
     \+ member(Ncol-Nline, Visited),
-    getPiece(Board, Ncol-Nline, Piece),
-    \+ number(Piece),!.
-next_position(_, _, null).
+    getPiece(Board, Ncol-Nline, (_,Height)),!.
+next_position_height(_, _, _,null).
 
+next_position_color(Board, Visited,Color, Ncol-Nline) :-
+    nth0(Nline, Board, Col),
+    length(Col, Ncols),
+    TmpNcols is Ncols - 1,
+    between(0, TmpNcols, Ncol),
+    \+ member(Ncol-Nline, Visited),
+    getPiece(Board, Ncol-Nline, (Color,_)),!.
 
+next_position_color(_, _, _,null).
 
 
 
