@@ -1,39 +1,130 @@
 :- use_module(library(lists)).
+:- use_module(library(between)).
+:- use_module(library(aggregate)).
 
-next_position(Board,Column_Number,_,_,-1,-1):-
-    length(Board,Size),
-    Size < Column_Number.
+winner(Board,Size, Winner) :-
+    start_color_bfs(Board,Size,MaxColor),
+    start_height_bfs(Board,Size,MaxHeight),
+    (MaxColor < MaxHeight ->
+        Winner = 'Height' ;
+        Winner = 'Color' 
+    ).
 
-next_position(Board,Column_Number,Line_number,Visited,Result_col,Result_line):-
-    nth0(Column_Number,Board,Col),
-    length(Col,Size),
-    Line_number =:= Size,
-    Tmp_col is Column_Number + 1,
-    next_position(Board,Tmp_col,0,Visited,Result_col,Result_line).
 
-next_position(Board,Column_Number,Line_number,Visited,Result_col,Result_line):-
-    nth0(Column_Number,Board,Col),
-    length(Col,Size_line),
-    Line_number < Size_line,
-    Newline is Line_number + 1,
-    nth0(Newline,Board,Place),
-    Place \= -1,
-    member((Column_Number,Newline),Visited),
-    next_position(Board,Column_Number,Newline,Visited,Result_col,Result_line).
+getPiece(Board, Col-Line, Piece) :-
+    nth0( Line,Board,Line_pieces),
+    nth0(Col, Line_pieces, Piece).
 
-next_position(Board,Column_Number,Line_number,Visited,Column_Number,Newline):-
-    nth0(Column_Number,Board,Col),
-    length(Col,Size_line),
-    Line_number < Size_line,
-    Newline is Line_number + 1,
-    nth0(Newline,Board,Place),
-    Place \= -1,
-    \+ member((Column_Number,Newline),Visited).
+get_Height((_,Height),Height).
+get_Color((Color,_),Color).
+
+%calcula o numero maximo de pecas com a mesma cor proximas umas das outras
+
+start_color_bfs(Board,Size,Max):-
+    Visited = [],
+    color_bfs(Board,Size,Visited,0,Max).
+
+color_bfs(Board,_,Visited,CurrMax,CurrMax):-
+    next_position(Board,Visited,Cord),
+    Cord == null.
+
+color_bfs(Board,Size,Visited,CurrMax,Max):-
+    next_position(Board,Visited,Cord),
+    Cord \= null,
+    getPiece(Board,Cord,(Color,_Height)),
+    color_bfs_aux(Board,Size,[Cord],Visited,NewVisited,Color,0,TmpMax),
+    (TmpMax < CurrMax ->
+        color_bfs(Board,Size,NewVisited,CurrMax,Max);
+        color_bfs(Board,Size,NewVisited,TmpMax,Max)
+    ).
+
+color_bfs_aux(_,_,[],Visited,Visited,_,Max,Max).
+
+color_bfs_aux(Board,Size,[Col-Line |  Rest],Visited,NewVisited,Color,Current_Max,Max):-
+    findall(Cords, (getPositionNear(Size,Line,Col,Cords), Cords\= null,\+ member(Cords,Visited),\+ member(Cords,Rest), getPiece(Board,Cords,(Color,_Height))),
+    New_Cords),
+    append(Rest,New_Cords,New_queue),
+    NewMax is Current_Max + 1,
+    color_bfs_aux(Board,Size,New_queue,[Col-Line | Visited],NewVisited,Color,NewMax,Max).
+
+
+%calcula o numero maximo de Pecas com a mesma altura proximas umas das outras
+start_height_bfs(Board,Size,Max):-
+    Visited = [],
+    height_bfs(Board,Size,Visited,0,Max).
+
+height_bfs(Board,_,Visited,CurrMax,CurrMax):-
+    next_position(Board,Visited,Cord),
+    Cord == null.
+
+height_bfs(Board,Size,Visited,CurrMax,Max):-
+    next_position(Board,Visited,Cord),
+    Cord \= null,
+    getPiece(Board,Cord,(_Color,Height)),
+    height_bfs_aux(Board,Size,[Cord],Visited,NewVisited,Height,0,TmpMax),
+    (TmpMax < CurrMax ->
+        height_bfs(Board,Size,NewVisited,CurrMax,Max);
+        height_bfs(Board,Size,NewVisited,TmpMax,Max)
+    ).
+height_bfs_aux(_,_,[],Visited,Visited,_,Max,Max).
+
+height_bfs_aux(Board,Size,[Col-Line |  Rest],Visited,NewVisited,Height,Current_Max,Max):-
+    findall(Cords, (getPositionNear(Size,Line,Col,Cords), Cords\= null,\+ member(Cords,Visited),\+ member(Cords,Rest), getPiece(Board,Cords,(_Color,Height))),
+    New_Cords),
+    append(Rest,New_Cords,New_queue),
+    NewMax is Current_Max + 1,
+    height_bfs_aux(Board,Size,New_queue,[Col-Line | Visited],NewVisited,Height,NewMax,Max).
+
+
+
+%gets a random position in the board
+
+getPositionNear(Size,Line,Col,Cords):-
+    get_back_left(Size,Line,Col,Cords),
+    Cords \= null.
+getPositionNear(Size,Line,Col,Cords):-
+    get_front_left(Size,Line,Col,Cords),
+    Cords \= null.
+
+getPositionNear(Size,Line,Col,Cords):-
+    get_front_right(Size,Line,Col,Cords),
+    Cords \= null.
+
+getPositionNear(Size,Line,Col,Cords):-
+    get_left(Size,Line,Col,Cords),
+    Cords \= null.
+
+getPositionNear(Size,Line,Col,Cords):-
+    get_right(Size,Line,Col,Cords),
+    Cords \= null.
+
+getPositionNear(Size,Line,Col,Cords):-
+    get_back_right(Size,Line,Col,Cords),
+    Cords \= null.
+getPositionNear(_,_,_,_):-fail.
+
+
+%finds the next position that is not visited and isnt empty
+
+next_position(Board, Visited, Ncol-Nline) :-
+    nth0(Nline, Board, Col),
+    length(Col, Ncols),
+    TmpNcols is Ncols - 1,
+    between(0, TmpNcols, Ncol),
+    \+ member(Ncol-Nline, Visited),
+    getPiece(Board, Ncol-Nline, Piece),
+    \+ number(Piece),!.
+next_position(_, _, null).
+
+
+
+
 
 
 %se a matrix ja estiver na ultima coluna
 can_not_Go_Front(Size,Line):-
-    NewSize is Size * 2,
+    TmpSize is Size - 1,
+    NewSize is TmpSize * 2 + 1,
     NewSize =<Line .
 
 %se a matrix quiser ir para traz mas ja esta na primeira coluna
@@ -60,29 +151,27 @@ get_front_left(Size,Line,Column,Column-RLine):-
 
 %front_right --------------------------------------------------------------------------------------------
 get_front_right(Size,Line,_,null):-
-    TmpSize is Size - 1,
-    can_not_Go_Front(TmpSize,Line),!.
+    can_not_Go_Front(Size,Line),!.
 
 %se o diamante ja se tiver a diminuir nao vai haver se a linha for igual ao size front_right so front_left
 
 get_front_right(Size,Line,Column,null):-
     TmpSize is Size - 1,
     TmpSize=<Line,
-    Tmp is TmpSize * 2 - Line,
-    write(Tmp),
+    Tmp is TmpSize * 2 - Line + 1,
     Tmp =:= Column,!.
 
 
 get_front_right(Size,Line,Column,RColumn-RLine):-
     TmpSize is Size - 1,
     Line=<TmpSize,
-    RColumn is Column,
+    RColumn is Column+ 1,
     RLine is Line + 1.
 
 get_front_right(Size,Line,Column,RColumn-RLine):-
     TmpSize is Size - 1,
     TmpSize<Line ,
-    RColumn is Column + 1,
+    RColumn is Column ,
     RLine is Line + 1.
 
 %get left --------------------------------------------------------------------------------------------
@@ -97,7 +186,8 @@ get_left(_,Line,Column,RColumn-Line):-
 get_right(Size,Line,Column,null):-
     TmpSize is Size - 1,
     TmpSize<Line,
-    Column is TmpSize * 2 - Line,!.
+    Tmp is TmpSize * 2 - Line +1,
+    Column =:= Tmp,!.
 
 get_right(Size,Line,Line,null):-
     TmpSize is Size - 1,
