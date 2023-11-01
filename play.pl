@@ -35,10 +35,10 @@ play_game(GameState, (PlayerNumber1, PlayerName1, Goal1), (PlayerNumber2, Player
     move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
     % display_game(MiddleState),
     (Turn =:= 1 ->
-        repeat_choose_tree(Tree, Trees1);
-        repeat_choose_tree(Tree, Trees2)
+        repeat_choose_tree(NewTree, Trees1);
+        repeat_choose_tree(NewTree, Trees2)
     ),
-    move(MiddleState,((Tree,-1),OldCoordinates),TurnState),
+    move(MiddleState,((NewTree,-1),OldCoordinates),TurnState),
     change_turn(TurnState,FinalState),
     play_game(FinalState,(PlayerNumber1, PlayerName1, Goal1), (PlayerNumber2, PlayerName2, Goal2))
 .
