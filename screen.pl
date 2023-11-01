@@ -2,18 +2,42 @@ draw_Piece(-1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['    _ '],NewTail1),
     append(Tail2,['   / \\'],NewTail2),
     append(Tail3,['   \\_/'],NewTail3).
-draw_Piece((_,1),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+draw_Piece((1,1),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['    _ '],NewTail1),
-    append(Tail2,['   V V'],NewTail2),
-    append(Tail3,['   \\_/'],NewTail3).
-draw_Piece((_,2),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+    append(Tail2,['    | '],NewTail2),
+    append(Tail3,['   \\L/'],NewTail3).
+draw_Piece((2,1),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['    _ '],NewTail1),
-    append(Tail2,['   G G'],NewTail2),
-    append(Tail3,['   \\_/'],NewTail3).
-draw_Piece((_,3),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+    append(Tail2,['    | '],NewTail2),
+    append(Tail3,['   \\M/'],NewTail3).
+draw_Piece((3,1),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['    _ '],NewTail1),
-    append(Tail2,['   B B'],NewTail2),
-    append(Tail3,['   \\_/'],NewTail3).
+    append(Tail2,['    | '],NewTail2),
+    append(Tail3,['   \\D/'],NewTail3).
+draw_Piece((1,2),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+    append(Tail1,['    _ '],NewTail1),
+    append(Tail2,['    ||'],NewTail2),
+    append(Tail3,['   \\L/'],NewTail3).
+draw_Piece((2,2),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+    append(Tail1,['    _ '],NewTail1),
+    append(Tail2,['    ||'],NewTail2),
+    append(Tail3,['   \\M/'],NewTail3).
+draw_Piece((3,2),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+    append(Tail1,['    _ '],NewTail1),
+    append(Tail2,['    ||'],NewTail2),
+    append(Tail3,['   \\D/'],NewTail3).
+draw_Piece((1,3),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+    append(Tail1,['    _ '],NewTail1),
+    append(Tail2,['   |||'],NewTail2),
+    append(Tail3,['   \\L/'],NewTail3).
+draw_Piece((2,3),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+    append(Tail1,['    _ '],NewTail1),
+    append(Tail2,['   |||'],NewTail2),
+    append(Tail3,['   \\M/'],NewTail3).
+draw_Piece((3,3),[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+    append(Tail1,['    _ '],NewTail1),
+    append(Tail2,['   |||'],NewTail2),
+    append(Tail3,['   \\D/'],NewTail3).
 
 draw_Piece(0,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['   '],NewTail1),
@@ -37,7 +61,7 @@ draw_First_Line(Size,Current_colomn):-
     Current_colomn =:= Tmp.
 
 draw_First_Line(Size,0):-
-    write('C  '),
+    write('\nC  '),
     draw_First_Line(Size,1).
 
 draw_First_Line(Size,Current_colomn):-
