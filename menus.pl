@@ -210,9 +210,9 @@ handle_option(1):-
     initial_state_size(1,InitialState),
     !,
     (Goal == 1 ->
-        play_game_GameState(InitialState, (1, Name1, Goal), (2, Name2, 2))
+        play_game(InitialState, (1, Name1, Goal), (2, Name2, 2))
     ;
-        play_game_GameState(InitialState, (1, Name1, Goal), (2, Name2, 1))
+        play_game(InitialState, (1, Name1, Goal), (2, Name2, 1))
     ),
     view_main_menu.
 
