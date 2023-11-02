@@ -2,9 +2,12 @@
 
 
 
+
+
+
 winner(Board, Winner) :-
-    start_color_bfs(Board,MaxColor),
-    start_height_bfs(Board,MaxHeight),
+    count_color_values(Board,MaxColor),
+    count_height_values(Board,MaxHeight),
     getWinner(MaxColor,MaxHeight,Winner).
 
 getWinner(MaxColor,MaxHeight,'Height'):- MaxColor < MaxHeight.
@@ -18,15 +21,9 @@ getPiece(Board, Line-Col, Piece) :-
 get_Height(Height-_,Height).
 get_Color(_-Color,Color).
 
-%calcula o numero maximo de pecas com a mesma cor proximas umas das outras
-bot_move([Board | RestGameState],'Height',Line-Col):-
-    get_size(Board,Size),
-    valid_moves([Board | RestGameState],ValidMoves),
-    findall(Score-Mov, (member(Mov,ValidMoves),move([Board | RestGameState],Mov,[BoardUpdated | _]),height_bfs(BoardUpdated,Size,Score)),MaxMoves),
-    sort(MaxMoves,SortedMoves).
 
 
-start_color_bfs(Board,Max):-
+count_color_values(Board,Max):-
     get_size(Board,Size),
     %write('start_color_bfs\n'),
     color_bfs(Board,Size,[],1,0,Max1),
@@ -67,7 +64,7 @@ color_bfs_aux(Board,Size,[Line-Col |  Rest],Visited,NewVisited,Color,Current_Max
 
 
 %calcula o numero maximo de Pecas com a mesma altura proximas umas das outras
-start_height_bfs(Board,Max):-
+count_height_values(Board,Max):-
     get_size(Board,Size),
     height_bfs(Board,Size,[],1,0,Max1),
     %write('Small:'),
@@ -140,7 +137,7 @@ next_position_height(Board, Visited,Height, Nline-Ncol) :-
     TmpNcols is Ncols - 1,
     between(0, TmpNcols, Ncol),
     \+ member(Nline-Ncol, Visited),
-    getPiece(Board, Nline-Ncol, (_,Height)),!.
+    getPiece(Board, Nline-Ncol, Height-_),!.
 next_position_height(_, _, _,null).
 
 next_position_color(Board, Visited,Color, Nline-Ncol) :-
@@ -149,7 +146,7 @@ next_position_color(Board, Visited,Color, Nline-Ncol) :-
     TmpNcols is Ncols - 1,
     between(0, TmpNcols, Ncol),
     \+ member(Nline-Ncol, Visited),
-    getPiece(Board, Nline-Ncol, (Color,_)),!.
+    getPiece(Board, Nline-Ncol, _-Color),!.
 
 next_position_color(_, _, _,null).
 

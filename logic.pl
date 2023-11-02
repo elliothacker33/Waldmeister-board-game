@@ -116,7 +116,7 @@ repeat_choose_tree_in_board(Board,(Tree,Coordinates),TreesInBoard):-
     format('~*c', [40, 32]),
     format('\e[48;5;208m\e[97mERROR: Invalid option. Please choose a Tree that is on the board.\e[0m', []),
     print_newline(2),
-    repeat_choose_tree_in_board(Coordinates,TreesInBoard).
+    repeat_choose_tree_in_board(Coordinates,(Tree,Coordinates),TreesInBoard).
 
 get_free_trees_in_board(_, _, _, [], []).
 get_free_trees_in_board(X, Y, Board, [Row | RestRows], TreesInBoard) :-

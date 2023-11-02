@@ -15,8 +15,7 @@ initial_state(Size,InitialState):-
         append([Matrix],[[(1-1,3),(1-2,3),(1-3,3),(2-1,3),(2-2,3),(2-3,3),(3-1,3),(3-2,3),(3-3,3)]],Temp),
         append(Temp,[[(1-1,3),(1-2,3),(1-3,3),(2-1,3),(2-2,3),(2-3,3),(3-1,3),(3-2,3),(3-3,3)]],Temp1),
         append(Temp1,[54],Temp2),
-        append(Temp2,[1],InitialState)
-.
+        append(Temp2,[1],InitialState).
         
         
         
@@ -183,7 +182,6 @@ initial_state(Size,InitialState):-
                 append(Tail1,['   '],NewTail1),
                 append(Tail2,['   '],NewTail2),
                 append(Tail3,['   '],NewTail3).
-
 
 
 
