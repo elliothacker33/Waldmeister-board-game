@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+initial_state_size(1,[Matrix,[(1-1,3),(1-2,3),(1-3,3),(2-1,3),(2-2,3),(2-3,3),(3-1,3),(3-2,3),(3-3,3)],[(1-1,3),(1-2,3),(1-3,3),(2-1,3),(2-2,3),(2-3,3),(3-1,3),(3-2,3),(3-3,3)],54,1]):-
+        generate_matrix(7,Matrix).
+>>>>>>> 73898be40465c76729e4deca484476971991de41
 
 
 print_valid_moves([]).
@@ -6,6 +11,7 @@ print_valid_moves([X-Y|H]):-
         print_valid_moves(H).
 
 
+<<<<<<< HEAD
 
 initial_state(Size,InitialState):-
         generate_matrix(Size,Matrix),
@@ -180,3 +186,6 @@ initial_state(Size,InitialState):-
                 append(Tail1,['   '],NewTail1),
                 append(Tail2,['   '],NewTail2),
                 append(Tail3,['   '],NewTail3).
+=======
+  
+>>>>>>> 73898be40465c76729e4deca484476971991de41

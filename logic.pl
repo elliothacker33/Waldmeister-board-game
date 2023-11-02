@@ -362,5 +362,3 @@ valid_moves([Board,_,_,_,_],X-Y,ValidMoves):-
 
 
 
-
-
