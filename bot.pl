@@ -1,10 +1,30 @@
-bot_Add_first_tree_move([Board | RestGameState],Trees,(Tree,Cords)):-
-    get_size(Board,Size),
-    Tmp_size is Size - 1,
-    MaxLine is Tmp_size * 2 + 1,
-    random_member((Tree,Amount),Trees),
-    findall(L-C, (between(0,MaxLine,L),((L=< Tmp_size,between(0,L,C)) ; (Tmp_size<L,Tmp_L is Tmp_size*2 - L,between(0,Tmp_L,C)))),PossibleCords),
-    random_member(Cords, PossibleCords).
+choose_move([Board, Trees1, Trees2, 54, _], 1, 1, (ValidMoves, Tree, Coordinates)) :-
+    collect_available_trees(Trees1, AvailableTrees),
+    random_member(Tree, AvailableTrees),
+    random_member(Coordinates, ValidMoves)
+.
+
+choose_move([Board, _, _, 54, _], 1, 1, (ValidMoves,Coordinates)) :-
+    random_member(Coordinates, ValidMoves)
+.
+choose_move([Board,_,_,_,_],_,1,(TreesInBoard,Tree,OldCoordinates,NewCoordinates)):-
+    random_member(OldCoordinates,TreesInBoard),
+    OldCoordinates = X-Y,
+    nth0(Board,X,Row),
+    nth0(Row,Y,Tree),
+    valid_moves([Board,_,_,_,_],X-Y,ValidMoves),
+    random_member(NewCoordinates,ValidMoves)
+.
+
+choose_move([Board, Trees1, Trees2,_,_],1,1,NewTree):-
+    collect_available_trees(Trees1,AvailableTrees),
+    random(NewTree,AvailableTrees)
+.
+
+choose_move([Board, Trees1, Trees2,_,_],2,1,NewTree):-
+    collect_available_trees(Trees2,AvailableTrees),
+    random(NewTree,AvailableTrees)
+.
 
 bot_Move_first_tree_move([Board | RestGameState],((Tree,OldCords),New_Cords)):-
     get_free_trees_in_board(0,0,Board,Board,TreesInBoard),
@@ -59,3 +79,4 @@ bot_move([Board | RestGameState],'Color',Trees,BotMov):-
     get_Maxs(OrdereMoves,MaxScore,MaxMoves),
     random_member(Mov, MaxMoves)
     .
+
