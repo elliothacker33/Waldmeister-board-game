@@ -18,12 +18,12 @@ choose_move([Board,_,_,_,_],_,1,(TreesInBoard,Tree,OldCoordinates,NewCoordinates
 
 choose_move([Board, Trees1, Trees2,_,_],1,1,NewTree):-
     collect_available_trees(Trees1,AvailableTrees),
-    random(NewTree,AvailableTrees)
+    random_member(NewTree,AvailableTrees)
 .
 
 choose_move([Board, Trees1, Trees2,_,_],2,1,NewTree):-
     collect_available_trees(Trees2,AvailableTrees),
-    random(NewTree,AvailableTrees)
+    random_member(NewTree,AvailableTrees)
 .
 
 bot_Move_first_tree_move([Board | RestGameState],((Tree,OldCords),New_Cords)):-
