@@ -67,9 +67,9 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
      choose_move(MiddleState,1,1,NewTree),
      move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
      ;
-     choose_move(GameState,1,2,(TreesInBoard,Tree,OldCoordinates,NewCoordinates)),
+     choose_move(GameState,1,2,(Goal1,TreesInBoard,Tree,OldCoordinates,NewCoordinates)),
      move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
-     choose_move(MiddleState,1,2,(OldCoordinates,NewTree)),
+     choose_move(MiddleState,1,2,(Goal1,OldCoordinates,NewTree)),
      move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
      )
      ;
@@ -89,9 +89,9 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
      choose_move(MiddleState,2,1,NewTree),
      move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
     ;
-     choose_move(GameState,2,2,(TreesInBoard,Tree,OldCoordinates,NewCoordinates)),
+     choose_move(GameState,2,2,(Goal2,TreesInBoard,Tree,OldCoordinates,NewCoordinates)),
      move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
-     choose_move(MiddleState,2,2,(OldCoordinates,NewTree)),
+     choose_move(MiddleState,2,2,(Goal2,OldCoordinates,NewTree)),
      move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
     )
     ),
