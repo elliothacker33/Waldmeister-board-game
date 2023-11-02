@@ -67,7 +67,7 @@ repeat_ask_option asks for user input until option is valid
 repeat_ask_option(Option):-
     askOption(Option),
     print_newline(2),
-    (Option >=1 , Option =< 6), !,
+    (Option >= 1 , Option =< 6), !,
     handle_option(Option)
 .
 

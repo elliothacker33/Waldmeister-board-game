@@ -31,7 +31,8 @@ bot_Move_first_tree_move([Board | RestGameState],((Tree,OldCords),New_Cords)):-
     nth0(0,TreesInBoard,OldCords),
     getPiece(Board,OldCords,Tree),
     valid_moves([Board | RestGameState],OldCords,ValidMoves),
-    random_member(New_Cords, ValidMoves).
+    random_member(New_Cords, ValidMoves)
+.
 
 %calcula o numero maximo de pecas com a mesma cor proximas umas das outras
 bot_move_easy([Board | RestGameState],Trees,((Tree,OldCords),NewCords,NewTree)):-
@@ -78,5 +79,5 @@ bot_move([Board | RestGameState],'Color',Trees,BotMov):-
     reverse(SortedMoves,OrdereMoves),
     get_Maxs(OrdereMoves,MaxScore,MaxMoves),
     random_member(Mov, MaxMoves)
-    .
+.
 
