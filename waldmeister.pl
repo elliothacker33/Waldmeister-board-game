@@ -3,6 +3,7 @@
 :-consult('display.pl').
 :-consult('generate_table.pl').
 :-consult('axil_of_the_board.pl').
+:-consult('bot.pl').
 :-consult('logic.pl').
 :-consult('play.pl').
 :-consult('generate_table.pl').

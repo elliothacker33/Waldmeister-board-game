@@ -3,7 +3,7 @@ play_game([Board,Trees1,Trees2,54,Turn], Player1, Player2) :-
     InitialState=[Board,Trees1,Trees2,54,Turn], 
     Player1=(PlayerNumber1, PlayerDifficulty1, Goal1),
     Player2=(PlayerNumber2, PlayerDifficulty2, Goal2),
-    % display_game(InitialState),
+    display_game(InitialState),
 
 
     valid_moves(InitialState,_,ValidMoves),
@@ -19,7 +19,7 @@ play_game([Board,Trees1,Trees2,54,Turn], Player1, Player2) :-
 
     change_turn(TurnState,MiddleState),
 
-    % display_game(MiddleState),
+    display_game(MiddleState),
 
     valid_moves(MiddleState,Coordinates,ValidMoves1),
 
@@ -33,21 +33,21 @@ play_game([Board,Trees1,Trees2,54,Turn], Player1, Player2) :-
     
     change_turn(TurnState1,FinalState),
 
-    % display_game(FinalState),
+    display_game(FinalState),
 
     play_game(FinalState,Player1, Player2)
 .
 
 play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
     GameOverState=[Board,Trees1,Trees2,0,_],
-    % display_game(GameOverState),
+    display_game(GameOverState),
     game_over(GameOverState,Winner),
     display_Winner(Winner,Player1)
 .
 
 play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
     GameState=[Board,Trees1,Trees2,Amount,Turn],
-    % display_game(GameState),
+    display_game(GameState),
 
     get_free_trees_in_board(0,0,Board,Board,TreesInBoard), 
     (Turn =:= 1 ->
