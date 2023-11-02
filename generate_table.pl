@@ -105,22 +105,25 @@ testing_height(Max):-
         Matrix,Max).
 testing_bot:-
     Matrix = [[1-2],
-            [1-2, 2-3],
-            [3-1, 2-2, 3-2],
-            [1-3, 1-1, 3-1, 3-3],
-            [-1, -1, -1, -1, -1],
-            [-1, -1, 1-1, -1, 1-1, -1],
-            [-1, -1, 1-2, -1, -1, -1, -1],
-            [-1, -1, 1-3, -1, -1, -1],
-            [-1, -1, -1, -1, -1],
-            [-1, -1, -1, -1],
-            [-1, -1, -1],
-            [-1, -1],
-            [-1]
-    ],draw_matrix(Matrix),valid_moves([Matrix,_,_,_,_],7-2,ValidMoves),write(ValidMoves).
+    [1-2, 2-3],
+    [3-1, 2-2, 3-2],
+    [1-3, 1-1, 3-1, 3-3],
+    [-1, -1, -1, -1, -1],
+    [-1, -1, 1-1, -1, 1-1, -1],
+    [-1, -1, 1-2, -1, -1, -1, -1],
+    [-1, -1, 1-2, -1, -1, -1, -1, -1],
+    [-1, -1, 1-2, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1],
+    [-1, -1, -1, -1],
+    [-1, -1, -1],
+    [-1, -1],
+    [-1]
+    ],draw_matrix(Matrix),%valid_moves([Matrix,_,_,_,_],9-2,ValidMoves),write(ValidMoves).
     write('ok'),
-    initial_state_size(1,[Board,Trees1,Trees2,Amout,Turn]),write('initial_state'),
-    bot_move([Matrix ,Trees1,Trees2,24,Turn],'Height',Trees1,Mov),write('done'),
+    get_free_trees_in_board(0,0,Matrix,Matrix,TreesInBoard),
+    initial_state(8,[Board,Trees1,Trees2,Amout,Turn]),write('initial_state'),
+    bot_move([Matrix ,Trees1,Trees2,24,Turn],'Color',Trees1,TreesInBoard,Mov),write('done'),
     write(Mov).
 
 
