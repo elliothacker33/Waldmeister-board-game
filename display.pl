@@ -1,4 +1,7 @@
-
+print_list([]).
+print_list([H-C | Rest]) :-
+    write(H-C), nl,
+    print_list(Rest).
 
 print_valid_moves([]).
 print_valid_moves([X-Y|H]):-
@@ -180,3 +183,238 @@ initial_state(Size,InitialState):-
                 append(Tail1,['   '],NewTail1),
                 append(Tail2,['   '],NewTail2),
                 append(Tail3,['   '],NewTail3).
+
+
+
+
+
+
+
+/* Menu Display */ 
+
+box_char(horizontal, 0x2500).
+box_char(vertical, 0x2502).
+box_char(top_left, 0x250C).
+box_char(top_right, 0x2510).
+box_char(bottom_left, 0x2514).
+box_char(bottom_right, 0x2518).
+box_char(connector, 0x2534).
+box_char(connector2, 0x252C).
+
+
+/* waldmeister_logo/0 is a predicate that is responsible for showing the waldmeister logo in ASCII ART */
+waldmeister_logo:-
+    format('~*c', [12, 32]),
+    format('\e[38;5;208m~w\e[0m', [' ##      ##    ##    ##    ##    ###       ##     ##   ####   #   ###   #####  ####   ###   ']),
+    print_newline(1),
+    format('~*c', [12, 32]),
+    format('\e[38;5;208m~w\e[0m', ['  ##   ## ##  ##   ##  ##  ##    #  #    ####   ####   # __   |    #  #   #    # __   #  #  ']),
+    print_newline(1),
+    format('~*c', [12, 32]),
+    format('\e[38;5;208m~w\e[0m', ['   ## ##  ## ##    ######  ##    #   #  ##  ## ##  ##  #      |  # ##     #    #      # ##  ']),
+    print_newline(1),
+    format('~*c', [12, 32]),
+    format('\e[38;5;208m~w\e[0m', ['    ##      ##     ##  ##  ##### ####  #    ##     #   ####   |  ###      #    ####   ##  # ']),
+    print_newline(1).
+
+display_aux_options_vertical(V):-
+    print_newline(1),
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    format('~*c', [35, 32]),
+    format('~c',[V]),
+    print_newline(1).
+display_aux_options_first_line(TL,H,TR):-
+     format('~*c', [40, 32]),
+     format('~c',[TL]),
+     format('~*c', [35, H]),
+     format('~c',[TR]).
+display_aux_options_last_line(BL,H,BR):-
+    format('~*c', [40, 32]),
+    format('~c',[BL]),
+    format('~*c', [35, H]),
+    format('~c',[BR]).
+display_choose(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('    Choose your option from 1-6    '),
+    format('~c',[V]).
+
+
+
+
+display_option_1(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['1']),
+    write(' Human/Human             '),
+    format('~c',[V]).
+
+display_option_2(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['2']),
+    write(' Human/PC                '),
+    format('~c',[V]).
+display_option_3(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['3']),
+    write(' PC/PC                   '),
+    format('~c',[V]).
+display_option_4(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['4']),
+    write(' Instructions            '),
+    format('~c',[V]).
+display_option_5(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['5']),
+    write(' Credits                 '),
+    format('~c',[V]).
+
+display_option_6(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['6']),
+    write(' Quit                    '),
+    format('~c',[V]).
+
+/* clear/0 is a predicate that is responsible to clear the screen */
+clear:-
+   write('\e[H\e[2J\n\n').
+
+/* print_newline/1 is a predicate that prints N times the newline*/
+print_newline(0):-!.
+print_newline(N):-
+    N1 is N-1,
+    print_newline(N1),
+    nl.
+
+/* print_options/2 is a predicate that prints the main menu option */
+print_options:-
+    box_char(horizontal,H),
+    box_char(vertical,V),
+    box_char(top_right,TR),
+    box_char(top_left,TL),
+    box_char(bottom_right,BR),
+    box_char(bottom_left,BL),
+    display_aux_options_first_line(TL,H,TR),
+    display_aux_options_vertical(V),
+    display_choose(V),
+    display_aux_options_vertical(V),
+    display_option_1(V),
+    display_aux_options_vertical(V),
+    display_option_2(V),
+    display_aux_options_vertical(V),
+    display_option_3(V),
+    display_aux_options_vertical(V),
+    display_option_4(V),
+    display_aux_options_vertical(V),
+    display_option_5(V),
+    display_aux_options_vertical(V),
+    display_option_6(V),
+    display_aux_options_vertical(V),
+    display_aux_options_last_line(BL,H,BR).
+
+
+display_difficulty_title(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('      Choose the AI difficulty     '),
+    format('~c',[V]).
+
+display_difficulty_1(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['1']),
+    write(' Easy                    '),
+    format('~c',[V]).
+display_difficulty_2(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['2']),
+    write(' Hard                    '),
+    format('~c',[V]).
+
+print_difficulty_menu:-
+    box_char(horizontal,H),
+    box_char(vertical,V),
+    box_char(top_right,TR),
+    box_char(top_left,TL),
+    box_char(bottom_right,BR),
+    box_char(bottom_left,BL),
+    display_aux_options_first_line(TL,H,TR),
+    display_aux_options_vertical(V),
+    display_difficulty_title(V),
+    display_aux_options_vertical(V),
+    display_difficulty_1(V),
+    display_aux_options_vertical(V),
+    display_difficulty_2(V),
+    display_aux_options_vertical(V),
+    display_aux_options_last_line(BL,H,BR).
+
+display_goal_title(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('      Player 1 choose your goal    '),
+    format('~c',[V]).
+
+display_goal_1(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['1']),
+    write(' Heights                 '),
+    format('~c',[V]).
+display_goal_2(V):-
+    format('~*c', [40, 32]),
+    format('~c',[V]),
+    write('         '),
+    format('\e[38;5;208m~w\e[0m',['2']),
+    write(' Colors                  '),
+    format('~c',[V]).
+print_goal_menu:-
+    box_char(horizontal,H),
+    box_char(vertical,V),
+    box_char(top_right,TR),
+    box_char(top_left,TL),
+    box_char(bottom_right,BR),
+    box_char(bottom_left,BL),
+    display_aux_options_first_line(TL,H,TR),
+    display_aux_options_vertical(V),
+    display_goal_title(V),
+    display_aux_options_vertical(V),
+    display_goal_1(V),
+    display_aux_options_vertical(V),
+    display_goal_2(V),
+    display_aux_options_vertical(V),
+    display_aux_options_last_line(BL,H,BR).
+
+
+
+/*  
+ display_main_menu is a predicate that shows main menu of Waldmeister Game
+
+*/
+% display_main_menu/0
+
+display_main_menu:-
+    clear,
+    waldmeister_logo,
+    print_newline(1),
+    print_options,
+    print_newline(3),
+    repeat_ask_option(Option),
+    !
+.
