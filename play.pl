@@ -27,7 +27,7 @@ play_game([Board,Trees1,Trees2,54,Turn], Player1, Player2) :-
     repeat_choose_valid_move(NewCoordinates,ValidMoves1),
     move(MiddleState,((Tree,Coordinates),NewCoordinates),TurnState1);
 
-    choose_move(InitialState,2,1,(ValidMoves1,Coordinates)),
+    choose_move(InitialState,2,1,(ValidMoves1,NewCoordinates)),
     move(MiddleState,((Tree,Coordinates),NewCoordinates),TurnState1)
     ),
     
