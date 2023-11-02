@@ -90,7 +90,7 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
      choose_move(MiddleState,2,2,(OldCoordinates,NewTree)),
      move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
     )
-    )
+    ),
     display_game(MiddleState),
     change_turn(TurnState,FinalState),
     play_game(FinalState,(PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2))
