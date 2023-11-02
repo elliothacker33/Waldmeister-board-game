@@ -4,7 +4,7 @@ choose_move([Board, Trees1, Trees2, 54, _], 1, 1, (ValidMoves, Tree, Coordinates
     random_member(Coordinates, ValidMoves)
 .
 
-choose_move([Board, _, _, 54, _], 1, 1, (ValidMoves,Coordinates)) :-
+choose_move([Board, _, _, 54, _], 2, 1, (ValidMoves,Coordinates)) :-
     random_member(Coordinates, ValidMoves)
 .
 choose_move([Board,_,_,_,_],_,1,(TreesInBoard,Tree,OldCoordinates,NewCoordinates)):-
