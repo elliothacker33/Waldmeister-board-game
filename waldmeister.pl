@@ -1,8 +1,8 @@
 :-consult('quit.pl').
 :-consult('menus.pl').
 :-consult('display.pl').
-:-consult('screen.pl').
 :-consult('generate_table.pl').
+:-consult('axil_of_the_board.pl').
 :-consult('logic.pl').
 :-consult('play.pl').
 :-use_module(library(system)).

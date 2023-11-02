@@ -25,11 +25,19 @@ get_Height(Height-_,Height).
 get_Color(_-Color,Color).
 
 %calcula o numero maximo de pecas com a mesma cor proximas umas das outras
-bot_move([Board | RestGameState],'Height',Line-Col):-
-    get_size(Board,Size),
-    valid_moves([Board | RestGameState],ValidMoves),
-    findall(Score-Mov, (member(Mov,ValidMoves),move([Board | RestGameState],Mov,[BoardUpdated | _]),height_bfs(BoardUpdated,Size,Score)),MaxMoves),
-    sort(MaxMoves,SortedMoves).
+bot_move([Board | RestGameState],'Height',Trees,BotMov):-
+    get_size(Board,Size),write('start_color_bfs\n'),
+    get_free_trees_in_board(0,0,Board,Board,TreesInBoard),write(TreesInBoard),write('start_color_bfs\n'),
+    findall(Score-((Tree,OldCords),NewCords,NewTree), (
+    %selecionar uma arvore que se pode mexer e vê se os movimentos validos e 
+        member(OldCords,TreesInBoard),getPiece(Board,OldCords,Tree),write(OldCords),valid_moves([Board | RestGameState],OldCords,ValidMoves),
+        write(ValidMoves),member(NewCords,ValidMoves),write('try to move\n'),move([Board | RestGameState],( (Tree ,OldCords),NewCords),[BoardUpdated | _])
+        ,write('found start pieces\n'),member(NewTree,Trees),move([BoardUpdated | RestGameState],( (NewTree , -1),OldCords),[BoardUpdated1 | _]),
+    height_bfs(BoardUpdated1,Size,Score)),MaxMoves),
+    sort(MaxMoves,SortedMoves),
+    last(SortedMoves,MaxScore-BotMov),%por random aqui
+    write(MaxScore)
+    .
 
 
 start_color_bfs(Board,Max):-
@@ -146,7 +154,7 @@ next_position_height(Board, Visited,Height, Nline-Ncol) :-
     TmpNcols is Ncols - 1,
     between(0, TmpNcols, Ncol),
     \+ member(Nline-Ncol, Visited),
-    getPiece(Board, Nline-Ncol, (_,Height)),!.
+    getPiece(Board, Nline-Ncol, Height-_),!.
 next_position_height(_, _, _,null).
 
 next_position_color(Board, Visited,Color, Nline-Ncol) :-
@@ -155,7 +163,7 @@ next_position_color(Board, Visited,Color, Nline-Ncol) :-
     TmpNcols is Ncols - 1,
     between(0, TmpNcols, Ncol),
     \+ member(Nline-Ncol, Visited),
-    getPiece(Board, Nline-Ncol, (Color,_)),!.
+    getPiece(Board, Nline-Ncol, _-Color),!.
 
 next_position_color(_, _, _,null).
 
