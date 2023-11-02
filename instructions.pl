@@ -1,1 +1,1 @@
-instructions:-view_main_menu.
+instructions:-display_main_menu.

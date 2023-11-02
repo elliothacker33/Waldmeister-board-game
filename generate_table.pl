@@ -121,8 +121,9 @@ testing_bot:-
     [-1]
     ],draw_matrix(Matrix),%valid_moves([Matrix,_,_,_,_],9-2,ValidMoves),write(ValidMoves).
     write('ok'),
+    get_free_trees_in_board(0,0,Matrix,Matrix,TreesInBoard),
     initial_state(8,[Board,Trees1,Trees2,Amout,Turn]),write('initial_state'),
-    bot_move([Matrix ,Trees1,Trees2,24,Turn],'Height',Trees1,Mov),write('done'),
+    bot_move([Matrix ,Trees1,Trees2,24,Turn],'Color',Trees1,TreesInBoard,Mov),write('done'),
     write(Mov).
 
 

@@ -47,7 +47,7 @@ play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), 
 
 play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
     GameState=[Board,Trees1,Trees2,Amount,Turn],
-    display_game(GameState),
+    % display_game(GameState),
     get_free_trees_in_board(0,0,Board,Board,TreesInBoard), 
 
     (Turn =:= 1 ->
@@ -67,10 +67,9 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
      choose_move(MiddleState,1,1,NewTree),
      move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
      ;
-     choose_move(GameState,1,2,(Goal1,TreesInBoard,Tree,OldCoordinates,NewCoordinates)),
-     move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
-     choose_move(MiddleState,1,2,(Goal1,OldCoordinates,NewTree)),
-     move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
+     choose_move(GameState,1,2,(Goal1,TreesInBoard,((Tree,OldCords),NewCords,NewTree))),
+     move(GameState,((Tree,OldCords),NewCords),MiddleState),
+     move(MiddleState,((NewTree,-1),OldCords),TurnState)
      )
      ;
      (PlayerDifficulty2 =:= -1 -> 
@@ -89,13 +88,12 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
      choose_move(MiddleState,2,1,NewTree),
      move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
     ;
-     choose_move(GameState,2,2,(Goal2,TreesInBoard,Tree,OldCoordinates,NewCoordinates)),
-     move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
-     choose_move(MiddleState,2,2,(Goal2,OldCoordinates,NewTree)),
-     move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
+     choose_move(GameState,2,2,(Goal2,TreesInBoard,((Tree,OldCords),NewCords,NewTree))),
+     move(GameState,((Tree,OldCords),NewCords),MiddleState),
+     move(MiddleState,((NewTree,-1),OldCords),TurnState)
     )
     ),
-    display_game(MiddleState),
+    % display_game(MiddleState),
     change_turn(TurnState,FinalState),
     play_game(FinalState,(PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2))
 .
