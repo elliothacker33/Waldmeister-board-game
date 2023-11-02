@@ -10,6 +10,7 @@ print_valid_moves([X-Y|H]):-
 
 
 
+
 initial_state(Size,InitialState):-
         generate_matrix(Size,Matrix),
         append([Matrix],[[(1-1,3),(1-2,3),(1-3,3),(2-1,3),(2-2,3),(2-3,3),(3-1,3),(3-2,3),(3-3,3)]],Temp),
@@ -201,7 +202,7 @@ box_char(connector2, 0x252C).
 
 
 /* waldmeister_logo/0 is a predicate that is responsible for showing the waldmeister logo in ASCII ART */
-waldmeister_logo:-
+display_waldmeister_logo:-
     format('~*c', [12, 32]),
     format('\e[38;5;208m~w\e[0m', [' ##      ##    ##    ##    ##    ###       ##     ##   ####   #   ###   #####  ####   ###   ']),
     print_newline(1),
@@ -298,7 +299,7 @@ print_newline(N):-
     nl.
 
 /* print_options/2 is a predicate that prints the main menu option */
-print_options:-
+display_options:-
     box_char(horizontal,H),
     box_char(vertical,V),
     box_char(top_right,TR),
@@ -345,7 +346,7 @@ display_difficulty_2(V):-
     write(' Hard                    '),
     format('~c',[V]).
 
-print_difficulty_menu:-
+display_difficulty_menu:-
     box_char(horizontal,H),
     box_char(vertical,V),
     box_char(top_right,TR),
@@ -382,7 +383,7 @@ display_goal_2(V):-
     format('\e[38;5;208m~w\e[0m',['2']),
     write(' Colors                  '),
     format('~c',[V]).
-print_goal_menu:-
+display_goal_menu:-
     box_char(horizontal,H),
     box_char(vertical,V),
     box_char(top_right,TR),
@@ -409,9 +410,9 @@ print_goal_menu:-
 
 display_main_menu:-
     clear,
-    waldmeister_logo,
+    display_waldmeister_logo,
     print_newline(1),
-    print_options,
+    display_options,
     print_newline(3),
     repeat_ask_option(Option),
     !

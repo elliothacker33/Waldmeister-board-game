@@ -18,7 +18,7 @@ repeat_ask_difficulty(Difficulty):-
 .
 
 /* 
-This Prolog predicate is responsible for interacting with the user to input the AI difficulty level.  
+This predicate is responsible for interacting with the user to input the AI difficulty level.  
 */ 
 % askDifficulty(-Difficulty)
 
@@ -133,7 +133,7 @@ Args :
 % handle_option(+Option)
 
 handle_option(1):-
-    print_goal_menu,
+    display_goal_menu,
     print_newline(2),
     repeat_ask_goal(Goal),
     print_newline(1),
@@ -150,11 +150,11 @@ handle_option(1):-
 .
 
 handle_option(2):-
-    print_goal_menu,
+    display_goal_menu,
     print_newline(2),
     repeat_ask_goal(Goal),
     print_newline(2),
-    print_difficulty_menu,
+    display_difficulty_menu,
     print_newline(2),
     repeat_ask_difficulty(Difficulty),
     print_newline(2),
@@ -170,10 +170,10 @@ handle_option(2):-
 . 
 
 handle_option(3):-
-    print_difficulty_menu,
+    display_difficulty_menu,
     print_newline(2),
     repeat_ask_difficulty(Difficulty1),
-    print_difficulty_menu,
+    display_difficulty_menu,
     print_newline(2),
     repeat_ask_difficulty(Difficulty2),
     repeat_ask_size(Size),
