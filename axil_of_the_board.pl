@@ -1,6 +1,4 @@
-:- use_module(library(lists)).
-:- use_module(library(between)).
-:- use_module(library(aggregate)).
+
 
 winner(Board,Size, Winner) :-
     start_color_bfs(Board,Size,MaxColor),

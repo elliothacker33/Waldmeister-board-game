@@ -8,30 +8,25 @@ height(3,'Small').
 
 tree(C,H):- color(C,_),height(H,_).
 
-goal(1,'colors').
-goal(2,'heights').
 
 
+% Choose Trees Done
 
+collect_available_trees(Trees, AvailableTrees) :-
+    findall(H-C, (member((H-C, Quantity), Trees), Quantity > 0), AvailableTrees).
 
-available_Tree(Height-Color, []) :- fail.
-
-available_Tree(Height-Color, [(H-C, Quantity) | _]) :-
-    Height == H, Color == C, Quantity > 0.
-
-available_Tree(Height-Color, [_ | Rest]) :-
-    available_Tree(Height-Color, Rest).
-
-repeat_choose_tree(Tree,Trees1):-
+repeat_choose_tree(Tree, Trees) :-
+    collect_available_trees(Trees, AvailableTrees),
     askTree(Tree),
     print_newline(2),
-    available_Tree(Tree,Trees1),!.
+    member(Tree, AvailableTrees),!.
 
-repeat_choose_tree(Tree,Trees1):-
+
+repeat_choose_tree(Tree,Trees):-
     format('~*c', [40, 32]),
     format('\e[48;5;208m\e[97mERROR: Invalid option. Please choose an available tree.\e[0m', []),
     print_newline(2),
-    repeat_choose_tree(Tree,Trees1).
+    repeat_choose_tree(Tree,Trees).
 
 askTree(Tree):-
     format('~*c', [40, 32]),
@@ -43,6 +38,12 @@ askTree(Tree):-
     format('~*c', [40, 32]),
     write('Choose a tree Height-Color: '),
     read(Tree).
+
+choose_random_tree(Tree,Trees):-
+    collect_available_trees(Trees, AvailableTrees),
+    random_member(Tree, AvailableTrees).
+
+% 
 
 repeat_choose_valid_move(Coordinates,ValidMoves):-
     askCoordinates(Coordinates,1),
