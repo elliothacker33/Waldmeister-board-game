@@ -17,6 +17,7 @@ collect_available_trees(Trees, AvailableTrees) :-
 
 repeat_choose_tree(Tree, Trees) :-
     collect_available_trees(Trees, AvailableTrees),
+    print_list(AvailableTrees),
     askTree(Tree),
     print_newline(2),
     member(Tree, AvailableTrees),!.
@@ -43,7 +44,7 @@ choose_random_tree(Tree,Trees):-
     collect_available_trees(Trees, AvailableTrees),
     random_member(Tree, AvailableTrees).
 
-% 
+
 
 repeat_choose_valid_move(Coordinates,ValidMoves):-
     askCoordinates(Coordinates,1),
@@ -213,7 +214,7 @@ get_valid_moves_row_left(X, Y, Row, RowLeftValidMoves) :-
     Y1 is Y - 1,
     (Y1 >= 0 ->
         nth0(Y1, Row, Element),
-        (Element =:= -1 ->
+        (Element = -1 ->
             get_valid_moves_row_left(X, Y1, Row, RestValidMoves),
             append([X-Y1], RestValidMoves, RowLeftValidMoves);
         RowLeftValidMoves = []
@@ -225,7 +226,7 @@ get_valid_moves_row_right(X, Y, Row, RowRightValidMoves) :-
     Y1 is Y + 1,
     (Y1 < L ->
         nth0(Y1, Row, Element),
-        (Element =:= -1 ->
+        (Element = -1 ->
             get_valid_moves_row_right(X, Y1, Row, RestValidMoves),
             append([X-Y1], RestValidMoves, RowRightValidMoves);
         RowRightValidMoves = []
@@ -240,7 +241,7 @@ get_valid_moves_up_right(L, C, MaxSize, Board, UpRightValidMoves) :-
     C1 is C + 1,
     nth0(L1, Board, List),
     nth0(C1, List, Element),
-    (Element =:= -1 ->
+    (Element = -1 ->
         get_valid_moves_up_right(L1, C1, MaxSize, Board, RestValidMoves),
         append([L1-C1], RestValidMoves, UpRightValidMoves);
     UpRightValidMoves = []
@@ -255,7 +256,7 @@ get_valid_moves_up_right(L, C, MaxSize, Board, UpRightValidMoves) :-
     (Delta >= C , L1 < Size  ->(
     nth0(L1, Board, List),
     nth0(C, List, Element),
-    (Element =:= -1 ->
+    (Element = -1 ->
         get_valid_moves_up_right(L1, C, MaxSize, Board, RestValidMoves),
         append([L1-C], RestValidMoves, UpRightValidMoves);
     UpRightValidMoves = []));
@@ -266,7 +267,7 @@ get_valid_moves_up_left(L, C, MaxSize, Board, UpLeftValidMoves) :-
     L1 is L + 1,
     nth0(L1, Board, List),
     nth0(C, List, Element),
-    (Element =:= -1 ->
+    (Element = -1 ->
         get_valid_moves_up_left(L1, C, MaxSize, Board, RestValidMoves),
         append([L1-C], RestValidMoves, UpLeftValidMoves);
     UpLeftValidMoves = []
@@ -279,7 +280,7 @@ get_valid_moves_up_left(L, C, MaxSize, Board, UpLeftValidMoves) :-
     (C1 >=0 , L1 < Size -> (
     nth0(L1, Board, List),
     nth0(C1, List, Element),
-    (Element =:= -1 ->
+    (Element = -1 ->
         get_valid_moves_up_left(L1, C1, MaxSize, Board, RestValidMoves),
         append([L1-C1], RestValidMoves, UpLeftValidMoves);
     UpLeftValidMoves = []))
@@ -291,7 +292,7 @@ get_valid_moves_down_right(L, C, MaxSize, Board, DownRightValidMoves) :-
     (L1 >= C, L1 >=0 ->(
     nth0(L1, Board, List),
     nth0(C, List, Element),
-    (Element =:= -1 ->
+    (Element = -1 ->
         get_valid_moves_down_right(L1, C, MaxSize, Board, RestValidMoves),
         append([L1-C], RestValidMoves, DownRightValidMoves);
     DownRightValidMoves = []));
@@ -303,7 +304,7 @@ get_valid_moves_down_right(L, C, MaxSize, Board, DownRightValidMoves) :-
     C1 is C + 1,
     nth0(L1, Board, List),
     nth0(C1, List, Element),
-    (Element =:= -1 ->
+    (Element = -1 ->
         get_valid_moves_down_right(L1, C1, MaxSize, Board, RestValidMoves),
         append([L1-C1], RestValidMoves, DownRightValidMoves);
     DownRightValidMoves = []).
@@ -316,19 +317,19 @@ get_valid_moves_down_left(L, C, MaxSize, Board, DownLeftValidMoves) :-
     (C1 >=0 , L1 >=0 -> (
     nth0(L1, Board, List),
     nth0(C1, List, Element),
-    (Element =:= -1 ->
+    (Element = -1 ->
         get_valid_moves_down_left(L1, C1, MaxSize, Board, RestValidMoves),
         append([L1-C1], RestValidMoves, DownLeftValidMoves);
     DownLeftValidMoves = []));
     DownLeftValidMoves = [])
 .
 
-get_valid_moves_down_left(L, C, MaxSize, Board, UpLeftValidMoves) :-
+get_valid_moves_down_left(L, C, MaxSize, Board, DownLeftValidMoves) :-
     L > MaxSize,
     L1 is L - 1,
     nth0(L1, Board, List),
     nth0(C, List, Element),
-    (Element =:= -1 ->
+    (Element = -1 ->
         get_valid_moves_down_left(L1, C, MaxSize, Board, RestValidMoves),
         append([L1-C], RestValidMoves, DownLeftValidMoves);
     DownLeftValidMoves = []).

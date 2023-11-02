@@ -8,6 +8,7 @@
 :-consult('play.pl').
 :-consult('generate_table.pl').
 :-consult('axil_of_the_board.pl').
+:-consult('test.pl').
 :-use_module(library(lists)).
 :- use_module(library(between)).
 :- use_module(library(aggregate)).

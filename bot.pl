@@ -1,10 +1,31 @@
-bot_Add_first_tree_move([Board | _],Trees,(Tree,Cords)):-
-    get_size(Board,Size),
-    Tmp_size is Size - 1,
-    MaxLine is Tmp_size * 2 + 1,
-    random_member((Tree,_),Trees),
-    findall(L-C, (between(0,MaxLine,L),((L=< Tmp_size,between(0,L,C)) ; (Tmp_size<L,Tmp_L is Tmp_size*2 - L,between(0,Tmp_L,C)))),PossibleCords),
-    random_member(Cords, PossibleCords).
+choose_move([Board, Trees1, _Trees2, 54, _], 1, 1, (ValidMoves, Tree, Coordinates)) :-
+    collect_available_trees(Trees1, AvailableTrees),
+    random_member(Tree, AvailableTrees),
+    random_member(Coordinates, ValidMoves)
+.
+
+choose_move([_Board, _, _, 54, _], 1, 1, (ValidMoves,Coordinates)) :-
+    random_member(Coordinates, ValidMoves)
+.
+choose_move([Board,_,_,_,_],_,1,(TreesInBoard,Tree,OldCoordinates,NewCoordinates)):-
+    random_member(OldCoordinates,TreesInBoard),
+    OldCoordinates = X-Y,
+    nth0(Board,X,Row),
+    nth0(Row,Y,Tree),
+    valid_moves([Board,_,_,_,_],X-Y,ValidMoves),
+    random_member(NewCoordinates,ValidMoves)
+.
+
+choose_move([_Board, Trees1, _Trees2,_,_],1,1,NewTree):-
+    collect_available_trees(Trees1,AvailableTrees),
+    random_member(NewTree,AvailableTrees)
+.
+
+choose_move([_Board, _Trees1, Trees2,_,_],2,1,NewTree):-
+    collect_available_trees(Trees2,AvailableTrees),
+    random_member(NewTree,AvailableTrees)
+.
+%choose_move([Board, Trees1, Trees2,_,_],2,2,NewTree):-
 
 bot_Move_first_tree_move([Board | RestGameState],((Tree,OldCords),New_Cords)):-
     get_free_trees_in_board(0,0,Board,Board,TreesInBoard),
@@ -53,7 +74,7 @@ bot_move([Board | RestGameState],'Height',Trees,BotMov):-
         count_height_values(BoardUpdated1,Score)),MaxMoves),%write('end\n'),length(MaxMoves,N),write(N),
     sort(MaxMoves,SortedMoves),
     %get best score
-    last(SortedMoves,MaxScore-Mov1),% write(MaxScore)%por random aqui
+    last(SortedMoves,MaxScore-_),% write(MaxScore)%por random aqui
     %find all best scores
     findall(Mov,member(MaxScore-Mov,SortedMoves),MaxMoves1),
     %choose one at random
