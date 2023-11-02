@@ -1,11 +1,8 @@
 :-consult('quit.pl').
 :-consult('menus.pl').
 :-consult('display.pl').
-<<<<<<< HEAD
-=======
 :-consult('screen.pl').
 :-consult('generate_table.pl').
->>>>>>> 73898be40465c76729e4deca484476971991de41
 :-consult('logic.pl').
 :-consult('play.pl').
 :-consult('generate_table.pl').

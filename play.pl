@@ -1,16 +1,11 @@
 play_game([Board,Trees1,Trees2,54,Turn], Player1, Player2) :-
-<<<<<<< HEAD
+
     InitialState=[Board,Trees1,Trees2,54,Turn], 
     Player1=(PlayerNumber1, PlayerDifficulty1, Goal1),
     Player2=(PlayerNumber2, PlayerDifficulty2, Goal2),
     % display_game(InitialState),
 
-=======
-    InitialState=[Board,Trees1,Trees2,54,Turn],
-    Player1=(PlayerNumber1, PlayerName1, Goal1),
-    Player2=(PlayerNumber2, PlayerName2, Goal2),
-    display_game(InitialState),
->>>>>>> 73898be40465c76729e4deca484476971991de41
+
     valid_moves(InitialState,_,ValidMoves),
 
     (PlayerDifficulty1 =:= -1 -> 
@@ -30,16 +25,12 @@ play_game([Board,Trees1,Trees2,54,Turn], Player1, Player2) :-
 
     (PlayerDifficulty2 =:= -1 -> 
     repeat_choose_valid_move(NewCoordinates,ValidMoves1),
-<<<<<<< HEAD
     move(MiddleState,((Tree,Coordinates),NewCoordinates),TurnState1);
 
     choose_move(InitialState,2,1,(ValidMoves1,Coordinates)),
     move(MiddleState,((Tree,Coordinates),NewCoordinates),TurnState1)
     ),
     
-=======
-    move(MiddleState,((Tree,Coordinates),NewCoordinates),TurnState1),
->>>>>>> 73898be40465c76729e4deca484476971991de41
     change_turn(TurnState1,FinalState),
 
     % display_game(FinalState),
@@ -56,19 +47,9 @@ play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), 
 
 play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
     GameState=[Board,Trees1,Trees2,Amount,Turn],
-<<<<<<< HEAD
     % display_game(GameState),
 
     get_free_trees_in_board(0,0,Board,Board,TreesInBoard), 
-=======
-    display_game(GameState),
-    get_free_trees_in_board(0,0,Board,Board,TreesInBoard), 
-    repeat_choose_tree_in_board(Board,(Tree,OldCoordinates),TreesInBoard),
-    valid_moves(GameState,OldCoordinates,ValidMoves), 
-    repeat_choose_valid_move(NewCoordinates,ValidMoves),
-    move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
-    display_game(MiddleState),
->>>>>>> 73898be40465c76729e4deca484476971991de41
     (Turn =:= 1 ->
      (PlayerDifficulty1 =:= -1 ->
      repeat_choose_tree_in_board(Board,(Tree,OldCoordinates),TreesInBoard),

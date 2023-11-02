@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-=======
-:- use_module(library(lists)).
-:- use_module(library(between)).
-:- use_module(library(aggregate)).
-:- use_module(library(random)).
-
-
->>>>>>> 73898be40465c76729e4deca484476971991de41
 
 
 
