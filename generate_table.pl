@@ -39,6 +39,10 @@ generate_line_aux(Size,Column_Number,Line):-
 generate_line(Number_Of_Pieces,Line):-
     add_PlaceHolders(Number_Of_Pieces,[],Line).
 
+get_size(Matrix,Result):-
+    length(Matrix,Number),
+    Result is round(( Number+ 1)/2).
+
 %teste
 /*teste:-draw_matrix([[0,0,0,0,0,0,0,-1],[0,0,0,0,0,0,-1,0,-1],[0,0,0,0,0,-1,0,-1,0,-1],[0,0,0,0,-1,0,-1,0,-1,0,-1],[0,0,0,-1,0,-1,0,-1,0,-1,0,-1],
     [0,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1],[0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1],[-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1],[0,-1,0,-1,0,-1,0,-1,0,-1,0,-1,0,-1],

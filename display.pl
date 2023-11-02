@@ -1,5 +1,3 @@
-initial_state_size(1,[Matrix,[(1-1,3),(1-2,3),(1-3,3),(2-1,3),(2-2,3),(2-3,3),(3-1,3),(3-2,3),(3-3,3)],[(1-1,3),(1-2,3),(1-3,3),(2-1,3),(2-2,3),(2-3,3),(3-1,3),(3-2,3),(3-3,3)],54,1]):-
-        generate_matrix(7,Matrix).
 
 
 print_valid_moves([]).
@@ -14,8 +12,7 @@ initial_state(Size,InitialState):-
         append([Matrix],[[(1-1,3),(1-2,3),(1-3,3),(2-1,3),(2-2,3),(2-3,3),(3-1,3),(3-2,3),(3-3,3)]],Temp),
         append(Temp,[[(1-1,3),(1-2,3),(1-3,3),(2-1,3),(2-2,3),(2-3,3),(3-1,3),(3-2,3),(3-3,3)]],Temp1),
         append(Temp1,[54],Temp2),
-        append(Temp2,[1],InitialState)
-        .
+        append(Temp2,[1],InitialState).
         
         
         
@@ -143,45 +140,42 @@ initial_state(Size,InitialState):-
                 append(Tail3,['   \\_/'],NewTail3).
         draw_Piece(1-1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
                 append(Tail1,['    _ '],NewTail1),
-                append(Tail2,['   /\x25b3\\\'],NewTail2),
+                append(Tail2,['   /\x25b3\\\\'],NewTail2),
                 append(Tail3,['   \\_/'],NewTail3).
         draw_Piece(2-1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
                 append(Tail1,['    _ '],NewTail1),
-                append(Tail2,['   /\x25ed\\\'],NewTail2),
+                append(Tail2,['   /\x25ed\\\\'],NewTail2),
                 append(Tail3,['   \\_/'],NewTail3).
         draw_Piece(3-1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
                 append(Tail1,['    _ '],NewTail1),
-                append(Tail2,['   /\x25b2\\\'],NewTail2),
+                append(Tail2,['   /\x25b2\\\\'],NewTail2),
                 append(Tail3,['   \\_/'],NewTail3).
         draw_Piece(1-2,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
                 append(Tail1,['    _ '],NewTail1),
-                append(Tail2,['   /\x25b3\\\'],NewTail2),
+                append(Tail2,['   /\x25b3\\\\'],NewTail2),
                 append(Tail3,['   \\\x25b3\/'],NewTail3).
         draw_Piece(2-2,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
                 append(Tail1,['    _ '],NewTail1),
-                append(Tail2,['   /\x25ed\\\'],NewTail2),
+                append(Tail2,['   /\x25ed\\\\'],NewTail2),
                 append(Tail3,['   \\\x25ed\/'],NewTail3).
         draw_Piece(3-2,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
                 append(Tail1,['    _ '],NewTail1),
-                append(Tail2,['   /\x25b2\\\'],NewTail2),
+                append(Tail2,['   /\x25b2\\\\'],NewTail2),
                 append(Tail3,['   \\\x25b2\/'],NewTail3).
         draw_Piece(1-3,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
                 append(Tail1,['    \x25b3\ '],NewTail1),
-                append(Tail2,['   /\x25b3\\\'],NewTail2),
+                append(Tail2,['   /\x25b3\\\\'],NewTail2),
                 append(Tail3,['   \\\x25b3\/'],NewTail3).
         draw_Piece(2-3,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
                 append(Tail1,['    \x25ed\ '],NewTail1),
-                append(Tail2,['   /\x25ed\\\'],NewTail2),
+                append(Tail2,['   /\x25ed\\\\'],NewTail2),
                 append(Tail3,['   \\\x25ed\/'],NewTail3).
         draw_Piece(3-3,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
                 append(Tail1,['    \x25b2\ '],NewTail1),
-                append(Tail2,['   /\x25b2\\\'],NewTail2),
+                append(Tail2,['   /\x25b2\\\\'],NewTail2),
                 append(Tail3,['   \\\x25b2\/'],NewTail3).
         
         draw_Piece(0,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
                 append(Tail1,['   '],NewTail1),
                 append(Tail2,['   '],NewTail2),
                 append(Tail3,['   '],NewTail3).
-
-
-  
