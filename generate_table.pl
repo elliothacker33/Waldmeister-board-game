@@ -55,6 +55,30 @@ screenCords_to_Cords(Line-Column,Size,TmpLine-TmpCol):-
     TmpSize is Line - Size + 1,
     TmpCol is Column - TmpSize,
     TmpLine is Line - 1.*/
+    
+    get_size(Matrix,Result):-
+        length(Matrix,Number),
+        Result is round(( Number+ 1)/2).
+
+testing:-
+    Board = [[1-2],
+    [1-2, 2-3],
+    [3-1, 2-2, 3-2],
+    [1-3, 1-1, 3-1, 3-3],
+    [-1, -1, -1, -1, -1],
+    [-1, -1, 1-1, -1, 1-1, -1],
+    [-1, -1, 1-2, -1, -1, -1, -1],
+    [-1, -1, 1-3, -1, -1, -1],
+    [-1, -1, -1, -1, -1],
+    [-1, -1, -1, -1],
+    [-1, -1, -1],
+    [-1, -1],
+    [-1]
+    ],
+    get_size(Board,Size),
+    Tmp_size is Size - 1,
+    MaxLine is Tmp_size * 2 + 1,
+    findall(L-C, (between(0,MaxLine,L),((L=< Tmp_size,between(0,L,C)) ; (Tmp_size<L,Tmp_L is Tmp_size*2 - L,between(0,Tmp_L,C)))),TreesInBoard),write(TreesInBoard).
 
 testing_height(Max):-
     Matrix = [[1-2],
@@ -71,7 +95,7 @@ testing_height(Max):-
     [-1, -1],
     [-1]
     ],draw_matrix(Matrix),
-    start_height_bfs(
+    count_height_values(
         Matrix,Max).
 testing_bot:-
     Matrix = [[1-2],
@@ -127,7 +151,7 @@ testing_color(Max):-
     [-1, -1],
     [-1]
     ],draw_matrix(Matrix),
-    start_color_bfs(Matrix,Max).
+    count_color_values(Matrix,Max).
 
 
 teste_generate_matrix(Value):-

@@ -1,7 +1,4 @@
-:- use_module(library(lists)).
-:- use_module(library(between)).
-:- use_module(library(aggregate)).
-:- use_module(library(random)).
+
 
 
 
@@ -9,8 +6,8 @@
 
 
 winner(Board, Winner) :-
-    start_color_bfs(Board,MaxColor),
-    start_height_bfs(Board,MaxHeight),
+    count_color_values(Board,MaxColor),
+    count_height_values(Board,MaxHeight),
     getWinner(MaxColor,MaxHeight,Winner).
 
 getWinner(MaxColor,MaxHeight,'Height'):- MaxColor < MaxHeight.
@@ -24,23 +21,9 @@ getPiece(Board, Line-Col, Piece) :-
 get_Height(Height-_,Height).
 get_Color(_-Color,Color).
 
-%calcula o numero maximo de pecas com a mesma cor proximas umas das outras
-bot_move([Board | RestGameState],'Height',Trees,BotMov):-
-    get_size(Board,Size),write('start_color_bfs\n'),
-    get_free_trees_in_board(0,0,Board,Board,TreesInBoard),write(TreesInBoard),write('start_color_bfs\n'),
-    findall(Score-((Tree,OldCords),NewCords,NewTree), (
-    %selecionar uma arvore que se pode mexer e vê se os movimentos validos e 
-        member(OldCords,TreesInBoard),getPiece(Board,OldCords,Tree),write(OldCords),valid_moves([Board | RestGameState],OldCords,ValidMoves),
-        write(ValidMoves),member(NewCords,ValidMoves),write('try to move\n'),move([Board | RestGameState],( (Tree ,OldCords),NewCords),[BoardUpdated | _])
-        ,write('found start pieces\n'),member(NewTree,Trees),move([BoardUpdated | RestGameState],( (NewTree , -1),OldCords),[BoardUpdated1 | _]),
-    height_bfs(BoardUpdated1,Size,Score)),MaxMoves),
-    sort(MaxMoves,SortedMoves),
-    last(SortedMoves,MaxScore-BotMov),%por random aqui
-    write(MaxScore)
-    .
 
 
-start_color_bfs(Board,Max):-
+count_color_values(Board,Max):-
     get_size(Board,Size),
     %write('start_color_bfs\n'),
     color_bfs(Board,Size,[],1,0,Max1),
@@ -81,7 +64,7 @@ color_bfs_aux(Board,Size,[Line-Col |  Rest],Visited,NewVisited,Color,Current_Max
 
 
 %calcula o numero maximo de Pecas com a mesma altura proximas umas das outras
-start_height_bfs(Board,Max):-
+count_height_values(Board,Max):-
     get_size(Board,Size),
     height_bfs(Board,Size,[],1,0,Max1),
     %write('Small:'),
