@@ -26,7 +26,6 @@ collect_available_trees(Trees, AvailableTrees):-
 
 repeat_choose_tree(Tree, [Board ,Trees1,_,_,_],1):-
     collect_available_trees(Trees1, AvailableTrees),
-    print_list(AvailableTrees),
     askTree(Tree),
     print_newline(2),
     member(Tree, AvailableTrees),!
@@ -41,7 +40,6 @@ repeat_choose_tree(Tree, [Board ,Trees1,_,_,_],1):-
 
 repeat_choose_tree(Tree, [Board ,_,Trees2,_,_],2):-
     collect_available_trees(Trees2, AvailableTrees),
-    print_list(AvailableTrees),
     askTree(Tree),
     print_newline(2),
     member(Tree, AvailableTrees),!

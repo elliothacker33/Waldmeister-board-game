@@ -128,7 +128,6 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
         display_game(TurnState)
         
      ;
-        write('Player 2 is thinking...'),nl,
         choose_move(GameState,2,2,(Goal2,TreesInBoard,((Tree,OldCoordinates),NewCoordinates,NewTree))),write('Player 1 is thinking2...'),nl,
         move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
         display_game(MiddleState),
