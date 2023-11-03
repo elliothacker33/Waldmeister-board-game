@@ -46,6 +46,7 @@ play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), 
 .
 
 play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
+    write('\n\n\n\n'),write(PlayerDifficulty1),write(PlayerDifficulty2),
     GameState=[Board,Trees1,Trees2,Amount,Turn],
     display_game(GameState),
     get_free_trees_in_board(0,0,Board,Board,TreesInBoard), 
@@ -62,18 +63,16 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
      move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
      ;
      PlayerDifficulty2 =:= 1->
-     write('\nFindCords: \n'),
+     write('\n\neasyPlayer\n'),
      choose_move(GameState,1,1,(TreesInBoard,Tree,OldCoordinates,NewCoordinates)),
      move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
-     write('\nFindTree: \n'),
      write(MiddleState),
      choose_move(MiddleState,1,1,NewTree),
-     write('\nFound Tree: \n'),
      move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
      ;
-     choose_move(GameState,1,2,(Goal1,TreesInBoard,((Tree,OldCords),NewCords,NewTree))),
+     write('ChooseMove: \n\n\nHardPlayer\n'),
+     choose_move(GameState,1,2,(Goal1,TreesInBoard,((Tree,OldCords),NewCords,NewTree))),     write('Choosed \n'),
      move(GameState,((Tree,OldCords),NewCords),MiddleState),
-     choose_move(MiddleState,1,2,(Goal1,OldCoordinates,NewTree)),
      move(MiddleState,((NewTree,-1),OldCords),TurnState)
      )
      ;
@@ -88,14 +87,15 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
      move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
      ; 
      PlayerDifficulty2 =:= 1->
+     write('\n\neasyPlayer\n'),
      choose_move(GameState,2,1,(TreesInBoard,Tree,OldCoordinates,NewCoordinates)),
      move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
      choose_move(MiddleState,2,1,NewTree),
      move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
     ;
-     choose_move(GameState,2,2,(Goal2,TreesInBoard,((Tree,OldCords),NewCords,NewTree))),
+    write('ChooseMove: \n\n\nHardPlayer\n'),
+     choose_move(GameState,2,2,(Goal2,TreesInBoard,((Tree,OldCords),NewCords,NewTree))),write('Choosed \n'),
      move(GameState,((Tree,OldCords),NewCords),MiddleState),
-     choose_move(MiddleState,2,2,(Goal2,OldCoordinates,NewTree)),
      move(MiddleState,((NewTree,-1),OldCords),TurnState)
     )
     ),

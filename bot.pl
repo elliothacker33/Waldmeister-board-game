@@ -18,7 +18,7 @@ choose_move([Board,_,_,_,_],_,1,(TreesInBoard,Tree,OldCoordinates,NewCoordinates
     OldCoordinates = X-Y,
     nth0(X,Board,Row),
     nth0(Y,Row,Tree),write('valid1 \n'),
-    valid_moves([Board,_,_,_,_],X-Y,ValidMoves),write(ValidMoves),
+    valid_moves([Board,_,_,_,_],X-Y,ValidMoves),%write(ValidMoves),
     random_member(NewCoordinates,ValidMoves),write('Done')
 .
 
