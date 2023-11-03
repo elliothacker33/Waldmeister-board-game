@@ -47,7 +47,8 @@ bot_Move_first_tree_move([Board | RestGameState],((Tree,OldCords),New_Cords)):-
     nth0(0,TreesInBoard,OldCords),
     getPiece(Board,OldCords,Tree),
     valid_moves([Board | RestGameState],OldCords,ValidMoves),
-    random_member(New_Cords, ValidMoves).
+    random_member(New_Cords, ValidMoves)
+.
 
 /*
    movimento do bot com dificuldade facil vai retornar um movimento aleatorio ((Tree,OldCords),NewCords,NewTree)) tree

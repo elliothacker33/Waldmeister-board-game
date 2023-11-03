@@ -69,6 +69,7 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
      ;
      choose_move(GameState,1,2,(Goal1,TreesInBoard,((Tree,OldCords),NewCords,NewTree))),
      move(GameState,((Tree,OldCords),NewCords),MiddleState),
+     choose_move(MiddleState,1,2,(Goal1,OldCoordinates,NewTree)),
      move(MiddleState,((NewTree,-1),OldCords),TurnState)
      )
      ;
@@ -90,6 +91,7 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
     ;
      choose_move(GameState,2,2,(Goal2,TreesInBoard,((Tree,OldCords),NewCords,NewTree))),
      move(GameState,((Tree,OldCords),NewCords),MiddleState),
+     choose_move(MiddleState,2,2,(Goal2,OldCoordinates,NewTree)),
      move(MiddleState,((NewTree,-1),OldCords),TurnState)
     )
     ),
