@@ -9,14 +9,6 @@ print_valid_moves([X-Y|H]):-
         print_valid_moves(H).
 
 
-
-
-initial_state(Size,InitialState):-
-        generate_matrix(Size,Matrix),
-        append([Matrix],[[(1-1,3),(1-2,3),(1-3,3),(2-1,3),(2-2,3),(2-3,3),(3-1,3),(3-2,3),(3-3,3)]],Temp),
-        append(Temp,[[(1-1,3),(1-2,3),(1-3,3),(2-1,3),(2-2,3),(2-3,3),(3-1,3),(3-2,3),(3-3,3)]],Temp1),
-        append(Temp1,[54],Temp2),
-        append(Temp2,[1],InitialState).
         
         
         

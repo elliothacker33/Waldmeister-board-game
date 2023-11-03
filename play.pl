@@ -1,8 +1,17 @@
-play_game([Board,Trees1,Trees2,54,Turn], Player1, Player2) :-
+/*
+ play_game is the predicate that executes the loop game. 
+ Contains the logic and steps of the game.
+
+ play_game([Board,Trees1,Trees2,54,Turn], (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)) -> Logic for the InitialState.
+ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)) -> Logic for the rest of the game until game_over.
+ play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)) -> Game over logic
+*/
+
+% play_game(+GameState,+Player1,+Player2)
+
+play_game([Board,Trees1,Trees2,54,Turn], (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2) ) :-
 
     InitialState=[Board,Trees1,Trees2,54,Turn],  
-    Player1=(PlayerNumber1, PlayerDifficulty1, Goal1), 
-    Player2=(PlayerNumber2, PlayerDifficulty2, Goal2),
     display_game(InitialState),
 
     valid_moves(InitialState,_,ValidMoves),
@@ -57,33 +66,19 @@ play_game([Board,Trees1,Trees2,54,Turn], Player1, Player2) :-
     ),
     
     change_turn(TurnState1,FinalState),
-    play_game(FinalState,Player1, Player2)
+    play_game(FinalState,(PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2))
 .
-
-
-
-
-
 
 play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
+
     GameOverState=[Board,Trees1,Trees2,0,_],
-    display_game(GameOverState),write('game_over'),
+    display_game(GameOverState),
     game_over(GameOverState,Winner),
-    display_Winner(Winner,Player1)
+    display_Winner(Winner,Player1) % needs Correction
 .
 
-
-
-
-
-
-
-
-
-
-
 play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
-    write('\n\n\n\n'),write(PlayerDifficulty1),write(PlayerDifficulty2),
+
     GameState=[Board,Trees1,Trees2,Amount,Turn],
     display_game(GameState),
     get_free_trees_in_board(0,0,Board,Board,TreesInBoard),
