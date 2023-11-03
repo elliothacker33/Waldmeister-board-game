@@ -2,7 +2,7 @@
 
 
 
-game_over([Board| Rest],Winner):-
+game_over([Board| _Rest],Winner):-
     winner(Board, Winner).
 
 /*
@@ -167,7 +167,11 @@ getPositionNear(Size,Line,Col,Cords):-
 getPositionNear(_,_,_,_):-fail.
 
 
-%finds the next position that is not visited and isnt empty
+/*
+  finds the next position that is not visited and isnt empty with the height of the input
+  */
+% next_position_height( +Board, +Visited,+Height, -Nline-Ncol)
+
 
 next_position_height(Board, Visited,Height, Nline-Ncol) :-
     nth0(Nline, Board, Col),
@@ -178,6 +182,10 @@ next_position_height(Board, Visited,Height, Nline-Ncol) :-
     getPiece(Board, Nline-Ncol, Height-_),!.
 next_position_height(_, _, _,null).
 
+/*
+  finds the next position that is not visited and isnt empty with the Color of the input
+  */
+% next_position_color(+Board, +Visited, + Color, -Nline-Ncol)
 next_position_color(Board, Visited,Color, Nline-Ncol) :-
     nth0(Nline, Board, Col),
     length(Col, Ncols),
@@ -190,17 +198,24 @@ next_position_color(_, _, _,null).
 
 
 
+/*
+  checks if according to the size of the board the next position of the line is valid, example if the line is the last one it cant go front
+  */
+% can_not_Go_Front(+Size,+Line)
 
-%se a matrix ja estiver na ultima coluna
 can_not_Go_Front(Size,Line):-
     TmpSize is Size - 1,
     NewSize is TmpSize * 2 + 1,
     NewSize =<Line .
 
-%se a matrix quiser ir para traz mas ja esta na primeira coluna
 
 
-%se o diamante ja se tiver a diminuir nao vai haver front_left so front_right
+/*
+  checks if according to the size and the line and column can go front left there are 6 possible moves front_left,front_right,left,right,back_left,back_right
+  and if it can it return the cords of the position needed to go to
+  */
+% get_front_left( +Size, +Line, +Column, -RLine-RColumn)
+
 get_front_left(Size,Line,_,null):-
     can_not_Go_Front(Size,Line),!.
 
@@ -219,7 +234,14 @@ get_front_left(Size,Line,Column,RLine-Column):-
     Line<TmpSize,
     RLine is Line + 1.
 
-%front_right --------------------------------------------------------------------------------------------
+/*
+  checks if according to the size and the line and column can go front right there are 6 possible moves front_left,front_right,left,right,back_left,back_right
+  and if it can it return the cords of the position needed to go to
+  */
+% get_front_right( +Size, +Line, +Column, -RLine-RColumn)
+
+
+
 get_front_right(Size,Line,_,null):-
     can_not_Go_Front(Size,Line),!.
 
@@ -244,7 +266,12 @@ get_front_right(Size,Line,Column,RLine-RColumn):-
     RColumn is Column ,
     RLine is Line + 1.
 
-%get left --------------------------------------------------------------------------------------------
+/*
+  checks if according to the size and the line and column can go left there are 6 possible moves front_left,front_right,left,right,back_left,back_right
+  and if it can it return the cords of the position needed to go to
+  */
+% get_left( +Size, +Line, +Column, -RLine-RColumn)
+
 
 get_left(_,_,Col,null):-
     Col =:= 0,!.
@@ -252,7 +279,11 @@ get_left(_,_,Col,null):-
 get_left(_,Line,Column,Line-RColumn):-  
     RColumn is Column - 1.
 
-%get right --------------------------------------------------------------------------------------------
+/*
+  checks if according to the size and the line and column can go right there are 6 possible moves front_left,front_right,left,right,back_left,back_right
+  and if it can it return the cords of the position needed to go to
+  */
+% get_right( +Size, +Line, +Column, -RLine-RColumn)
 get_right(Size,Line,Column,null):-
     TmpSize is Size - 1,
     TmpSize<Line,
@@ -265,7 +296,11 @@ get_right(Size,Line,Line,null):-
 
 get_right(_,Line,Column,Line-RColumn):-
     RColumn is Column + 1.
-%get back_left --------------------------------------------------------------------------------------------
+/*
+  checks if according to the size and the line and column can go back left there are 6 possible moves front_left,front_right,left,right,back_left,back_right
+  and if it can it return the cords of the position needed to go to
+  */
+% get_back_left( +Size, +Line, +Column, -RLine-RColumn)
 get_back_left(_,Line,_,null):-
     Line =:= 0,!.
 
@@ -286,7 +321,11 @@ get_back_left(Size,Line,Column,RLine-RColumn):-
     RColumn is Column.
 
 
-%get back_right --------------------------------------------------------------------------------------------
+/*
+  checks if according to the size and the line and column can go back right there are 6 possible moves front_left,front_right,left,right,back_left,back_right
+  and if it can it return the cords of the position needed to go to
+  */
+% get_back_right( +Size, +Line, +Column, -RLine-RColumn)
 get_back_right(_,Line,_,null):-
     Line =:= 0,!.
 

@@ -1,10 +1,10 @@
 
 % Random AI
 
-choose_move([_Board, Trees1, _, _ , _], 1, 1, (ValidMoves,Tree,Coordinates)):-
+choose_move([_Board, _Trees1, _, _ , _], 1, 1, (ValidMoves,_Tree,Coordinates)):-
     random_member(Coordinates, ValidMoves)
 .
-choose_move([_Board, _, Trees2, _ , _], 2, 1, (ValidMoves,Tree,Coordinates)):-
+choose_move([_Board, _,_Trees2, _ , _], 2, 1, (ValidMoves,_Tree,Coordinates)):-
     random_member(Coordinates, ValidMoves)
 .
 
@@ -28,7 +28,7 @@ choose_move([Board,_,Trees2,_,_],2,1,(TreesInBoard,Tree,Coordinates,NewCoordinat
     valid_moves(GameState,Coordinates,ValidMoves),
     random_member(NewCoordinates,ValidMoves),
     collect_available_trees(Trees2,AvailableTrees),
-    random_member(NewTree,AvailableTrees),
+    random_member(NewTree,AvailableTrees)
 .
 
 
