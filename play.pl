@@ -50,21 +50,13 @@ play_game([Board,Trees1,Trees2,54,Turn], (PlayerNumber1, PlayerDifficulty1, Goal
         display_game(TurnState1)
         
         ;
-
-        PlayerDifficulty2 =:= 1->
-
+        % os bots são iguais no inicio do jogo
         choose_move(MiddleState,2,1,(TreesInBoard,NewTree,Coordinates,NewCoordinates,NewTree1)),
         move(MiddleState,((NewTree,Coordinates),NewCoordinates),MiddleState1),
         display_game(MiddleState1),
         move(MiddleState1,((NewTree1,-1),Coordinates),TurnState1),
         display_game(TurnState1)
 
-        ;
-        choose_move(MiddleState,2,2,(Goal2,TreesInBoard,((NewTree,Coordinates),NewCoordinates,NewTree1))),
-        move(MiddleState,((NewTree,Coordinates),NewCoordinates),MiddleState1),
-        display_game(MiddleState1),
-        move(MiddleState1,((NewTree1,-1),Coordinates),TurnState1),
-        display_game(TurnState1)
     ),
     
     change_turn(TurnState1,FinalState),
@@ -76,7 +68,12 @@ play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), 
     GameOverState=[Board,Trees1,Trees2,0,_],
     display_game(GameOverState),
     game_over(GameOverState,Winner),
-    display_Winner(Winner,Player1) % needs Correction
+    (Goal1 =:= Winner ->
+        Player = PlayerNumber1
+    ;
+        Player = PlayerNumber2
+    ),
+    display_Winner(Winner,Player) % needs Correction
 .
 
 play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
@@ -97,8 +94,7 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
         move(MiddleState,((NewTree,-1),OldCoordinates),TurnState),
         display_game(TurnState)
      ;
-    PlayerDifficulty2 =:= 1->
-
+    PlayerDifficulty1 =:= 1->
         choose_move(GameState,1,1,(TreesInBoard,Tree,OldCoordinates,NewCoordinates,NewTree)),
         move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
         display_game(MiddleState),
@@ -132,7 +128,8 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
         display_game(TurnState)
         
      ;
-        choose_move(GameState,2,2,(Goal2,TreesInBoard,((Tree,OldCoordinates),NewCoordinates,NewTree))),
+        write('Player 2 is thinking...'),nl,
+        choose_move(GameState,2,2,(Goal2,TreesInBoard,((Tree,OldCoordinates),NewCoordinates,NewTree))),write('Player 1 is thinking2...'),nl,
         move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
         display_game(MiddleState),
         move(MiddleState,((NewTree,-1),OldCoordinates),TurnState),
