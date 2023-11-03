@@ -1,14 +1,14 @@
 
 % Random AI
 
-choose_move([_Board, Trees1, _, _ , _], 1, 1, (ValidMoves,Tree,Coordinates)):-write('\n\n1\n\n'),
+choose_move([_Board, Trees1, _, _ , _], 1, 1, (ValidMoves,Tree,Coordinates)):-
     random_member(Coordinates, ValidMoves)
 .
-choose_move([_Board, _, Trees2, _ , _], 2, 1, (ValidMoves,Tree,Coordinates)):-write('\n\n2\n\n'),
+choose_move([_Board, _, Trees2, _ , _], 2, 1, (ValidMoves,Tree,Coordinates)):-
     random_member(Coordinates, ValidMoves)
 .
 
-choose_move([Board,Trees1,_,_,_],1,1,(TreesInBoard,Tree,Coordinates,NewCoordinates,NewTree)):-write('\n\n3\n\n'),
+choose_move([Board,Trees1,_,_,_],1,1,(TreesInBoard,Tree,Coordinates,NewCoordinates,NewTree)):-
     GameState = [Board,_,_,_,_],
     random_member(Coordinates,TreesInBoard),
     Coordinates = X-Y,
@@ -19,25 +19,25 @@ choose_move([Board,Trees1,_,_,_],1,1,(TreesInBoard,Tree,Coordinates,NewCoordinat
     collect_available_trees(Trees1,AvailableTrees),
     random_member(NewTree,AvailableTrees)
 .
-choose_move([Board,_,Trees2,_,_],2,1,(TreesInBoard,Tree,Coordinates,NewCoordinates,NewTree)):-write('\n\n4\n\n'),
+choose_move([Board,_,Trees2,_,_],2,1,(TreesInBoard,Tree,Coordinates,NewCoordinates,NewTree)):-
     GameState = [Board,_,_,_,_],
-    random_member(Coordinates,TreesInBoard),write('Not here\n'),
+    random_member(Coordinates,TreesInBoard),
     Coordinates = X-Y,
     nth0(X,Board,Row),
     nth0(Y,Row,Tree),
-    valid_moves(GameState,Coordinates,ValidMoves),write('Not here3\n'),write(NewCoordinates),write('\n'),
-    random_member(NewCoordinates,ValidMoves),write('Not here2\n'),write(NewCoordinates),
+    valid_moves(GameState,Coordinates,ValidMoves),
+    random_member(NewCoordinates,ValidMoves),
     collect_available_trees(Trees2,AvailableTrees),
-    random_member(NewTree,AvailableTrees),write('Not here\n')
+    random_member(NewTree,AvailableTrees),
 .
 
 
 % Greedy AI
 
-choose_move([Board, Trees1, Trees2,Amount,Turn],1,2,(1,TreesInBoard,BotMov)):-write('\n\ncalled5\n\n'),
+choose_move([Board, Trees1, Trees2,Amount,Turn],1,2,(1,TreesInBoard,BotMov)):-
     bot_move([Board, Trees1, Trees2,Amount,Turn],'Height',Trees1,TreesInBoard,BotMov).
 
-choose_move([Board, Trees1, Trees2,Amount,Turn],1,2,(2,TreesInBoard,BotMov)):-write('\n\ncalled6\n\n'),
+choose_move([Board, Trees1, Trees2,Amount,Turn],1,2,(2,TreesInBoard,BotMov)):-
     bot_move([Board, Trees1, Trees2,Amount,Turn],'Color',Trees1,TreesInBoard,BotMov).
 
 choose_move([Board, Trees1, Trees2,Amount,Turn],2,2,(1,TreesInBoard,BotMov)):-
@@ -54,7 +54,6 @@ has_piece_near_with_same_height(Board,Size,Line-Col,Height-_):-
 getOptimalStartTree(Board,Size,Trees,TreesInBoard,OldCords,NewTree):-
     member((NewTree,Amount),Trees),
     0 < Amount,member(OldCords,TreesInBoard),
-    %write(OldCords),write('\n'),
     has_piece_near_with_same_height(Board,Size,OldCords,NewTree).
 
 
@@ -66,7 +65,6 @@ getOptimalStartTree(Board,Size,Trees,TreesInBoard,OldCords,NewTree):-
     getOptimalStartTreeColor(Board,Size,Trees,TreesInBoard,OldCords,NewTree):-
         member((NewTree,Amount),Trees),
         0 < Amount,member(OldCords,TreesInBoard),
-        %write(OldCords),write('\n'),
         has_piece_near_with_same_color(Board,Size,OldCords,NewTree).
 
 /*
@@ -88,17 +86,16 @@ bot_move([Board | RestGameState],'Height',Trees,TreesInBoard,BotMov):-
         move([Board | RestGameState],( (Tree ,OldCords),NewCords),[BoardUpdated | _]),
         %colocar a peça na localização em que tiramos a outra peça
         move([BoardUpdated | RestGameState],( (NewTree , -1),OldCords),[BoardUpdated1 | _]),
-        count_height_values(BoardUpdated1,Score)),MaxMoves),%write('end\n'),
+        count_height_values(BoardUpdated1,Score)),MaxMoves),
     
     length(MaxMoves,N),
     (0 < N ->
         sort(MaxMoves,SortedMoves),
         %get best score
-        last(SortedMoves,MaxScore-_),% write(MaxScore)%por random aqui
+        last(SortedMoves,MaxScore-_),
         %find all best scores
         findall(Mov,member(MaxScore-Mov,SortedMoves),MaxMoves1),
         %choose one at random
-        %write('\nMaxScore:'),%length(MaxMoves1,S),write(S),write('\n'),
         random_member(BotMov, MaxMoves1)
         ;
         %if the gready algorithm didnt find any moves, use the easy algorithm
@@ -121,17 +118,16 @@ bot_move([Board | RestGameState],'Color',Trees,TreesInBoard,BotMov):-
         move([Board | RestGameState],( (Tree ,OldCords),NewCords),[BoardUpdated | _]),
         %colocar a peça na localização em que tiramos a outra peça
         move([BoardUpdated | RestGameState],( (NewTree , -1),OldCords),[BoardUpdated1 | _]),
-        count_color_values(BoardUpdated1,Score)),MaxMoves),%write('end\n'),
+        count_color_values(BoardUpdated1,Score)),MaxMoves),
     
     length(MaxMoves,N),
     (0 < N ->
         sort(MaxMoves,SortedMoves),
         %get best score
-        last(SortedMoves,MaxScore-_),% write(MaxScore)%por random aqui
+        last(SortedMoves,MaxScore-_),
         %find all best scores
         findall(Mov,member(MaxScore-Mov,SortedMoves),MaxMoves1),
         %choose one at random
-        %write('\nMaxScore:'),%length(MaxMoves1,S),write(S),write('\n'),
         random_member(BotMov, MaxMoves1)
         ;
         choose_move([Board,Trees,_,_,_],1,1,(TreesInBoard,Tree,Coordinates,NewCoordinates;NewTree)),
