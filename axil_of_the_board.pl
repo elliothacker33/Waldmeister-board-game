@@ -2,20 +2,21 @@
 
 
 
-
+game_over([Board| Rest],Winner):-
+    winner(Board, Winner).
 
 /*
    recebe um Board que avalia e devolve o vencedor Cores ou Alturas
 */
-% choose_move(+Board,-winner)
+% winner(+Board,-winner)
 winner(Board, Winner) :-
     count_color_values(Board,MaxColor),
     count_height_values(Board,MaxHeight),
     getWinner(MaxColor,MaxHeight,Winner).
 
-getWinner(MaxColor,MaxHeight,'Height'):- MaxColor < MaxHeight.
-getWinner(MaxColor,MaxHeight,'Color'):- MaxHeight < MaxColor .
-getWinner(MaxColor,MaxHeight,'Tie'):- MaxHeight =:= MaxColor .
+getWinner(MaxColor,MaxHeight,1):- MaxColor < MaxHeight.% height won
+getWinner(MaxColor,MaxHeight,2):- MaxHeight < MaxColor .% color won
+getWinner(MaxColor,MaxHeight,0):- MaxHeight =:= MaxColor .% draw
 
 /*
    recebe um Board que avalia , uma posição para devolver a tree que la esta ou -1 se nao estiver la nenhuma arvore

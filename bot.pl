@@ -12,21 +12,23 @@ choose_move([_Board, Trees1, _Trees2, 54, _], 1, 1, (ValidMoves, Tree, Coordinat
 choose_move([Board, _, _, 54, _], 2, 1, (ValidMoves,Coordinates)) :-
     random_member(Coordinates, ValidMoves)
 .
-choose_move([Board,_,_,_,_],_,1,(TreesInBoard,Tree,OldCoordinates,NewCoordinates)):-
+choose_move([Board,_,_,_,_],_,1,(TreesInBoard,Tree,OldCoordinates,NewCoordinates)):-write('F\n'),
+    ground(TreesInBoard),
     random_member(OldCoordinates,TreesInBoard),
     OldCoordinates = X-Y,
-    nth0(Board,X,Row),
-    nth0(Row,Y,Tree),
-    valid_moves([Board,_,_,_,_],X-Y,ValidMoves),
-    random_member(NewCoordinates,ValidMoves)
+    nth0(X,Board,Row),
+    nth0(Y,Row,Tree),write('valid1 \n'),
+    valid_moves([Board,_,_,_,_],X-Y,ValidMoves),write(ValidMoves),
+    random_member(NewCoordinates,ValidMoves),write('Done')
 .
 
 choose_move([_Board, Trees1, _Trees2,_,_],1,1,NewTree):-
+    write('\nvalid3 \n'),
     collect_available_trees(Trees1,AvailableTrees),
     random_member(NewTree,AvailableTrees)
 .
 
-choose_move([_Board, _Trees1, Trees2,_,_],2,1,NewTree):-
+choose_move([_Board, _Trees1, Trees2,_,_],2,1,NewTree):-write('valid2 \n'),
     collect_available_trees(Trees2,AvailableTrees),
     random_member(NewTree,AvailableTrees)
 .

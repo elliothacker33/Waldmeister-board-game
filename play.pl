@@ -40,14 +40,14 @@ play_game([Board,Trees1,Trees2,54,Turn], Player1, Player2) :-
 
 play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
     GameOverState=[Board,Trees1,Trees2,0,_],
-    display_game(GameOverState),
+    display_game(GameOverState),write('game_over'),
     game_over(GameOverState,Winner),
     display_Winner(Winner,Player1)
 .
 
 play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
     GameState=[Board,Trees1,Trees2,Amount,Turn],
-    % display_game(GameState),
+    display_game(GameState),
     get_free_trees_in_board(0,0,Board,Board,TreesInBoard), 
 
     (Turn =:= 1 ->
@@ -62,9 +62,13 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
      move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
      ;
      PlayerDifficulty2 =:= 1->
+     write('\nFindCords: \n'),
      choose_move(GameState,1,1,(TreesInBoard,Tree,OldCoordinates,NewCoordinates)),
      move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
+     write('\nFindTree: \n'),
+     write(MiddleState),
      choose_move(MiddleState,1,1,NewTree),
+     write('\nFound Tree: \n'),
      move(MiddleState,((NewTree,-1),OldCoordinates),TurnState)
      ;
      choose_move(GameState,1,2,(Goal1,TreesInBoard,((Tree,OldCords),NewCords,NewTree))),
@@ -95,7 +99,7 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
      move(MiddleState,((NewTree,-1),OldCords),TurnState)
     )
     ),
-    % display_game(MiddleState),
+    display_game(MiddleState),
     change_turn(TurnState,FinalState),
     play_game(FinalState,(PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2))
 .
