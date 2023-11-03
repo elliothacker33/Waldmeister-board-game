@@ -1,3 +1,8 @@
+/*
+   movimento do bot com todas as especificações necessarias e apresentadas no guião para cada etapa do jogo
+*/
+% choose_move(+GameState,Player,Dificulty,-Mov)
+
 choose_move([_Board, Trees1, _Trees2, 54, _], 1, 1, (ValidMoves, Tree, Coordinates)) :-
     collect_available_trees(Trees1, AvailableTrees),
     random_member(Tree, AvailableTrees),
@@ -44,7 +49,11 @@ bot_Move_first_tree_move([Board | RestGameState],((Tree,OldCords),New_Cords)):-
     valid_moves([Board | RestGameState],OldCords,ValidMoves),
     random_member(New_Cords, ValidMoves).
 
-%calcula o numero maximo de pecas com a mesma cor proximas umas das outras
+/*
+   movimento do bot com dificuldade facil vai retornar um movimento aleatorio ((Tree,OldCords),NewCords,NewTree)) tree
+    que se vai mecher das cordenadas velhas para as novas e a nova arvore que se vai colocar no tabuleiro nas cordenadas antigas
+*/
+% bot_easy(+GameState,'Height' or 'Color', +TreesInBoard,-BotMov)
 bot_move_easy([Board | RestGameState],Trees,((Tree,OldCords),NewCords,NewTree)):-
     get_free_trees_in_board(0,0,Board,Board,TreesInBoard),
     random_member(OldCords, TreesInBoard),
@@ -77,7 +86,12 @@ getOptimalStartTree(Board,Size,Trees,TreesInBoard,OldCords,NewTree):-
         %write(OldCords),write('\n'),
         has_piece_near_with_same_color(Board,Size,OldCords,NewTree).
 
-%calcula o numero maximo de pecas com a mesma cor proximas umas das outras
+/*
+   movimento do bot com dificuldade facil vai retornar um movimento melhor para a situação ((Tree,OldCords),NewCords,NewTree)) tree
+    que se vai mecher das cordenadas velhas para as novas e a nova arvore que se vai colocar no tabuleiro nas cordenadas antigas 
+    caso nao exista nenhum movimento melhor é utilizado um aleatorio
+*/
+% bot_move(+GameState,'Height' or 'Color', +TreesInBoard,-BotMov)
 bot_move([Board | RestGameState],'Height',Trees,TreesInBoard,BotMov):-
     get_size(Board,Size),
     

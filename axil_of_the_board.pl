@@ -4,7 +4,10 @@
 
 
 
-
+/*
+   recebe um Board que avalia e devolve o vencedor Cores ou Alturas
+*/
+% choose_move(+Board,-winner)
 winner(Board, Winner) :-
     count_color_values(Board,MaxColor),
     count_height_values(Board,MaxHeight),
@@ -14,6 +17,10 @@ getWinner(MaxColor,MaxHeight,'Height'):- MaxColor < MaxHeight.
 getWinner(MaxColor,MaxHeight,'Color'):- MaxHeight < MaxColor .
 getWinner(MaxColor,MaxHeight,'Tie'):- MaxHeight =:= MaxColor .
 
+/*
+   recebe um Board que avalia , uma posição para devolver a tree que la esta ou -1 se nao estiver la nenhuma arvore
+*/
+% getPiece(+ Board, +Cords, -Piece)
 getPiece(Board, Line-Col, Piece) :-
     nth0( Line,Board,Line_pieces),
     nth0(Col, Line_pieces, Piece).
@@ -22,6 +29,10 @@ get_Height(Height-_,Height).
 get_Color(_-Color,Color).
 
 
+/*
+   recebe um Board que avalia devolve os pontos do jogador por cores
+*/
+% count_color_values(+Board,-Max)
 
 count_color_values(Board,Max):-
     get_size(Board,Size),
@@ -40,6 +51,10 @@ count_color_values(Board,Max):-
     %write('\n'),
     Max is Max1 + Max2 + Max3.
 
+/*
+   uma função que atravez de chamadas recurssivas calcula o numero de peças do aglomerado maior de uma certa cor que é recebida como input Color no Board recebido
+*/
+% count_color_values( +Board,+Size,+Visited,+Color,+CurrMax,-Max)
 color_bfs(Board,_,Visited,Color,CurrMax,CurrMax):-
     next_position_color(Board,Visited,Color,Cord),
     Cord == null.
@@ -53,6 +68,12 @@ color_bfs(Board,Size,Visited,Color,CurrMax,Max):-
         color_bfs(Board,Size,NewVisited,Color,TmpMax,Max)
     ).
 
+/*
+  Função que utiliza Bfs para calcular o numero de peças do aglomerado maior de uma certa cor que é recebida  como input Color no Board recebido e a 
+  peça inicial é recebida para começar o bfs esta função é o bfs em si
+*/
+% color_bfs_aux( +Board,+Size,+Visited,-NewVisited,+Color,+CurrMax,-Max)
+
 color_bfs_aux(_,_,[],Visited,Visited,_,Max,Max).
 
 color_bfs_aux(Board,Size,[Line-Col |  Rest],Visited,NewVisited,Color,Current_Max,Max):-
@@ -62,8 +83,10 @@ color_bfs_aux(Board,Size,[Line-Col |  Rest],Visited,NewVisited,Color,Current_Max
     NewMax is Current_Max + 1,
     color_bfs_aux(Board,Size,New_queue,[Line-Col | Visited],NewVisited,Color,NewMax,Max).
 
-
-%calcula o numero maximo de Pecas com a mesma altura proximas umas das outras
+/*
+   recebe um Board que avalia devolve os pontos do jogador por alturas
+*/
+% count_color_values(+Board,-Max)
 count_height_values(Board,Max):-
     get_size(Board,Size),
     height_bfs(Board,Size,[],1,0,Max1),
@@ -79,6 +102,11 @@ count_height_values(Board,Max):-
     %write(Max3),
     %write('\n'),
     Max is Max1 + Max2 + Max3.
+/*
+   uma função que atravez de chamadas recurssivas calcula o numero de peças do aglomerado maior de uma certa height que é recebida como input height no Board recebido
+*/
+% count_color_values( +Board,+Size,+Visited,+Color,+CurrMax,-Max)
+
 
 height_bfs(Board,_,Visited,Height,CurrMax,CurrMax):-
     next_position_height(Board,Visited,Height,Cord),
@@ -92,6 +120,12 @@ height_bfs(Board,Size,Visited,Height,CurrMax,Max):-
         height_bfs(Board,Size,NewVisited,Height,CurrMax,Max);
         height_bfs(Board,Size,NewVisited,Height,TmpMax,Max)
     ).
+
+/*
+  Função que utiliza Bfs para calcular o numero de peças do aglomerado maior de uma certa heigth que é recebida  como input Color no Board recebido e a 
+  peça inicial é recebida para começar o bfs esta função é o bfs em si
+*/
+% color_bfs_aux( +Board,+Size,+Visited,-NewVisited,+Height,+CurrMax,-Max)
 height_bfs_aux(_,_,[],Visited,Visited,_,Max,Max).
 
 height_bfs_aux(Board,Size,[Line-Col |  Rest],Visited,NewVisited,Height,Current_Max,Max):-
@@ -102,7 +136,10 @@ height_bfs_aux(Board,Size,[Line-Col |  Rest],Visited,NewVisited,Height,Current_M
     height_bfs_aux(Board,Size,New_queue,[Line-Col | Visited],NewVisited,Height,NewMax,Max).
 
 
-%gets a position in the near the position
+/*
+  esta função é utilizada para encontrar alguma peça que esteja proxima da linha (+Line) e coluna (+Colum) recebida como input as cords recebidas são da peça selecionada
+*/
+% getPositionNear(+Size,+Line,+Col,-Cords)
 
 getPositionNear(Size,Line,Col,Cords):-
     get_back_left(Size,Line,Col,Cords),
