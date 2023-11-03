@@ -6,28 +6,41 @@ height(1,'High').
 height(2,'Medium').
 height(3,'Small').
 
-tree(C,H):- color(C,_),height(H,_).
 
 
 
-% Choose Trees Done
+
 
 collect_available_trees(Trees, AvailableTrees) :-
     findall(H-C, (member((H-C, Quantity), Trees), Quantity > 0), AvailableTrees).
 
-repeat_choose_tree(Tree, Trees) :-
-    collect_available_trees(Trees, AvailableTrees),
+repeat_choose_tree(Tree, [Board ,Trees1,_,_,_],1) :-
+    collect_available_trees(Trees1, AvailableTrees),
     print_list(AvailableTrees),
     askTree(Tree),
     print_newline(2),
     member(Tree, AvailableTrees),!.
 
 
-repeat_choose_tree(Tree,Trees):-
+repeat_choose_tree(Tree, [Board ,Trees1,_,_,_],1):-
     format('~*c', [40, 32]),
     format('\e[48;5;208m\e[97mERROR: Invalid option. Please choose an available tree.\e[0m', []),
     print_newline(2),
-    repeat_choose_tree(Tree,Trees).
+    repeat_choose_tree(Tree, [Board ,Trees1,_,_,_],1).
+
+repeat_choose_tree(Tree, [Board ,_,Trees2,_,_],2) :-
+    collect_available_trees(Trees2, AvailableTrees),
+    print_list(AvailableTrees),
+    askTree(Tree),
+    print_newline(2),
+    member(Tree, AvailableTrees),!.
+
+
+repeat_choose_tree(Tree, [Board ,_,Trees2,_,_],2):-
+    format('~*c', [40, 32]),
+    format('\e[48;5;208m\e[97mERROR: Invalid option. Please choose an available tree.\e[0m', []),
+    print_newline(2),
+    repeat_choose_tree(Tree, [Board ,_,Trees2,_,_],2).
 
 askTree(Tree):-
     format('~*c', [40, 32]),
@@ -39,10 +52,6 @@ askTree(Tree):-
     format('~*c', [40, 32]),
     write('Choose a tree Height-Color: '),
     read(Tree).
-
-choose_random_tree(Tree,Trees):-
-    collect_available_trees(Trees, AvailableTrees),
-    random_member(Tree, AvailableTrees).
 
 
 
@@ -104,7 +113,7 @@ askCoordinates(Coordinates,2):-
     write('Choose valid coordinates for free trees in board (Orange hollows) as X-Y: '),
     read(Coordinates).
 
-repeat_choose_tree_in_board(Board,(Tree,Coordinates),TreesInBoard):-
+repeat_choose_tree_in_board([Board | _ ],(Tree,Coordinates),TreesInBoard):-
     askCoordinates(Coordinates,2),
     member(Coordinates,TreesInBoard),
     !,
@@ -112,11 +121,11 @@ repeat_choose_tree_in_board(Board,(Tree,Coordinates),TreesInBoard):-
     nth0(X,Board,List),
     nth0(Y,List,Tree).
 
-repeat_choose_tree_in_board(Board,(Tree,Coordinates),TreesInBoard):-
+repeat_choose_tree_in_board([Board | _ ],(Tree,Coordinates),TreesInBoard):-
     format('~*c', [40, 32]),
     format('\e[48;5;208m\e[97mERROR: Invalid option. Please choose a Tree that is on the board.\e[0m', []),
     print_newline(2),
-    repeat_choose_tree_in_board(Coordinates,(Tree,Coordinates),TreesInBoard).
+    repeat_choose_tree_in_board([Board | _ ],(Tree,Coordinates),TreesInBoard).
 
 get_free_trees_in_board(_, _, _, [], []).
 get_free_trees_in_board(X, Y, Board, [Row | RestRows], TreesInBoard) :-
