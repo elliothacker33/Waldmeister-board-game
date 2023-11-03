@@ -1,12 +1,29 @@
-:-consult('menus.pl').
-:-consult('display.pl').
-:-consult('generate_table.pl').
-:-consult('axil_of_the_board.pl').
+/*
+ Game files.
+*/
+
+:-consult('board.pl').
 :-consult('bot.pl').
+:-consult('credits.pl').
+:-consult('display.pl').
+:-consult('instructions.pl').
 :-consult('logic.pl').
+:-consult('menus.pl').
 :-consult('play.pl').
-:-use_module(library(lists)).
-:-use_module(library(between)).
+:-consult('value.pl').
+
+/*
+ Prolog modules and libraries.
+*/
+
 :-use_module(library(aggregate)).
+:-use_module(library(between)).
+:-use_module(library(lists)).
 :-use_module(library(random)).
-play:-display_main_menu.  % play/0 is a predicate that redirects the player for the main menu.
+
+/*
+ Play predicate is responsible to start the game invoking main menu.
+*/
+% play/0 
+
+play:-display_main_menu.

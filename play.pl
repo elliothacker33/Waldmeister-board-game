@@ -1,10 +1,12 @@
 /*
+
  play_game is the predicate that executes the loop game. 
  Contains the logic and steps of the game.
 
  play_game([Board,Trees1,Trees2,54,Turn], (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)) -> Logic for the InitialState.
  play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)) -> Logic for the rest of the game until game_over.
  play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)) -> Game over logic
+ 
 */
 
 % play_game(+GameState,+Player1,+Player2)

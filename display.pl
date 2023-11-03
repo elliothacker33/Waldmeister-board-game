@@ -11,7 +11,6 @@ print_valid_moves([X-Y|H]):-
 
         
         
-        
         display_game([Board,Trees1,Trees2,_,_]):-
         draw_matrix(Board),
         write('\n\nPlayer 1: small    Medium  big\n'),
