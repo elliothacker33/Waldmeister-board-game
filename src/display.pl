@@ -37,7 +37,7 @@ display_Winner(2,Player,PointsHeight,PointsColor):-
 .
 
 
-display_Winner(_,_):- 
+display_Winner(0,_):- 
     write('Draw : Both players scored the same ')
 .
 
@@ -464,7 +464,3 @@ display_credits:-
     print_newline(1),
     write('Version 1.0 of Waldmeister board game')
 .
-
-
-
-

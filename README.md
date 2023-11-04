@@ -11,7 +11,7 @@
 	 - [Objective](#objective) 
 	 - [Ending and Scoring](#ending-and-scoring)
    - [Helpful links](#helpful-links)
-- [Logic of the game](#logic-of-the-game)Representation Of The GameState
+- [Logic of the game](#logic-of-the-game)
 	- [GameState](#representation-of-the-gamestate)
 	- [Value of the board](#value-of-the-board)
 	- [Bot Move Choice](#bot-move-choice)
@@ -131,6 +131,15 @@ The board of the game in wich it represents the pieces in place in pairs with th
 	The variable Amount it is the amount of pieces available to be played in the game. It will go from 54 to 0.
 
 - **Turn**
+
+#### Representation of Trees and Coordinates
+The representation of both trees and coordinates consists of a pair in the form of X-Y.
+  
+
+#####  Trees (Height-Color)
+- 1:  Height --> small size , Color --> light green 
+- 2:  Height --> medium size ,  Color --> medium green
+- 3:  Height --> big size , Color --> dark green
 
 #### Value of the Board
 Our game has special way to count to count the poinst depending if u win writh colors or heights u count de number of pieces with the biggest peices from every color/height type and sum it we use 3 main functions to resolve this problem we will show an example of the values function of color its the same but with height in the heights functions
