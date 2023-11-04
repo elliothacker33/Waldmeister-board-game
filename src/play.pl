@@ -73,12 +73,13 @@ play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), 
     GameOverState=[Board,Trees1,Trees2,0,_],
     display_game(GameOverState),
     sleep(2),
-    game_over(GameOverState,Winner),
+    game_over(GameOverState,Winner,PointsHeight,PointsColor),
     (Goal1 =:= Winner ->
-        display_Winner(Winner,PlayerNumber1) 
+        display_Winner(Winner,PlayerNumber1,PointsHeight,PointsColor) 
     ;
-        display_Winner(Winner,PlayerNumber2)
-    )
+        display_Winner(Winner,PlayerNumber2,PointsHeight,PointsColor)
+    ),
+    sleep(20)
 .
 
 play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
@@ -144,7 +145,7 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
         sleep(5)
         
      ;
-        choose_move(GameState,2,2,(Goal2,TreesInBoard,((Tree,OldCoordinates),NewCoordinates,NewTree))),write('Player 1 is thinking2...'),nl,
+        choose_move(GameState,2,2,(Goal2,TreesInBoard,((Tree,OldCoordinates),NewCoordinates,NewTree))),
         move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
         display_game(MiddleState),
         sleep(5),

@@ -215,19 +215,20 @@ choose_move([Board,Trees1,_,_,_],1,1,(TreesInBoard,Tree,Coordinates,NewCoordinat
 	<bl>
 	- In this bot we made a little gready options like only chosing trees to move in wich its neightboors are with the same color/height of the piece tha we will put, and move the oldpiece only to the positions when there are neightboors with the same height/color with this we greattly reduce the solutions numbers to make the code quicker but we might end the code without any solutions in that case in the end of the code if we dont have solutions it chooses a random move from the easy bot
 ```prolog
-%calcula o numero maximo de pecas com a mesma cor proximas umas das outras
+% Calculate the maximum number of pieces with the same color close to each other
+
 bot_move([Board | RestGameState],'Color',Trees,TreesInBoard,BotMov):-
     get_size(Board,Size),
     
     findall(Score-((Tree,OldCords),NewCords,NewTree), 
         (
-    %selecionar uma arvore que se pode mexer e vêr se em relação a pessa que pomos tem pelo menos uma pessa com a mesma altura perto
+        % Select a tree that can be moved and check if it has at least one piece with the same height nearby in relation to the piece we place
         getOptimalStartTreeColor(Board,Size,Trees,TreesInBoard,OldCords,NewTree),getPiece(Board,OldCords,Tree),
-        %optimizações vamos concederar movimentos que estão pertos de outras arvores
+        % Optimize: consider moves that are close to other trees
         valid_moves([Board | RestGameState],OldCords,ValidMoves) , member(NewCords,ValidMoves) , has_piece_near_with_same_color(Board,Size,NewCords,Tree),
-        %mover a peça para outra zona do tabuleiro
+         % Move the piece to another area of the board
         move([Board | RestGameState],( (Tree ,OldCords),NewCords),[BoardUpdated | _]),
-        %colocar a peça na localização em que tiramos a outra peça
+        % Place the piece at the location where we removed another piece
         move([BoardUpdated | RestGameState],( (NewTree , -1),OldCords),[BoardUpdated1 | _]),
         count_color_values(BoardUpdated1,Score)),MaxMoves),
     

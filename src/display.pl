@@ -1,4 +1,8 @@
-display_game([Board,Trees1,Trees2,_,Turn]):-
+/* 
+    it prints the board and other inportant information
+*/
+% display_game(+Gamestate)
+display_game([Board,Trees1,Trees2,Amount,Turn]):-
     draw_matrix(Board),
     write('\n\nPlayer 1: small    Medium  big\n'),
     member((1-1,Ls),Trees1),member((2-1,Lm),Trees1),member((3-1,Lb),Trees1),
@@ -14,15 +18,22 @@ display_game([Board,Trees1,Trees2,_,Turn]):-
     format('Medium Green: ~w    ~w       ~w ~n',[Ms2,Mm2,Mb2]),
     member((1-3,Ds2),Trees2),member((2-3,Dm2),Trees2),member((3-3,Db2),Trees2),
     format('Dark Green:   ~w    ~w       ~w ~n~n',[Ds2,Dm2,Db2]),
-    format('Player ~w is playing !!.~n~n',[Turn])
+    (Amount = 0 ->
+        format('Game Ended.~n~n',[])
+        ;
+        format('Player ~w is playing !!.~n~n',[Turn])
+    )
 .
-        
-display_Winner(1,Player):-
-    format('Player ~w won playing for heights',[Player])
+/* 
+    it prints the wining player and the points
+*/
+% display_Winner(+Goal,+Player,+PointsHeight,+PointsColor)   
+display_Winner(1,Player,PointsHeight,PointsColor):-
+    format('Player ~w won playing for heights with ~w points vs ~w',[Player,PointsHeight,PointsColor])
 .
 
-display_Winner(2,Player):-
-    format('Player ~w won playing for colors',[Player])
+display_Winner(2,Player,PointsHeight,PointsColor):-
+    format('Player ~w won playing for colors with ~w points vs ~w',[Player,PointsColor,PointsHeight])
 .
 
 
@@ -32,44 +43,30 @@ display_Winner(_,_):-
 
         
         
-        
+/* 
+    this function is responsible to fill the matrix with 0 that represents filler places so that the board is alligned
+*/
+% add_blancks(+Blanks,Column,Result)
 add_blancks(0,Result,Result).
 add_blancks(Blanks,Column,Result):-
     append([0],Column,NewColumn),
     NewBlanks is Blanks - 1,
     add_blancks(NewBlanks,NewColumn,Result).
-        
+/* 
+    this function is responsible to draw the board 
+*/
+% draw_matrix(+Matrix)  
 draw_matrix([]).
 draw_matrix(Matrix):-
     get_size(Matrix,Size),
-    draw_First_Line(Size,0),
     write('\nL\n'),
     draw_matrix_aux(Size,1,Matrix).
         
-draw_First_Line(Size,Current_colomn):-
-    Tmp is Size*2 ,
-    Current_colomn =:= Tmp.
-        
-draw_First_Line(Size,0):-
-    write('\nC  '),
-    draw_First_Line(Size,1).
-        
-draw_First_Line(Size,Current_colomn):-
-    Current_colomn < Size*2,
-    Current_colomn < 10,
-    New_Current_colomn is Current_colomn + 1,
-    write('  '),
-    write(Current_colomn),
-    draw_First_Line(Size,New_Current_colomn).
-        
-draw_First_Line(Size,Current_colomn):-
-    Current_colomn < Size*2,
-    10 =< Current_colomn ,
-    New_Current_colomn is Current_colomn + 1,
-    write(' '),
-    write(Current_colomn),
-    draw_First_Line(Size,New_Current_colomn).
-        
+
+/* 
+    this function is and axiliary function to draw the board
+*/
+% draw_matrix_aux(+Size,+NColumn,+Matrix)        
 draw_matrix_aux(_,_,[]).
         
 draw_matrix_aux(Size,NColumn,[Head | Tail]):-
@@ -85,7 +82,11 @@ draw_matrix_aux(Size,NColumn,[Head | Tail]):-
     NColumn1 is NColumn + 1,
     draw_matrix_aux2(NColumn,Blanks,Head),
     draw_matrix_aux(Size,NColumn1,Tail).
-        
+/* 
+    this function is and a second axiliary function to draw the board used to process the board with filler 
+    places and use 3 diferent lists because each piece is composed by 3 lines
+*/
+% draw_matrix_aux2(+Size,+NColumn,+Line)  
 draw_matrix_aux2(NColumn,Blanks,Head):-
     NColumn < 10,
     add_blancks(Blanks,Head,NewHead),
@@ -107,7 +108,10 @@ draw_matrix_aux2(NColumn,Blanks,Head):-
     draw_line(NewLine1),
     draw_line(NewLine2),
     draw_line(NewLine3),write('\n').
-        
+/* 
+    this function is used to draw each line of the auxiliary lines used to draw the board
+*/
+% draw_line(+Line) 
 draw_line([]):-
         write('\n').
         
@@ -119,14 +123,21 @@ draw_line([Head | Tail]):-
 draw_line([Head | Tail]):-
     format(Head,[]),
     draw_line(Tail).
-        
-draw_line_with_pieces([],Lines,Lines).
+/* 
+    this function is used to draw each call the draw_piece function that is responsible to draw each piece and 
+    transform into a list of lines that represents each line of the piece
+*/
+% draw_line([Head | Tail],Lines,Result) 
+draw_line_with_pieces(_Line,Lines,Lines).
         
 draw_line_with_pieces([Head | Tail],Lines,Result):-
     draw_Piece(Head,Lines,NewLines),
     draw_line_with_pieces( Tail,NewLines,Result).
         
-        
+/* 
+    this function is used to draw each diferent piece
+*/
+% draw_Piece(+Type,[+Tail1,+Tail2,+Tail3],[-NewTail1,-NewTail2,-NewTail3])
 draw_Piece(-1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['    _ '],NewTail1),
     append(Tail2,['   / \\'],NewTail2),

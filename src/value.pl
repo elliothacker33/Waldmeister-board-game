@@ -2,14 +2,14 @@
 
 
 
-game_over([Board| _Rest],Winner):-
-    winner(Board, Winner).
+game_over([Board| _Rest],Winner,MaxHeight,MaxColor):-
+    winner(Board, Winner,MaxHeight,MaxColor).
 
 /*
-   recebe um Board que avalia e devolve o vencedor Cores ou Alturas
+   it receves a board and returns the winner the poinst of the color player and height ratio
 */
-% winner(+Board,-winner)
-winner(Board, Winner) :-
+% winner(+Board,-winner,-MaxHeight,-MaxColor)
+winner(Board, Winner,MaxHeight,MaxColor) :-
     count_color_values(Board,MaxColor),
     count_height_values(Board,MaxHeight),
     getWinner(MaxColor,MaxHeight,Winner).
@@ -19,7 +19,7 @@ getWinner(MaxColor,MaxHeight,2):- MaxHeight < MaxColor .% color won
 getWinner(MaxColor,MaxHeight,0):- MaxHeight =:= MaxColor .% draw
 
 /*
-   recebe um Board que avalia , uma posição para devolver a tree que la esta ou -1 se nao estiver la nenhuma arvore
+   You receive a board that assesses a position to return the tree that is there, or -1 if there is no tree.
 */
 % getPiece(+ Board, +Cords, -Piece)
 getPiece(Board, Line-Col, Piece) :-
@@ -31,7 +31,7 @@ get_Color(_-Color,Color).
 
 
 /*
-   recebe um Board que avalia devolve os pontos do jogador por cores
+   You receive a board that assesses and returns the player's points by colors.
 */
 % count_color_values(+Board,-Max)
 
@@ -43,7 +43,7 @@ count_color_values(Board,Max):-
     Max is Max1 + Max2 + Max3.
 
 /*
-   uma função que atravez de chamadas recurssivas calcula o numero de peças do aglomerado maior de uma certa cor que é recebida como input Color no Board recebido
+   A function that, through recursive calls, calculates the number of pieces in the largest cluster of a specific color received as input on the given board.
 */
 % count_color_values( +Board,+Size,+Queue,+Visited,+Color,+CurrMax,-Max)
 color_bfs(Board,_,Visited,Color,CurrMax,CurrMax):-
@@ -60,8 +60,8 @@ color_bfs(Board,Size,Visited,Color,CurrMax,Max):-
     ).
 
 /*
-  Função que utiliza Bfs para calcular o numero de peças do aglomerado maior de uma certa cor que é recebida  como input Color no Board recebido e a 
-  peça inicial é recebida para começar o bfs esta função é o bfs em si
+A function that uses BFS (Breadth-First Search) to calculate the number of pieces in the largest cluster of a specific 
+color received as input on the given board. The starting piece is received to begin the BFS, and this function is the BFS implementation itself.
 */
 % color_bfs_aux( +Board,+Size,+Queue,+Visited,-NewVisited,+Color,+CurrMax,-Max)
 
@@ -75,7 +75,7 @@ color_bfs_aux(Board,Size,[Line-Col |  Rest],Visited,NewVisited,Color,Current_Max
     color_bfs_aux(Board,Size,New_queue,[Line-Col | Visited],NewVisited,Color,NewMax,Max).
 
 /*
-   recebe um Board que avalia devolve os pontos do jogador por alturas
+   receives a board that evaluates and returns the player's points by heights.
 */
 % count_color_values(+Board,-Max)
 count_height_values(Board,Max):-
@@ -85,7 +85,7 @@ count_height_values(Board,Max):-
     height_bfs(Board,Size,[],3,0,Max3),
     Max is Max1 + Max2 + Max3.
 /*
-   uma função que atravez de chamadas recurssivas calcula o numero de peças do aglomerado maior de uma certa height que é recebida como input height no Board recebido
+A function that, through recursive calls, calculates the number of pieces in the largest cluster of a certain height received as input on the given board.
 */
 % count_color_values( +Board,+Size,+Visited,+Color,+CurrMax,-Max)
 
@@ -104,8 +104,9 @@ height_bfs(Board,Size,Visited,Height,CurrMax,Max):-
     ).
 
 /*
-  Função que utiliza Bfs para calcular o numero de peças do aglomerado maior de uma certa heigth que é recebida  como input Color no Board recebido e a 
-  peça inicial é recebida para começar o bfs esta função é o bfs em si
+A function that uses BFS (Breadth-First Search) to calculate the number of pieces in
+ the largest cluster of a certain height received as input on the given board. 
+ The starting piece is received to begin the BFS, and this function is the BFS implementation itself.
 */
 % color_bfs_aux( +Board,+Size,+Visited,-NewVisited,+Height,+CurrMax,-Max)
 height_bfs_aux(_,_,[],Visited,Visited,_,Max,Max).
@@ -119,7 +120,7 @@ height_bfs_aux(Board,Size,[Line-Col |  Rest],Visited,NewVisited,Height,Current_M
 
 
 /*
-  esta função é utilizada para encontrar alguma peça que esteja proxima da linha (+Line) e coluna (+Colum) recebida como input as cords recebidas são da peça selecionada
+"This function is used to find a piece that is close to the row (+Line) and column (+Column) received as input. The provided coordinates are for the selected piece."
 */
 % getPositionNear(+Size,+Line,+Col,-Cords)
 
@@ -226,7 +227,6 @@ get_front_left(Size,Line,Column,RLine-Column):-
 get_front_right(Size,Line,_,null):-
     can_not_Go_Front(Size,Line),!.
 
-%se o diamante ja se tiver a diminuir nao vai haver se a linha for igual ao size front_right so front_left
 
 get_front_right(Size,Line,Column,null):-
     TmpSize is Size - 1,

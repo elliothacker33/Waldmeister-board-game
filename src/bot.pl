@@ -48,16 +48,16 @@ choose_move([Board,_,Trees2,_,_],2,1,(TreesInBoard,Tree,Coordinates,NewCoordinat
 
 % Greedy AI
 
-choose_move([Board, Trees1, Trees2,Amount,Turn],1,2,(1,TreesInBoard,BotMov)):-
+choose_move([Board, Trees1, Trees2,Amount,Turn],1,2,(1,TreesInBoard,BotMov)):-write('Height1'),nl,
     bot_move([Board, Trees1, Trees2,Amount,Turn],'Height',Trees1,TreesInBoard,BotMov).
 
-choose_move([Board, Trees1, Trees2,Amount,Turn],1,2,(2,TreesInBoard,BotMov)):-
+choose_move([Board, Trees1, Trees2,Amount,Turn],1,2,(2,TreesInBoard,BotMov)):-write('Color'),nl,
     bot_move([Board, Trees1, Trees2,Amount,Turn],'Color',Trees1,TreesInBoard,BotMov).
 
-choose_move([Board, Trees1, Trees2,Amount,Turn],2,2,(1,TreesInBoard,BotMov)):-
+choose_move([Board, Trees1, Trees2,Amount,Turn],2,2,(1,TreesInBoard,BotMov)):-write('Height2'),nl,
     bot_move([Board, Trees1, Trees2,Amount,Turn],'Height',Trees2,TreesInBoard,BotMov).
 
-choose_move([Board, Trees1, Trees2,Amount,Turn],2,2,(2,TreesInBoard,BotMov)):-
+choose_move([Board, Trees1, Trees2,Amount,Turn],2,2,(2,TreesInBoard,BotMov)):-write('Color'),nl,
     bot_move([Board, Trees1, Trees2,Amount,Turn],'Color',Trees2,TreesInBoard,BotMov).
 
 
@@ -82,9 +82,9 @@ getOptimalStartTree(Board,Size,Trees,TreesInBoard,OldCords,NewTree):-
         has_piece_near_with_same_color(Board,Size,OldCords,NewTree).
 
 /*
-   movimento do bot com dificuldade facil vai retornar um movimento melhor para a situação ((Tree,OldCords),NewCords,NewTree)) tree
-    que se vai mecher das cordenadas velhas para as novas e a nova arvore que se vai colocar no tabuleiro nas cordenadas antigas 
-    caso nao exista nenhum movimento melhor é utilizado um aleatorio
+   The bot's movement with easy difficulty will return a better move for the situation ((Tree, OldCoords), NewCoords, NewTree)) tree
+   which will move from the old coordinates to the new ones, and the new tree that will be placed on the board at the old coordinates.
+   If there is no better move available, a random one will be used.
 */
 % bot_move(+GameState,'Height' or 'Color', +TreesInBoard,-BotMov)
 bot_move([Board | RestGameState],'Height',Trees,TreesInBoard,BotMov):-
@@ -92,58 +92,42 @@ bot_move([Board | RestGameState],'Height',Trees,TreesInBoard,BotMov):-
     
     findall(Score-((Tree,OldCords),NewCords,NewTree), 
         (
-    %selecionar uma arvore que se pode mexer e vêr se em relação a pessa que pomos tem pelo menos uma pessa com a mesma altura perto
         getOptimalStartTree(Board,Size,Trees,TreesInBoard,OldCords,NewTree),getPiece(Board,OldCords,Tree),
-        %optimizações vamos concederar movimentos que estão pertos de outras arvores
         valid_moves([Board | RestGameState],OldCords,ValidMoves) , member(NewCords,ValidMoves) , has_piece_near_with_same_height(Board,Size,NewCords,Tree),
-        %mover a peça para outra zona do tabuleiro
         move([Board | RestGameState],( (Tree ,OldCords),NewCords),[BoardUpdated | _]),
-        %colocar a peça na localização em que tiramos a outra peça
         move([BoardUpdated | RestGameState],( (NewTree , -1),OldCords),[BoardUpdated1 | _]),
         count_height_values(BoardUpdated1,Score)),MaxMoves),
-    
+    write('exited'),
     length(MaxMoves,N),
     (0 < N ->
         sort(MaxMoves,SortedMoves),
-        %get best score
         last(SortedMoves,MaxScore-_),
-        %find all best scores
         findall(Mov,member(MaxScore-Mov,SortedMoves),MaxMoves1),
-        %choose one at random
         random_member(BotMov, MaxMoves1)
         ;
-        %if the gready algorithm didnt find any moves, use the easy algorithm
-        choose_move([Board,Trees,_,_,_],1,1,(TreesInBoard,Tree,Coordinates,NewCoordinates;NewTree)),
+        choose_move([Board,Trees,_,_,_],1,1,(TreesInBoard,Tree,Coordinates,NewCoordinates,NewTree)),
         BotMov = ((Tree,Coordinates),NewCoordinates,NewTree)
     ).
 
 
-%calcula o numero maximo de pecas com a mesma cor proximas umas das outras
 bot_move([Board | RestGameState],'Color',Trees,TreesInBoard,BotMov):-
     get_size(Board,Size),
     
     findall(Score-((Tree,OldCords),NewCords,NewTree), 
         (
-    %selecionar uma arvore que se pode mexer e vêr se em relação a pessa que pomos tem pelo menos uma pessa com a mesma altura perto
         getOptimalStartTreeColor(Board,Size,Trees,TreesInBoard,OldCords,NewTree),getPiece(Board,OldCords,Tree),
-        %optimizações vamos concederar movimentos que estão pertos de outras arvores
         valid_moves([Board | RestGameState],OldCords,ValidMoves) , member(NewCords,ValidMoves) , has_piece_near_with_same_color(Board,Size,NewCords,Tree),
-        %mover a peça para outra zona do tabuleiro
         move([Board | RestGameState],( (Tree ,OldCords),NewCords),[BoardUpdated | _]),
-        %colocar a peça na localização em que tiramos a outra peça
         move([BoardUpdated | RestGameState],( (NewTree , -1),OldCords),[BoardUpdated1 | _]),
         count_color_values(BoardUpdated1,Score)),MaxMoves),
     
     length(MaxMoves,N),
     (0 < N ->
         sort(MaxMoves,SortedMoves),
-        %get best score
         last(SortedMoves,MaxScore-_),
-        %find all best scores
         findall(Mov,member(MaxScore-Mov,SortedMoves),MaxMoves1),
-        %choose one at random
         random_member(BotMov, MaxMoves1)
         ;
-        choose_move([Board,Trees,_,_,_],1,1,(TreesInBoard,Tree,Coordinates,NewCoordinates;NewTree)),
+        choose_move([Board,Trees,_,_,_],1,1,(TreesInBoard,Tree,Coordinates,NewCoordinates,NewTree)),
         BotMov = ((Tree,Coordinates),NewCoordinates,NewTree)
     ).
