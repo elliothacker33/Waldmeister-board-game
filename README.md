@@ -11,7 +11,10 @@
 	 - [Objective](#objective) 
 	 - [Ending and Scoring](#ending-and-scoring)
    - [Helpful links](#helpful-links)
-- [Logic]()
+- [Logic of the game](#logic-of-the-game)Representation Of The GameState
+	- [GameState](#representation-of-the-gamestate)
+	- [Value of the board](#value-of-the-board)
+	- [Bot Move Choice](#bot-move-choice)
 ## Group
    - Tomás Alexandre Torres Pereira (up202108845@edu.fe.up.pt)
    - Tomás Miranda de Figueiredo Sarmento (up202108778@edu.fe.up.pt)
@@ -111,7 +114,7 @@ The game ends when all the pieces have been placed on the board. Players must th
 - [Official Website](https://www.spielewerkstatt.eu/gb/strategy-tactics/204-forestmeister.html): Browse the official website of the game and buy the game.
 
 
-### LogicGame
+### Logic of the Game
 
 #### Representation Of The GameState
 
@@ -172,7 +175,7 @@ color_bfs(Board,Size,Visited,Color,CurrMax,Max):-
 ```
 
 
-#### BotMoveChoice
+#### Bot Move Choice
 - **Bot Generic behaviour**
 the function choose_move(+Gamestate, +Player, +Dificulty, -Mov) is standard among all bots but they have slight differences our game is a bit special one move is actual two, and our initial move is diferent and doesnt have a gready approch possible because that approch is only feasible when there are pieces in the board one move consist in trading a piece with one of the player and using the piece that was removed from the board to move in one of the available paths but in the start we dont have any piece to replace so the first move is choosing a random position and placing a piece there and then the second player chooses a random valid position and move the piece there.
 ```prolog
