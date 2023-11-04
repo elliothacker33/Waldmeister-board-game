@@ -1,12 +1,25 @@
 
 % Random AI
 
+/*
+ choose_move([_Board, _Trees1, _, _ , _], _, 1, (ValidMoves,_Tree,Coordinates))
+ This predicat is responsible to choose a random coordinates for a tree.
+*/
+% choose_move([_Board, Trees, _, _ , _], PlayerNumber, 1, (ValidMoves,_Tree,Coordinates))
+
 choose_move([_Board, _Trees1, _, _ , _], 1, 1, (ValidMoves,_Tree,Coordinates)):-
     random_member(Coordinates, ValidMoves)
 .
+
 choose_move([_Board, _,_Trees2, _ , _], 2, 1, (ValidMoves,_Tree,Coordinates)):-
     random_member(Coordinates, ValidMoves)
 .
+
+/*
+choose_move([Board,_,_,_,_],_,1,(TreesInBoard,Tree,Coordinates,NewCoordinates,NewTree))
+This is the predicat that executes the random difficulty level for the AI.
+*/
+% choose_move([Board,Trees,_,_,_],PlayerNumber,1,(TreesInBoard,Tree,Coordinates,NewCoordinates,NewTree))
 
 choose_move([Board,Trees1,_,_,_],1,1,(TreesInBoard,Tree,Coordinates,NewCoordinates,NewTree)):-
     GameState = [Board,_,_,_,_],
@@ -19,6 +32,7 @@ choose_move([Board,Trees1,_,_,_],1,1,(TreesInBoard,Tree,Coordinates,NewCoordinat
     collect_available_trees(Trees1,AvailableTrees),
     random_member(NewTree,AvailableTrees)
 .
+
 choose_move([Board,_,Trees2,_,_],2,1,(TreesInBoard,Tree,Coordinates,NewCoordinates,NewTree)):-
     GameState = [Board,_,_,_,_],
     random_member(Coordinates,TreesInBoard),

@@ -1,11 +1,3 @@
-color(1,'Strong green').
-color(2,'Medium green').
-color(3,'Light green').
-
-height(1,'High').
-height(2,'Medium').
-height(3,'Small').
-
 /*
     The predicate collect_available_trees finds all trees that a player can use.
     Quantity>0 -> tree is available, else is not.
@@ -32,8 +24,7 @@ repeat_choose_tree(Tree, [Board ,Trees1,_,_,_],1):-
 .
 
 repeat_choose_tree(Tree, [Board ,Trees1,_,_,_],1):-
-    format('~*c', [40, 32]),
-    format('\e[48;5;208m\e[97mERROR: Invalid option. Please choose an available tree.\e[0m', []),
+    format('ERROR: Invalid option. Please choose an available tree.', []),
     print_newline(2),
     repeat_choose_tree(Tree, [Board ,Trees1,_,_,_],1)
 .
@@ -46,8 +37,7 @@ repeat_choose_tree(Tree, [Board ,_,Trees2,_,_],2):-
 .
 
 repeat_choose_tree(Tree, [Board ,_,Trees2,_,_],2):-
-    format('~*c', [40, 32]),
-    format('\e[48;5;208m\e[97mERROR: Invalid option. Please choose an available tree.\e[0m', []),
+    format('ERROR: Invalid option. Please choose an available tree.', []),
     print_newline(2),
     repeat_choose_tree(Tree, [Board ,_,Trees2,_,_],2)
 .
@@ -65,8 +55,7 @@ repeat_choose_valid_move(Coordinates,ValidMoves):-
 .
 
 repeat_choose_valid_move(Coordinates,ValidMoves):-
-    format('~*c', [40, 32]),
-    format('\e[48;5;208m\e[97mERROR: Invalid option. Please choose a valid move.\e[0m', []),
+    format('ERROR: Invalid option. Please choose a valid move.', []),
     print_newline(2),
     repeat_choose_valid_move(Coordinates,ValidMoves)
 .
@@ -86,8 +75,7 @@ repeat_choose_tree_in_board([Board | _ ],(Tree,Coordinates),TreesInBoard):-
 .
 
 repeat_choose_tree_in_board([Board | _ ],(Tree,Coordinates),TreesInBoard):-
-    format('~*c', [40, 32]),
-    format('\e[48;5;208m\e[97mERROR: Invalid option. Please choose a Tree that is on the board.\e[0m', []),
+    format('ERROR: Invalid option. Please choose a Tree that is on the board.', []),
     print_newline(2),
     repeat_choose_tree_in_board([Board | _ ],(Tree,Coordinates),TreesInBoard)
 .
@@ -98,13 +86,11 @@ repeat_choose_tree_in_board([Board | _ ],(Tree,Coordinates),TreesInBoard):-
 % askTree(-Tree)
 
 askTree(Tree):-
-    format('~*c', [40, 32]),
-    write('Heights. 1- High 2-Medium 3-Small'),
     print_newline(1),
-    format('~*c', [40, 32]),
-    write('Colors.  1- Strong green 2- Medium green 3- Light green'),
+    write('Heights. 1- Small 2-Medium 3-High'),
     print_newline(1),
-    format('~*c', [40, 32]),
+    write('Colors.  1- Light green 2- Medium green 3- Strong green'),
+    print_newline(2),
     write('Choose a tree Height-Color: '),
     read(Tree)
 .
@@ -118,14 +104,12 @@ askTree(Tree):-
 % askCoordinates(-Coordinates,+Options)
 
 askCoordinates(Coordinates,1):-
-    format('~*c', [40, 32]),
-    write('Choose a valid move (Orange hollows) as X-Y: '),
+    write('Choose a valid move X-Y: '),
     read(Coordinates)
 .
 
 askCoordinates(Coordinates,2):-
-    format('~*c', [40, 32]),
-    write('Choose valid coordinates for free trees in board (Orange hollows) as X-Y: '),
+    write('Choose a free tree in board with coordinates X-Y: '),
     read(Coordinates)
 .
 

@@ -69,11 +69,10 @@ play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), 
     display_game(GameOverState),
     game_over(GameOverState,Winner),
     (Goal1 =:= Winner ->
-        Player = PlayerNumber1
+        display_Winner(Winner,PlayerNumber1) 
     ;
-        Player = PlayerNumber2
-    ),
-    display_Winner(Winner,Player) % needs Correction
+        display_Winner(Winner,PlayerNumber2)
+    )
 .
 
 play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
