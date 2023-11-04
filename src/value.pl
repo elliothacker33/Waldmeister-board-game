@@ -37,25 +37,15 @@ get_Color(_-Color,Color).
 
 count_color_values(Board,Max):-
     get_size(Board,Size),
-    %write('start_color_bfs\n'),
     color_bfs(Board,Size,[],1,0,Max1),
-    %write('LightGreen:'),
-    %write(Max1),
-    %write('\n'),
     color_bfs(Board,Size,[],2,0,Max2),
-    %write('MediumLight:'),
-    %write(Max2),
-    %write('\n'),
     color_bfs(Board,Size,[],3,0,Max3),
-    %write('MaxLight:'),
-    %write(Max3),
-    %write('\n'),
     Max is Max1 + Max2 + Max3.
 
 /*
    uma função que atravez de chamadas recurssivas calcula o numero de peças do aglomerado maior de uma certa cor que é recebida como input Color no Board recebido
 */
-% count_color_values( +Board,+Size,+Visited,+Color,+CurrMax,-Max)
+% count_color_values( +Board,+Size,+Queue,+Visited,+Color,+CurrMax,-Max)
 color_bfs(Board,_,Visited,Color,CurrMax,CurrMax):-
     next_position_color(Board,Visited,Color,Cord),
     Cord == null.
@@ -73,7 +63,7 @@ color_bfs(Board,Size,Visited,Color,CurrMax,Max):-
   Função que utiliza Bfs para calcular o numero de peças do aglomerado maior de uma certa cor que é recebida  como input Color no Board recebido e a 
   peça inicial é recebida para começar o bfs esta função é o bfs em si
 */
-% color_bfs_aux( +Board,+Size,+Visited,-NewVisited,+Color,+CurrMax,-Max)
+% color_bfs_aux( +Board,+Size,+Queue,+Visited,-NewVisited,+Color,+CurrMax,-Max)
 
 color_bfs_aux(_,_,[],Visited,Visited,_,Max,Max).
 
@@ -91,17 +81,8 @@ color_bfs_aux(Board,Size,[Line-Col |  Rest],Visited,NewVisited,Color,Current_Max
 count_height_values(Board,Max):-
     get_size(Board,Size),
     height_bfs(Board,Size,[],1,0,Max1),
-    %write('Small:'),
-    %write(Max1),
-    %write('\n'),
     height_bfs(Board,Size,[],2,0,Max2),
-    %write('Medium:'),
-    %write(Max2),
-    %write('\n'),
     height_bfs(Board,Size,[],3,0,Max3),
-    %write('Max:'),
-    %write(Max3),
-    %write('\n'),
     Max is Max1 + Max2 + Max3.
 /*
    uma função que atravez de chamadas recurssivas calcula o numero de peças do aglomerado maior de uma certa height que é recebida como input height no Board recebido
