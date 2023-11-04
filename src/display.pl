@@ -1,33 +1,20 @@
-print_list([]).
-print_list([H-C | Rest]) :-
-    write(H-C), nl,
-    print_list(Rest).
-
-print_valid_moves([]).
-print_valid_moves([X-Y|H]):-
-        format('~w-~w ',[X,Y]),
-        print_valid_moves(H).
-
-
-        
-        
 display_game([Board,Trees1,Trees2,_,Turn]):-
-        draw_matrix(Board),
-        write('\n\nPlayer 1: small    Medium  big\n'),
-        member((1-1,Ls),Trees1),member((2-1,Lm),Trees1),member((3-1,Lb),Trees1),
-        format('Ligth Green:  ~w    ~w       ~w ~n',[Ls,Lm,Lb]),
-        member((1-2,Ms),Trees1),member((2-2,Mm),Trees1),member((3-2,Mb),Trees1),
-        format('Medium Green: ~w    ~w       ~w ~n',[Ms,Mm,Mb]),
-        member((1-3,Ds),Trees1),member((2-3,Dm),Trees1),member((3-3,Db),Trees1),
-        format('Dark Green:   ~w    ~w       ~w ~n',[Ds,Dm,Db]),
-        write('\n\nPlayer 2: small    Medium  big\n'),
-        member((1-1,Ls2),Trees2),member((2-1,Lm2),Trees2),member((3-1,Lb2),Trees2),
-        format('Ligth Green:  ~w    ~w       ~w ~n',[Ls2,Lm2,Lb2]),
-        member((1-2,Ms2),Trees2),member((2-2,Mm2),Trees2),member((3-2,Mb2),Trees2),
-        format('Medium Green: ~w    ~w       ~w ~n',[Ms2,Mm2,Mb2]),
-        member((1-3,Ds2),Trees2),member((2-3,Dm2),Trees2),member((3-3,Db2),Trees2),
-        format('Dark Green:   ~w    ~w       ~w ~n~n',[Ds2,Dm2,Db2]),
-        format('Player ~w is playing !!.~n~n',[Turn])
+    draw_matrix(Board),
+    write('\n\nPlayer 1: small    Medium  big\n'),
+    member((1-1,Ls),Trees1),member((2-1,Lm),Trees1),member((3-1,Lb),Trees1),
+    format('Ligth Green:  ~w    ~w       ~w ~n',[Ls,Lm,Lb]),
+    member((1-2,Ms),Trees1),member((2-2,Mm),Trees1),member((3-2,Mb),Trees1),
+    format('Medium Green: ~w    ~w       ~w ~n',[Ms,Mm,Mb]),
+    member((1-3,Ds),Trees1),member((2-3,Dm),Trees1),member((3-3,Db),Trees1),
+    format('Dark Green:   ~w    ~w       ~w ~n',[Ds,Dm,Db]),
+    write('\n\nPlayer 2: small    Medium  big\n'),
+    member((1-1,Ls2),Trees2),member((2-1,Lm2),Trees2),member((3-1,Lb2),Trees2),
+    format('Ligth Green:  ~w    ~w       ~w ~n',[Ls2,Lm2,Lb2]),
+    member((1-2,Ms2),Trees2),member((2-2,Mm2),Trees2),member((3-2,Mb2),Trees2),
+    format('Medium Green: ~w    ~w       ~w ~n',[Ms2,Mm2,Mb2]),
+    member((1-3,Ds2),Trees2),member((2-3,Dm2),Trees2),member((3-3,Db2),Trees2),
+    format('Dark Green:   ~w    ~w       ~w ~n~n',[Ds2,Dm2,Db2]),
+    format('Player ~w is playing !!.~n~n',[Turn])
 .
         
 display_Winner(1,Player):-
@@ -259,13 +246,13 @@ display_option_2(V):-
     format('~c',[V]),
     write('         '),
     format('~w',['2']),
-    write(' Human/PC                '),
+    write(' Human/AI                '),
     format('~c',[V]).
 display_option_3(V):-
     format('~c',[V]),
     write('         '),
     format('~w',['3']),
-    write(' PC/PC                   '),
+    write(' AI/AI                   '),
     format('~c',[V]).
 display_option_4(V):-
     format('~c',[V]),
@@ -371,12 +358,14 @@ display_goal_1(V):-
     format('~w',['1']),
     write(' Heights                 '),
     format('~c',[V]).
+
 display_goal_2(V):-
     format('~c',[V]),
     write('         '),
     format('~w',['2']),
     write(' Colors                  '),
     format('~c',[V]).
+
 display_goal_menu:-
     box_char(horizontal,H),
     box_char(vertical,V),
@@ -398,7 +387,6 @@ display_goal_menu:-
 
 /*  
  display_main_menu is a predicate that shows main menu of Waldmeister Game
-
 */
 % display_main_menu/0
 
@@ -411,3 +399,61 @@ display_main_menu:-
     repeat_ask_option(Option),
     !
 .
+
+/*
+ display_instructions predicate is responsible to show instructions.
+*/
+% display_instructions/0
+
+display_instructions:-
+    write('The waldmeister game is played with the following set of rules.'),
+    print_newline(1),
+    write('1- Each player has 27 trees (3 of each type Height-Colors)'),
+    print_newline(1),
+    write('2- One player will play for heights team and the other for colors team'),
+    print_newline(1),
+    write('3- In the first play the first player takes one of his trees and put it in the board in place X'),
+    print_newline(1),
+    write('4- Then, the second player moves the tree player one played and put it in place Y (valid moves)'),
+    print_newline(1),
+    write('5- After that second player moves one of his trees to the place X'),
+    print_newline(1),
+    write('6- After this first player plays and choose one tree in the board (position K) and put it in position Z'),
+    print_newline(1),
+    write('7- After this first player chooses a tree that is not on the board and put it in position K'),
+    print_newline(2),
+    write('A free tree is a tree that can move to other places (has >=1 valid moves)'),
+    print_newline(2),
+    write('In the end, all trees on the board the points are checked for heights and colors'),
+    print_newline(1),
+    write('A cluster is a group of pieces of the same height or color that are adjacent or connected without being separated by pieces of different color, height, or empty spaces.'),
+    print_newline(1),
+    write('To win the sum of your best clusters (light-green,medium-green,dark-green) must be higher than the sum of 3 best heights or the opposite for other player')
+.
+
+
+
+/*
+ display_credits predicate is responsible to show credits.
+*/
+% display_credits/0
+
+display_credits:-
+    write('Team members: '),
+    print_newline(1),
+    write('1 --> Tomas Pereira'),
+    print_newline(1),
+    write('2 --> Tomas Sarmento'),
+    print_newline(3),
+    write('FEUP - Faculty of Engineering of the University of Porto'),
+    print_newline(2),
+    write('Sicstus prolog 4.18 was the only tool used in game development'),
+    print_newline(1),
+    write('For more information go to our github --> https://github.com/elliothacker33/Waldmeister-board-game'),
+    print_newline(1),
+    write('Version 1.0 of Waldmeister board game')
+.
+
+
+
+

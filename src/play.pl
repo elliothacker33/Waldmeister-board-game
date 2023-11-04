@@ -32,7 +32,7 @@ play_game([Board,Trees1,Trees2,54,Turn], (PlayerNumber1, PlayerDifficulty1, Goal
 
     change_turn(TurnState,MiddleState),
     display_game(MiddleState),
-
+    sleep(5),
     nth0(0,MiddleState,Board1),
     get_free_trees_in_board(0,0,Board1,Board1,TreesInBoard), 
 
@@ -45,17 +45,22 @@ play_game([Board,Trees1,Trees2,54,Turn], (PlayerNumber1, PlayerDifficulty1, Goal
         repeat_choose_valid_move(NewCoordinates,ValidMoves1),
         move(MiddleState,((NewTree,Coordinates),NewCoordinates),MiddleState1),
         display_game(MiddleState1),
+        sleep(5),
         repeat_choose_tree(NewTree1,MiddleState1,2), 
         move(MiddleState1,((NewTree1,-1),Coordinates),TurnState1),
-        display_game(TurnState1)
+        display_game(TurnState1),
+        sleep(5)
+
         
         ;
         % os bots são iguais no inicio do jogo
         choose_move(MiddleState,2,1,(TreesInBoard,NewTree,Coordinates,NewCoordinates,NewTree1)),
         move(MiddleState,((NewTree,Coordinates),NewCoordinates),MiddleState1),
         display_game(MiddleState1),
+        sleep(5),
         move(MiddleState1,((NewTree1,-1),Coordinates),TurnState1),
-        display_game(TurnState1)
+        display_game(TurnState1),
+        sleep(5)
 
     ),
     
@@ -67,6 +72,7 @@ play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), 
 
     GameOverState=[Board,Trees1,Trees2,0,_],
     display_game(GameOverState),
+    sleep(2),
     game_over(GameOverState,Winner),
     (Goal1 =:= Winner ->
         display_Winner(Winner,PlayerNumber1) 
@@ -79,6 +85,7 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
 
     GameState=[Board,Trees1,Trees2,Amount,Turn],
     display_game(GameState),
+    sleep(5),
     get_free_trees_in_board(0,0,Board,Board,TreesInBoard),
 
     (Turn =:= 1 ->
@@ -88,23 +95,29 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
         valid_moves(GameState,OldCoordinates,ValidMoves), 
         repeat_choose_valid_move(NewCoordinates,ValidMoves),
         move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
-        display_game(MiddleState),  
+        display_game(MiddleState), 
+        sleep(5),
         repeat_choose_tree(NewTree,MiddleState,1), 
         move(MiddleState,((NewTree,-1),OldCoordinates),TurnState),
-        display_game(TurnState)
+        display_game(TurnState),
+        sleep(5)
      ;
     PlayerDifficulty1 =:= 1->
         choose_move(GameState,1,1,(TreesInBoard,Tree,OldCoordinates,NewCoordinates,NewTree)),
         move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
         display_game(MiddleState),
+        sleep(5),
         move(MiddleState,((NewTree,-1),OldCoordinates),TurnState),
-        display_game(TurnState)
+        display_game(TurnState),
+        sleep(5)
      ;
         choose_move(GameState,1,2,(Goal1,TreesInBoard,((Tree,OldCoordinates),NewCoordinates,NewTree))),
         move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
         display_game(MiddleState),
+        sleep(5),
         move(MiddleState,((NewTree,-1),OldCoordinates),TurnState),
-        display_game(TurnState)
+        display_game(TurnState),
+        sleep(5)
      )
      ;
      (
@@ -114,24 +127,30 @@ play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, 
         repeat_choose_valid_move(NewCoordinates,ValidMoves),
         move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
         display_game(MiddleState),
+        sleep(5),
         repeat_choose_tree(NewTree,MiddleState,2), 
         move(MiddleState,((NewTree,-1),OldCoordinates),TurnState),
-        display_game(TurnState)
+        display_game(TurnState),
+        sleep(5)
      ; 
      PlayerDifficulty2 =:= 1->
 
         choose_move(GameState,2,1,(TreesInBoard,Tree,OldCoordinates,NewCoordinates,NewTree)),
         move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
         display_game(MiddleState),
+        sleep(5),
         move(MiddleState,((NewTree,-1),OldCoordinates),TurnState),
-        display_game(TurnState)
+        display_game(TurnState),
+        sleep(5)
         
      ;
         choose_move(GameState,2,2,(Goal2,TreesInBoard,((Tree,OldCoordinates),NewCoordinates,NewTree))),write('Player 1 is thinking2...'),nl,
         move(GameState,((Tree,OldCoordinates),NewCoordinates),MiddleState),
         display_game(MiddleState),
+        sleep(5),
         move(MiddleState,((NewTree,-1),OldCoordinates),TurnState),
-        display_game(TurnState)
+        display_game(TurnState),
+        sleep(5)
         
     )
     ),

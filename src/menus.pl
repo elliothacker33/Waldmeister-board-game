@@ -176,11 +176,15 @@ handle_option(3):-
 .
 
 handle_option(4):-
-    instructions,display_main_menu
+    display_instructions,
+    sleep(10),
+    display_main_menu
 .
 
 handle_option(5):-
-    credits,display_main_menu
+    display_credits,
+    sleep(10),
+    display_main_menu
 .
 
 handle_option(6):-

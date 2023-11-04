@@ -4,9 +4,7 @@
 
 :-consult('board.pl').
 :-consult('bot.pl').
-:-consult('credits.pl').
 :-consult('display.pl').
-:-consult('instructions.pl').
 :-consult('logic.pl').
 :-consult('menus.pl').
 :-consult('play.pl').
@@ -20,6 +18,7 @@
 :-use_module(library(between)).
 :-use_module(library(lists)).
 :-use_module(library(random)).
+:-use_module(library(system)).
 
 /*
  Play predicate is responsible to start the game invoking main menu.
