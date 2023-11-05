@@ -141,7 +141,7 @@ sicstus.exe
 
 ```
 3. Change the font and size
-![Alt text](../media-assets/font.jpg)
+![Alt text](media-assets/font.jpg)
   
 
 4. Load the game in sicstus:
