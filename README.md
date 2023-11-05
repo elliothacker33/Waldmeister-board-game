@@ -4,7 +4,7 @@
 
 ##  Index
 
-- [Group](#group)
+- [Group](#group-and-contributions)
 
 - [Installation and Execution](#installation-and-execution)
 
@@ -41,11 +41,11 @@
 - [Conclusions](#conclusions)
 
 
-##  Group
+##  Group and Contributions
 
-- Tomás Alexandre Torres Pereira (up202108845@edu.fe.up.pt)
+- Tomás Alexandre Torres Pereira (up202108845@edu.fe.up.pt), contribution -> 50%
 
-- Tomás Miranda de Figueiredo Sarmento (up202108778@edu.fe.up.pt)
+- Tomás Miranda de Figueiredo Sarmento (up202108778@edu.fe.up.pt), contribution -> 50%
 
   
 

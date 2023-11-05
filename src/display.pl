@@ -462,7 +462,5 @@ display_credits:-
     print_newline(2),
     write('Sicstus prolog 4.18 was the only tool used in game development'),
     print_newline(1),
-    write('For more information go to our github --> https://github.com/elliothacker33/Waldmeister-board-game'),
-    print_newline(1),
     write('Version 1.0 of Waldmeister board game')
 .
