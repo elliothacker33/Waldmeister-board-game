@@ -88,7 +88,7 @@ draw_matrix_aux(Size,NColumn,[Head | Tail]):-
 */
 % draw_matrix_aux2(+Size,+NColumn,+Line)  
 draw_matrix_aux2(NColumn,Blanks,Head):-
-    NColumn < 10,
+    NColumn =< 10,
     add_blancks(Blanks,Head,NewHead),
     draw_line_with_pieces(NewHead,[[],[],[]],[Line1,Line2,Line3]),
     append([' '],Line1,NewLine1),
@@ -100,7 +100,7 @@ draw_matrix_aux2(NColumn,Blanks,Head):-
     draw_line(NewLine3),write('\n').
         
 draw_matrix_aux2(NColumn,Blanks,Head):-
-    10 =< NColumn,
+    10 < NColumn,
     add_blancks(Blanks,Head,NewHead),
     draw_line_with_pieces(NewHead,[[],[],[]],[Line1,Line2,Line3]),
     append(['  '],Line1,NewLine1),
