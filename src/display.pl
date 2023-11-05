@@ -114,7 +114,7 @@ draw_matrix_aux2(NColumn,Blanks,Head):-
 % draw_line(+Line) 
 draw_line([]):-
         write('\n').
-        
+
 draw_line([Head | Tail]):-
     number(Head),!,
     write(Head),
@@ -128,7 +128,7 @@ draw_line([Head | Tail]):-
     transform into a list of lines that represents each line of the piece
 */
 % draw_line([Head | Tail],Lines,Result) 
-draw_line_with_pieces(_Line,Lines,Lines).
+draw_line_with_pieces([],Lines,Lines).
         
 draw_line_with_pieces([Head | Tail],Lines,Result):-
     draw_Piece(Head,Lines,NewLines),
