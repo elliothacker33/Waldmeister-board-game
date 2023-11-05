@@ -4,7 +4,7 @@
 
 ##  Index
 
-- [Group](#group)
+- [Group](#group-and-contributions)
 
 - [Installation and Execution](#installation-and-execution)
 
@@ -43,11 +43,11 @@
 - [Conclusions](#conclusions)
 
 
-##  Group
+##  Group and Contributions
 
-- Tomás Alexandre Torres Pereira (up202108845@edu.fe.up.pt)
+- Tomás Alexandre Torres Pereira (up202108845@edu.fe.up.pt), contribution -> 50%
 
-- Tomás Miranda de Figueiredo Sarmento (up202108778@edu.fe.up.pt)
+- Tomás Miranda de Figueiredo Sarmento (up202108778@edu.fe.up.pt), contribution -> 50%
 
   
 
@@ -824,3 +824,7 @@ play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1,_, Goal1), (PlayerNumber2,_,
     sleep(20)
 .
 ```
+
+#### Conclusions 
+
+One of our most significant challenges was creating a visually appealing display for the various trees in our game. Given that the game is based in a terminal environment, our options for implementing an aesthetically pleasing visual representation were limited. Another challenge we had to confront was designing the logic for valid moves. This was particularly tricky due to the unconventional layout of the game board. Currently, we haven't identified any specific bugs or errors. Our primary goals moving forward are to enhance the visual display by introducing color to the trees and to further optimize and correct the logic in the code for improved efficiency and accuracy.

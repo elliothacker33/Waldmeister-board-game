@@ -92,7 +92,8 @@ draw_matrix_aux2(NColumn,Blanks,Head):-
     add_blancks(Blanks,Head,NewHead),
     draw_line_with_pieces(NewHead,[[],[],[]],[Line1,Line2,Line3]),
     append([' '],Line1,NewLine1),
-    append([NColumn],Line2,NewLine2),
+    ColumnIndex is NColumn-1,
+    append([ColumnIndex],Line2,NewLine2),
     append([' '],Line3,NewLine3),
     draw_line(NewLine1),
     draw_line(NewLine2),
@@ -103,7 +104,8 @@ draw_matrix_aux2(NColumn,Blanks,Head):-
     add_blancks(Blanks,Head,NewHead),
     draw_line_with_pieces(NewHead,[[],[],[]],[Line1,Line2,Line3]),
     append(['  '],Line1,NewLine1),
-    append([NColumn],Line2,NewLine2),
+    ColumnIndex is NColumn-1,
+    append([ColumnIndex],Line2,NewLine2),
     append(['  '],Line3,NewLine3),
     draw_line(NewLine1),
     draw_line(NewLine2),
@@ -459,8 +461,6 @@ display_credits:-
     write('FEUP - Faculty of Engineering of the University of Porto'),
     print_newline(2),
     write('Sicstus prolog 4.18 was the only tool used in game development'),
-    print_newline(1),
-    write('For more information go to our github --> https://github.com/elliothacker33/Waldmeister-board-game'),
     print_newline(1),
     write('Version 1.0 of Waldmeister board game')
 .
