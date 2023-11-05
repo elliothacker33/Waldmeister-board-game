@@ -30,6 +30,8 @@
 
 - [Trees](#representation-of-trees-and-coordinates)
 
+- [Display](#display)
+
 - [Value of the board](#value-of-the-board)
 
 - [Bot Move Choice](#bot-move-choice)
@@ -301,6 +303,116 @@ The representation of both trees and coordinates consists of a pair in the form 
 - 3: Height --> big size , Color --> dark green
 
   
+#### Display
+We used a lot of functions to draw the components nedded for this game i will talk about the more important ones.
+- Drawing the board is a complex task given that our board have an unsual size and variable size i will show the main functions use to draw the board in this function we use draw_matrix(+Matrix) to add some components needed to the board aside from the board it self like coluns or lines if needed and could help in future developement
+```prolog
+
+draw_matrix([]).
+draw_matrix(Matrix):-
+    get_size(Matrix,Size),
+    write('\nL\n'),
+    draw_matrix_aux(Size,1,Matrix).
+        
+/* 
+    this function is and axiliary function to draw the board
+*/
+% draw_matrix_aux(+Size,+NColumn,+Matrix)        
+    draw_matrix_aux(_,_,[]).
+            
+    draw_matrix_aux(Size,NColumn,[Head | Tail]):-
+        NColumn =< Size,
+        Blanks is Size - NColumn,
+        NColumn1 is NColumn + 1,
+        draw_matrix_aux2(NColumn,Blanks,Head),
+        draw_matrix_aux(Size,NColumn1,Tail).
+            
+    draw_matrix_aux(Size,NColumn,[Head | Tail]):-
+        NColumn > Size,
+        Blanks is NColumn - Size,
+        NColumn1 is NColumn + 1,
+        draw_matrix_aux2(NColumn,Blanks,Head),
+        draw_matrix_aux(Size,NColumn1,Tail).
+```
+- this function is used to add filler to deal with the weird size of our board
+```prolog
+add_blancks(0,Result,Result).
+add_blancks(Blanks,Column,Result):-
+    append([0],Column,NewColumn),
+    NewBlanks is Blanks - 1,
+    add_blancks(NewBlanks,NewColumn,Result).
+```
+
+ - draw_matrix_aux2 is used to draw each line of the board given that each line of the matrix of the board needs to have fillers placed according to the size of the matrix as well as each line of the matrix of the board are equal to 3 lines in the terminal so this function works as a translation layer
+
+ ```prolog
+ draw_matrix_aux2(NColumn,Blanks,Head):-
+    NColumn < 10,
+    add_blancks(Blanks,Head,NewHead),
+    draw_line_with_pieces(NewHead,[[],[],[]],[Line1,Line2,Line3]),
+    append([' '],Line1,NewLine1),
+    append([NColumn],Line2,NewLine2),
+    append([' '],Line3,NewLine3),
+    draw_line(NewLine1),
+    draw_line(NewLine2),
+    draw_line(NewLine3),write('\n').
+        
+draw_matrix_aux2(NColumn,Blanks,Head):-
+    10 =< NColumn,
+    add_blancks(Blanks,Head,NewHead),
+    draw_line_with_pieces(NewHead,[[],[],[]],[Line1,Line2,Line3]),
+    append(['  '],Line1,NewLine1),
+    append([NColumn],Line2,NewLine2),
+    append(['  '],Line3,NewLine3),
+    draw_line(NewLine1),
+    draw_line(NewLine2),
+    draw_line(NewLine3),write('\n').
+ ```
+
+ - This function draws the fragments of a line in the terminal
+
+ ```prolog
+draw_line([]):-
+        write('\n').
+
+draw_line([Head | Tail]):-
+    number(Head),!,
+    write(Head),
+    draw_line(Tail).
+
+draw_line([Head | Tail]):-
+    format(Head,[]),
+    draw_line(Tail).
+ ```
+ - For each piece in a line it calls the draw piece wich is diferent from each piece
+ ```prolog
+draw_line_with_pieces([],Lines,Lines).
+        
+draw_line_with_pieces([Head | Tail],Lines,Result):-
+    draw_Piece(Head,Lines,NewLines),
+    draw_line_with_pieces(Tail,NewLines,Result).
+ ```
+ - this function is diferent for each piece there are two examples 
+the Colors are light green &#9651; green &#9709; Dark green &#9650;
+And the heights are represented by one triangle if the trees are smal or two triagles if the trees are medium or three trees is they are tall
+ ```prolog
+ %draw blank
+ draw_Piece(0,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+    append(Tail1,['   '],NewTail1),
+    append(Tail2,['   '],NewTail2),
+    append(Tail3,['   '],NewTail3).
+%draw place without piece yet
+draw_Piece(-1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+    append(Tail1,['    _ '],NewTail1),
+    append(Tail2,['   / \\'],NewTail2),
+    append(Tail3,['   \\_/'],NewTail3).
+%draw a piece
+draw_Piece(1-1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+    append(Tail1,['    _ '],NewTail1),
+    append(Tail2,['   /\x25b3\\\'],NewTail2),
+    append(Tail3,['   \\_/'],NewTail3)
+.
+ ```
 
 ####  Value of the Board
 
