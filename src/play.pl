@@ -68,7 +68,7 @@ play_game([Board,Trees1,Trees2,54,Turn], (PlayerNumber1, PlayerDifficulty1, Goal
     play_game(FinalState,(PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2))
 .
 
-play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
+play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1,_, Goal1), (PlayerNumber2,_,_)):-
 
     GameOverState=[Board,Trees1,Trees2,0,_],
     display_game(GameOverState),
@@ -85,7 +85,7 @@ play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1, PlayerDifficulty1, Goal1), 
 play_game(GameState, (PlayerNumber1, PlayerDifficulty1, Goal1), (PlayerNumber2, PlayerDifficulty2, Goal2)):-
 
     GameState=[Board,Trees1,Trees2,Amount,Turn],
-    display_game(GameState),
+    display_game([Board,Trees1,Trees2,Amount,Turn]),
     sleep(5),
     get_free_trees_in_board(0,0,Board,Board,TreesInBoard),
 

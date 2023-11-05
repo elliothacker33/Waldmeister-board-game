@@ -16,7 +16,7 @@ collect_available_trees(Trees, AvailableTrees):-
 */
 % repeat_choose_tree(-Tree,+GameState,+Turn)
 
-repeat_choose_tree(Tree, [Board ,Trees1,_,_,_],1):-
+repeat_choose_tree(Tree, [_,Trees1,_,_,_],1):-
     collect_available_trees(Trees1, AvailableTrees),
     askTree(Tree),
     print_newline(2),
@@ -29,7 +29,7 @@ repeat_choose_tree(Tree, [Board ,Trees1,_,_,_],1):-
     repeat_choose_tree(Tree, [Board ,Trees1,_,_,_],1)
 .
 
-repeat_choose_tree(Tree, [Board ,_,Trees2,_,_],2):-
+repeat_choose_tree(Tree, [_,_,Trees2,_,_],2):-
     collect_available_trees(Trees2, AvailableTrees),
     askTree(Tree),
     print_newline(2),
@@ -565,7 +565,7 @@ valid_moves([Board,_,_,_,_],X-Y,ValidMoves):-
     append(Temp4, DownLeftValidMoves, ValidMoves)
 .
 
-valid_moves([Board,_,_,0,_],_,[]).
+valid_moves([_,_,_,0,_],_,[]).
    
 
 

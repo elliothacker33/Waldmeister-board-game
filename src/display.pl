@@ -407,7 +407,7 @@ display_main_menu:-
     print_newline(1),
     display_options,
     print_newline(3),
-    repeat_ask_option(Option),
+    repeat_ask_option(_),
     !
 .
 
