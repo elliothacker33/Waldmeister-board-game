@@ -87,7 +87,7 @@ repeat_choose_tree_in_board([Board | _ ],(Tree,Coordinates),TreesInBoard):-
 
 askTree(Tree):-
     print_newline(1),
-    write('Heights. 1- Small 2-Medium 3-High'),
+    write('Heights. 1- Small 2- Medium 3- High'),
     print_newline(1),
     write('Colors.  1- Light green 2- Medium green 3- Strong green'),
     print_newline(2),
