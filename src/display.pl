@@ -37,7 +37,7 @@ display_Winner(2,Player,PointsHeight,PointsColor):-
 .
 
 
-display_Winner(0,_):- 
+display_Winner(0,_,_,_):- 
     write('Draw : Both players scored the same ')
 .
 
@@ -132,7 +132,7 @@ draw_line_with_pieces(_Line,Lines,Lines).
         
 draw_line_with_pieces([Head | Tail],Lines,Result):-
     draw_Piece(Head,Lines,NewLines),
-    draw_line_with_pieces( Tail,NewLines,Result).
+    draw_line_with_pieces(Tail,NewLines,Result).
         
 /* 
     this function is used to draw each diferent piece

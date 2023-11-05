@@ -97,7 +97,6 @@ bot_move([Board | RestGameState],'Height',Trees,TreesInBoard,BotMov):-
         move([Board | RestGameState],( (Tree ,OldCords),NewCords),[BoardUpdated | _]),
         move([BoardUpdated | RestGameState],( (NewTree , -1),OldCords),[BoardUpdated1 | _]),
         count_height_values(BoardUpdated1,Score)),MaxMoves),
-    write('exited'),
     length(MaxMoves,N),
     (0 < N ->
         sort(MaxMoves,SortedMoves),
