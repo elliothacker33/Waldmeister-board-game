@@ -30,9 +30,12 @@
 
 - [Trees](#representation-of-trees-and-coordinates)
 
+- [Move Validation and Execution](#move-validation-and-execution)
+
 - [Value of the board](#value-of-the-board)
 
 - [Bot Move Choice](#bot-move-choice)
+
 
 ##  Group
 
@@ -490,10 +493,10 @@ random_member(BotMov, MaxMoves1)
 ;
 
 choose_move([Board,Trees,_,_,_],1,1,(TreesInBoard,Tree,Coordinates,NewCoordinates;NewTree)),
+    BotMov = ((Tree,Coordinates),NewCoordinates,NewTree)
 
-BotMov = ((Tree,Coordinates),NewCoordinates,NewTree)
-
-).
+)
+.
 
 ```
 #### Move Validation and Execution
@@ -542,11 +545,11 @@ valid_moves([Board,_,_,_,_],X-Y,ValidMoves):-
 
 ```prolog
 get_free_trees_in_board(X, Y, Board, [Row | RestRows], TreesInBoard):-
-search_row(X, Y, Row,TreeRow),
-filter_free(TreeRow,Board,FreeTrees),
-X1 is X + 1,
-get_free_trees_in_board(X1, 0,Board, RestRows, TreeRestRows),
-append(FreeTrees, TreeRestRows, TreesInBoard)
+    search_row(X, Y, Row,TreeRow),
+    filter_free(TreeRow,Board,FreeTrees),
+    X1 is X + 1,
+    get_free_trees_in_board(X1, 0,Board, RestRows, TreeRestRows),
+    append(FreeTrees, TreeRestRows, TreesInBoard)
 .
 ```
 - **What is the check logic for moving to free space?**
@@ -664,5 +667,23 @@ change_turn([1], [2]).
 change_turn([2], [1]).
 change_turn([H | L], [H | NewRestOfState]):-
 	change_turn(L, NewRestOfState)
+.
+```
+#### End of Game
+
+When the game reaches its conclusion, the game_over(GameOverState, Winner) predicate is called. It determines the winner by comparing the points of the players and selects the player with more points as the winner.
+
+```prolog
+play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1,_, Goal1), (PlayerNumber2,_,_)):-
+    GameOverState=[Board,Trees1,Trees2,0,_],
+    display_game(GameOverState),
+    sleep(2),
+    game_over(GameOverState,Winner,PointsHeight,PointsColor),
+    (Goal1 =:= Winner ->
+        display_Winner(Winner,PlayerNumber1,PointsHeight,PointsColor) 
+    ;
+        display_Winner(Winner,PlayerNumber2,PointsHeight,PointsColor)
+    ),
+    sleep(20)
 .
 ```
