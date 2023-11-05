@@ -149,17 +149,17 @@ draw_Piece(1-1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail3,['   \\_/'],NewTail3)
 .
 
-draw_Piece(2-1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+draw_Piece(1-2,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['    _ '],NewTail1),
     append(Tail2,['   /\x25ed\\\'],NewTail2),
     append(Tail3,['   \\_/'],NewTail3).
 
-draw_Piece(3-1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+draw_Piece(1-3,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['    _ '],NewTail1),
     append(Tail2,['   /\x25b2\\\'],NewTail2),
     append(Tail3,['   \\_/'],NewTail3).
 
-draw_Piece(1-2,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+draw_Piece(2-1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['    _ '],NewTail1),
     append(Tail2,['   /\x25b3\\\'],NewTail2),
     append(Tail3,['   \\\x25b3\/'],NewTail3).
@@ -169,17 +169,17 @@ draw_Piece(2-2,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail2,['   /\x25ed\\\'],NewTail2),
     append(Tail3,['   \\\x25ed\/'],NewTail3).
 
-draw_Piece(3-2,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+draw_Piece(2-3,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['    _ '],NewTail1),
     append(Tail2,['   /\x25b2\\\'],NewTail2),
     append(Tail3,['   \\\x25b2\/'],NewTail3).
 
-draw_Piece(1-3,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+draw_Piece(3-1,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['    \x25b3\ '],NewTail1),
     append(Tail2,['   /\x25b3\\\'],NewTail2),
     append(Tail3,['   \\\x25b3\/'],NewTail3).
 
-draw_Piece(2-3,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
+draw_Piece(3-2,[Tail1,Tail2,Tail3],[NewTail1,NewTail2,NewTail3]):-
     append(Tail1,['    \x25ed\ '],NewTail1),
     append(Tail2,['   /\x25ed\\\'],NewTail2),
     append(Tail3,['   \\\x25ed\/'],NewTail3).
