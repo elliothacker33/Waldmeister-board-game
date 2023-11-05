@@ -81,7 +81,7 @@ git clone  https://github.com/elliothacker33/Waldmeister-board-game.git
 
 ```shell
 
-cd  Waldmeister-board-game
+cd  Waldmeister-board-game/src
 
 sicstus
 
@@ -135,7 +135,7 @@ git clone  https://github.com/elliothacker33/Waldmeister-board-game.git
 
 ```shell
 
-cd  Waldmeister-board-game
+cd  Waldmeister-board-game/src
 
 sicstus.exe
 
