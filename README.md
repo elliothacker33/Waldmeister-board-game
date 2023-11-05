@@ -140,10 +140,11 @@ cd  Waldmeister-board-game
 sicstus.exe
 
 ```
-
+3. Change the font and size
+![Alt text](../media-assets/font.jpg)
   
 
-3. Load the game in sicstus:
+4. Load the game in sicstus:
 
 ```prolog
 
@@ -153,7 +154,7 @@ consult('waldmeister.pl').
 
   
 
-4. Start the game:
+5. Start the game:
 
 ```prolog
 
@@ -827,4 +828,4 @@ play_game([Board,Trees1,Trees2,0,_], (PlayerNumber1,_, Goal1), (PlayerNumber2,_,
 
 #### Conclusions 
 
-One of our most significant challenges was creating a visually appealing display for the various trees in our game. Given that the game is based in a terminal environment, our options for implementing an aesthetically pleasing visual representation were limited. Another challenge we had to confront was designing the logic for valid moves. This was particularly tricky due to the unconventional layout of the game board. Currently, we haven't identified any specific bugs or errors. Our primary goals moving forward are to enhance the visual display by introducing color to the trees and to further optimize and correct the logic in the code for improved efficiency and accuracy.
+One of our most significant challenges was creating a visually appealing display for the various trees in our game. Given that the game is based in a terminal environment, our options for implementing an aesthetically pleasing visual representation were limited. Another challenge we had to confront was designing the logic for valid moves. This was particularly tricky due to the unconventional layout of the game board. Currently, we haven't identified any specific bugs or errors. Our primary goals moving forward are to enhance the visual display by introducing color to the trees and to further optimize and correct the logic in the code for improved efficiency and accuracy. Another chalange that we had to deal along the game was adjust a uncommon shape of the board and deal with a size that can vary with all the functions overall working with prolog made us realise that debuging it is a lot harder than it seems try to indentify the colors of the trees when colors arent supported in sicstus is challenging .
